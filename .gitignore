@@ -1,0 +1,12 @@
+wwwroot/*.js
+node_modules
+typings
+dist
+.DS_Store
+VERSION.txt
+tests/coverage
+.idea/
+.vscode/
+
+.env
+credentials.json
