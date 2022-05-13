@@ -1,0 +1,494 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`apiSyntaxToFriendlySyntax should correctly read from \`and\` definition 1`] = `
+"type t1
+  relations
+    define r1 as self and writer
+"
+`;
+
+exports[`apiSyntaxToFriendlySyntax should correctly read from \`basic\` definition 1`] = `
+"type t1
+  relations
+    define r1 as self
+"
+`;
+
+exports[`apiSyntaxToFriendlySyntax should correctly read from \`but not\` definition 1`] = `
+"type t1
+  relations
+    define r1 as self but not writer
+"
+`;
+
+exports[`apiSyntaxToFriendlySyntax should correctly read from \`or\` definition 1`] = `
+"type t1
+  relations
+    define r1 as self or writer
+"
+`;
+
+exports[`apiSyntaxToFriendlySyntax should read a complex definition 1`] = `
+"type folder
+  relations
+    define deleter as self
+type doc
+  relations
+    define blocked_reader as self
+    define delete as writer and deleter from parent
+    define glass as writer
+    define parent as self
+    define read as reader or writer
+    define reader as shared_reader but not blocked_reader
+    define shared_reader as self
+    define writer as self
+"
+`;
+
+exports[`friendlySyntaxToApiSyntax() should be able to handle single character type 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "r": Object {
+          "this": Object {},
+        },
+      },
+      "type": "t",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should correctly read from \`and\` definition 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "r1": Object {
+          "intersection": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "writer",
+                },
+              },
+            ],
+          },
+        },
+      },
+      "type": "t1",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should correctly read from \`and\` definition with $ as prefix 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "$r1": Object {
+          "intersection": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "$writer",
+                },
+              },
+            ],
+          },
+        },
+      },
+      "type": "$t1",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should correctly read from \`basic\` definition 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "r1": Object {
+          "this": Object {},
+        },
+      },
+      "type": "t1",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should correctly read from \`but not\` definition 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "r1": Object {
+          "difference": Object {
+            "base": Object {
+              "this": Object {},
+            },
+            "subtract": Object {
+              "computedUserset": Object {
+                "object": "",
+                "relation": "writer",
+              },
+            },
+          },
+        },
+      },
+      "type": "t1",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should correctly read from \`from\` definition 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "share": Object {
+          "tupleToUserset": Object {
+            "computedUserset": Object {
+              "object": "",
+              "relation": "owner",
+            },
+            "tupleset": Object {
+              "object": "",
+              "relation": "parent",
+            },
+          },
+        },
+      },
+      "type": "t1",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should correctly read from \`or\` definition 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "r1": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "writer",
+                },
+              },
+            ],
+          },
+        },
+      },
+      "type": "t1",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should read a complex definition 1`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "deleter": Object {
+          "this": Object {},
+        },
+      },
+      "type": "folder",
+    },
+    Object {
+      "relations": Object {
+        "admin": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "creator",
+                },
+              },
+            ],
+          },
+        },
+        "blocked_reader": Object {
+          "this": Object {},
+        },
+        "creator": Object {
+          "this": Object {},
+        },
+        "delete": Object {
+          "intersection": Object {
+            "child": Array [
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "writer",
+                },
+              },
+              Object {
+                "tupleToUserset": Object {
+                  "computedUserset": Object {
+                    "object": "",
+                    "relation": "deleter",
+                  },
+                  "tupleset": Object {
+                    "object": "",
+                    "relation": "parent",
+                  },
+                },
+              },
+            ],
+          },
+        },
+        "glass": Object {
+          "computedUserset": Object {
+            "object": "",
+            "relation": "writer",
+          },
+        },
+        "parent": Object {
+          "this": Object {},
+        },
+        "read": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "reader",
+                },
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "writer",
+                },
+              },
+            ],
+          },
+        },
+        "reader": Object {
+          "difference": Object {
+            "base": Object {
+              "computedUserset": Object {
+                "object": "",
+                "relation": "shared_reader",
+              },
+            },
+            "subtract": Object {
+              "computedUserset": Object {
+                "object": "",
+                "relation": "blocked_reader",
+              },
+            },
+          },
+        },
+        "shared_reader": Object {
+          "this": Object {},
+        },
+        "writer": Object {
+          "this": Object {},
+        },
+      },
+      "type": "doc",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should read a complex definition 2`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "admin": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "owner",
+                },
+              },
+            ],
+          },
+        },
+        "billing": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "admin",
+                },
+              },
+            ],
+          },
+        },
+        "content_editor": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "admin",
+                },
+              },
+            ],
+          },
+        },
+        "owner": Object {
+          "this": Object {},
+        },
+        "viewer": Object {
+          "intersection": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "admin",
+                },
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "content_editand",
+                },
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "billing",
+                },
+              },
+            ],
+          },
+        },
+      },
+      "type": "website",
+    },
+  ],
+}
+`;
+
+exports[`friendlySyntaxToApiSyntax() should read a complex definition 3`] = `
+Object {
+  "type_definitions": Array [
+    Object {
+      "relations": Object {
+        "admin": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "randy",
+                },
+              },
+            ],
+          },
+        },
+        "billing": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "admin",
+                },
+              },
+            ],
+          },
+        },
+        "content_editor": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "admin",
+                },
+              },
+            ],
+          },
+        },
+        "randy": Object {
+          "this": Object {},
+        },
+        "viewer": Object {
+          "union": Object {
+            "child": Array [
+              Object {
+                "this": Object {},
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "admin",
+                },
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "content_editor",
+                },
+              },
+              Object {
+                "computedUserset": Object {
+                  "object": "",
+                  "relation": "billing",
+                },
+              },
+            ],
+          },
+        },
+      },
+      "type": "website",
+    },
+  ],
+}
+`;
