@@ -1,0 +1,61 @@
+{
+  "name": "@openfga/syntax-transformer",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist/ && tsc --outDir dist/",
+    "prepublishOnly": "npm run build",
+    "test": "jest --config ./tests/jest.config.js",
+    "typecheck": "tsc  --skipLibCheck",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
+    "format:check": "prettier --check src/**",
+    "format:fix": "prettier --write src/**"
+  },
+  "keywords": [
+    "openfga",
+    "authorization",
+    "fga",
+    "fine-grained-authorization",
+    "rebac",
+    "zanzibar"
+  ],
+  "author": "OpenFGA",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "nearley": "^2.20.1"
+  },
+  "devDependencies": {
+    "@auth0/fga": "^0.6.4",
+    "@types/jest": "^27.5.1",
+    "@types/lodash": "^4.14.182",
+    "@types/nearley": "^2.11.2",
+    "@types/node": "^16.11.26",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.4"
+  },
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:openfga/sytax-transformer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openfga/sytax-transformer/issues"
+  },
+  "homepage": "https://github.com/openfga/sytax-transformer#readme"
+}
