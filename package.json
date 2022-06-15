@@ -51,12 +51,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com:openfga/sytax-transformer.git"
+    "url": "git://github.com:openfga/syntax-transformer.git"
   },
   "bugs": {
-    "url": "https://github.com/openfga/sytax-transformer/issues"
+    "url": "https://github.com/openfga/syntax-transformer/issues"
   },
-  "homepage": "https://github.com/openfga/sytax-transformer#readme",
+  "homepage": "https://github.com/openfga/syntax-transformer#readme",
   "publishConfig": {
     "access": "public"
   }
