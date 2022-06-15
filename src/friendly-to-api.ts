@@ -2,7 +2,7 @@ import { flatMapDeep, flatten, flattenDeep, isEmpty } from "lodash";
 
 import { parseDSL } from "./parse-dsl";
 import { Keywords } from "./keywords";
-import { TypeDefinition, TypeDefinitions, Userset } from "@auth0/fga";
+import { TypeDefinition, TypeDefinitions, Userset } from "@openfga/sdk";
 
 const resolveRelation = (relation: string): Userset => {
   let result;
