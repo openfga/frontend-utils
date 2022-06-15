@@ -1,4 +1,4 @@
-import { TypeDefinition, TypeDefinitions, Userset } from "@auth0/fga";
+import { TypeDefinition, TypeDefinitions, Userset } from "@openfga/sdk";
 import { Keywords } from "./keywords";
 
 const readFrom = (obj: Userset, define: string[]) => {

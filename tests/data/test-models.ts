@@ -1,4 +1,4 @@
-import { TypeDefinitions } from "@auth0/fga";
+import { TypeDefinitions } from "@openfga/sdk";
 
 export const testModels: { name: string, json: TypeDefinitions, friendly: string }[] = [
   {
