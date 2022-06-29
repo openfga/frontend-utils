@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-**Please do not report security vulnerabilities here**. See the [Responsible Disclosure Program](https://github.com/openfga/js-sdk/blob/main/.github/SECURITY.md).
+**Please do not report security vulnerabilities here**. See the [Responsible Disclosure Program](https://github.com/openfga/.github/blob/main/SECURITY.md).
 
 **Thank you in advance for helping us to improve this library!** Please read through the template below and answer all relevant questions. Your additional work here is greatly appreciated and will help us respond as quickly as possible.
 
-By submitting an issue to this repository, you agree to the terms within the [OpenFGA Code of Conduct](https://github.com/openfga/rfcs/blob/main/CODE-OF-CONDUCT.md).
+By submitting an issue to this repository, you agree to the terms within the [OpenFGA Code of Conduct](https://github.com/openfga/.github/blob/main/CODE_OF_CONDUCT.md).
 
 ### Description
 
