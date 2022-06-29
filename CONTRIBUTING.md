@@ -1,1 +1,52 @@
-# Contributing
+# Contributing to OpenFGA projects
+
+A big welcome and thank you for considering contributing to the OpenFGA open source projects. It’s people like you that make it a reality for users in our community.
+
+Reading and following these guidelines will help us make the contribution process easy and effective for everyone involved. It also communicates that you agree to respect the time of the developers managing and developing these open source projects. In return, we will reciprocate that respect by addressing your issue, assessing changes, and helping you finalize your pull requests.
+
+### Table of Contents
+
+* [Code of Conduct](#code-of-conduct)
+* [Getting Started](#getting-started)
+    * [Making Changes](#making-changes)
+    * [Opening Issues](#opening-issues)
+    * [Submitting Pull Requests](#submitting-pull-requests)
+* [Getting in Touch](#getting-in-touch)
+    * [Have a question or problem?](#have-a-question-or-problem)
+    * [Vulnerability Reporting](#vulnerability-reporting)
+
+## Code of Conduct
+
+By participating and contributing to this project, you are expected to uphold our [Code of Conduct](https://github.com/openfga/.github/blob/main/CODE_OF_CONDUCT.md).
+
+## Getting Started
+
+### Making Changes
+
+When contributing to a repository, the first step is to [open an issue](https://github.com/openfga/syntax-transformer/issues/new) to discuss the change you wish to make before making them.
+
+### Opening Issues
+
+Before you submit a new issue please make sure to search all open and closed issues. It is possible your feature request/issue has already been answered.  Make sure to also check the [OpenFGA discussions](https://github.com/orgs/openfga/discussions).
+
+That repo includes an issue template that will walk through all the places to check before submitting your issue here. Please follow the instructions there to make sure this is not a duplicate issue and that we have everything we need to research and reproduce this problem.
+
+### Submitting Pull Requests
+
+In order to submit a Pull Request, you need to:
+1- Fork this repository to your personal account
+2- Clone the forked repository
+3- Apply your changes
+4- Make sure tests are still running
+5- Commit and push your changes to your forked clone
+6- Submit a Pull Request from your forked clone to the [original OpenFGA syntax-transformer repo](https://github.com/openfga/syntax-transformer)
+
+## Getting in touch
+
+### Have a question or problem?
+
+Please do not open issues for general support or usage questions. Instead, join us over in the [OpenFGA discussions](https://github.com/orgs/openfga/discussions) or [support community](https://discord.gg/8naAwJfWN6).
+
+### Vulnerability Reporting
+
+Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://github.com/openfga/.github/blob/main/SECURITY.md) details the procedure for disclosing security issues.

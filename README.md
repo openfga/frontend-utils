@@ -6,14 +6,14 @@ This module transforms between the JSON syntax accepted by the OpenFGA API and t
 
 ## Table of Contents
 
-- [About OpenFGA](#about)
+- [About OpenFGA](#about-openfga)
 - [Resources](#resources)
 - [Installation](#installation)
 - [Contributing](#contributing)
 - [Author](#author)
 - [License](#license)
 
-## <a id="about"></a>About OpenFGA
+## About OpenFGA
 
 [OpenFGA](https://openfga.dev) is an open source Fine-Grained Authorization solution inspired by [Google's Zanzibar paper](https://research.google/pubs/pub48190/). It was created by the FGA team at [Auth0](https://auth0.com) based on [Auth0 Fine-Grained Authorization (FGA)](https://fga.dev), available under [a permissive license (Apache-2)](https://github.com/openfga/rfcs/blob/main/LICENSE) and welcomes community contributions.
 
