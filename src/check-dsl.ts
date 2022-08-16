@@ -29,7 +29,7 @@ export const checkDSL = (codeInEditor: string) => {
       const relations = [Keywords.SELF as string];
 
       _.forEach(r[2], (r2, idx: number) => {
-        const relation = _.trim(_.flattenDeep(r2).join("")).match(/define\s+(.*)\s+as/)?.[1];
+        const relation = _.trim(_.flattenDeep(r2).join("")).match(/define\s+(.*)\s+as\s/)?.[1];
         if (!relation) {
           return;
         }

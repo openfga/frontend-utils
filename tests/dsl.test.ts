@@ -198,6 +198,25 @@ type app
     define member as member from member`);
         expect(markers).toMatchSnapshot();
       });
+
+      it("should allow model with relations starting with as", () => {
+        const markers = checkDSL(`type org
+  relations
+    define member as self
+type feature
+  relations
+    define associated_plan as self
+    define access as subscriber_member from associated_plan
+type plan
+  relations
+    define subscriber as self
+    define subscriber_member as member from subscriber
+type permission
+  relations
+    define access_feature as access from associated_feature
+    define associated_feature as self`);
+        expect(markers).toMatchSnapshot();
+      });
     });
   });
 });

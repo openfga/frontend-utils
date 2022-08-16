@@ -126,6 +126,8 @@ Array [
 ]
 `;
 
+exports[`DSL checkDSL() semantics should allow model with relations starting with as 1`] = `Array []`;
+
 exports[`DSL checkDSL() semantics should allow self reference 1`] = `Array []`;
 
 exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
