@@ -181,5 +181,63 @@ type organization
   relations
     define member as self
 `
-  }
+  },
+  {
+    "name": "relations-starting-with-as",
+    "json": {
+      "type_definitions": [
+        { "type": "org", "relations": { "member": { "this": {} } } },
+        {
+          "type": "feature",
+          "relations": {
+            "associated_plan": { "this": {} },
+            "access": {
+              "tupleToUserset": {
+                "tupleset": { "object": "", "relation": "associated_plan" },
+                "computedUserset": { "object": "", "relation": "subscriber_member" }
+              }
+            }
+          }
+        }, {
+          "type": "plan",
+          "relations": {
+            "subscriber": { "this": {} },
+            "subscriber_member": {
+              "tupleToUserset": {
+                "tupleset": { "object": "", "relation": "subscriber" },
+                "computedUserset": { "object": "", "relation": "member" }
+              }
+            }
+          }
+        }, {
+          "type": "permission",
+          "relations": {
+            "access_feature": {
+              "tupleToUserset": {
+                "tupleset": {
+                  "object": "",
+                  "relation": "associated_feature"
+                }, "computedUserset": { "object": "", "relation": "access" }
+              }
+            }, "associated_feature": { "this": {} }
+          }
+        }]
+    },
+    "friendly": `type org
+  relations
+    define member as self
+type feature
+  relations
+    define associated_plan as self
+    define access as subscriber_member from associated_plan
+type plan
+  relations
+    define subscriber as self
+    define subscriber_member as member from subscriber
+type permission
+  relations
+    define access_feature as access from associated_feature
+    define associated_feature as self
+`
+  },
 ];
