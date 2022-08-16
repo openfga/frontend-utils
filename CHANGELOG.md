@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.0.4
+
+### [0.0.4](https://github.com/openfga/syntax-transformer/compare/v0.0.3...v0.0.4) (2022-08-16)
+
+#### Changes
+- fix(check-dsl): incorrect parsing of relations starting with `as`
+- chore(deps): bump dependencies
+
 ## v0.0.3
 
 ### [0.0.3](https://github.com/openfga/syntax-transformer/compare/v0.0.2...v0.0.3) (2022-06-29)
