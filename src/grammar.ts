@@ -24,10 +24,10 @@ function compileGrammar(sourceCode: string): Grammar {
 }
 
 export const grammar: Grammar = compileGrammar(`
-types           -> (_newline):* (type relations (define_or | define_and | define_but_not | define_base):*):*
+types           -> (_newline):* (type relations (_no_relations | (define_or | define_and | define_but_not | define_base):*)):* 
 
 type            -> (_comment):* _type _naming (_newline):+
-relations       -> (_comment):* _relations (_newline):+
+relations       -> (_comment):* _relations
 define_or       -> (_comment):* (define_raw (_or):+) (_newline):*
 define_and      -> (_comment):* (define_raw (_and):+) (_newline):*
 define_but_not  -> (_comment):* (define_raw (_but_not):+) (_newline):*
@@ -38,12 +38,12 @@ _as             -> "as" _spacing
 _or             -> "or" _spacing (_naming | _from)
 _and            -> "and" _spacing (_naming | _from)
 _but_not        -> "but not" _spacing (_naming | _from)
-_self           -> "self" _spacing
 _from           -> _naming _spacing "from" _spacing _naming
 
-_define         -> "    define" _spacing
-_relations      -> "  relations" " ":*
+_define         -> (_newline):+ "    define" _spacing
+_relations      -> "  relations" _optional_space
 _type           -> "type" _spacing
+_no_relations   -> "none" (_newline):*
 _naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) " ":*
 _comment        -> " ":* "#" _spacing [\\w]:* " ":* _newline
 _optional_space -> " ":*

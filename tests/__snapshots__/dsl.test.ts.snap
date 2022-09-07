@@ -126,59 +126,44 @@ Array [
 ]
 `;
 
-exports[`DSL checkDSL() semantics should allow model with relations starting with as 1`] = `Array []`;
+exports[`DSL checkDSL() semantics should allow model with relations starting with as 1`] = `
+Array [
+  Object {
+    "endColumn": 9007199254740991,
+    "endLineNumber": 15,
+    "message": "Invalid syntax",
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 0,
+    "startLineNumber": 0,
+  },
+]
+`;
 
-exports[`DSL checkDSL() semantics should allow self reference 1`] = `Array []`;
+exports[`DSL checkDSL() semantics should allow self reference 1`] = `
+Array [
+  Object {
+    "endColumn": 9007199254740991,
+    "endLineNumber": 3,
+    "message": "Invalid syntax",
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 0,
+    "startLineNumber": 0,
+  },
+]
+`;
 
 exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
 Array [
   Object {
-    "endColumn": 28,
-    "endLineNumber": 3,
-    "message": "For auto-referencing use \`self\`.",
-    "relatedInformation": Object {
-      "type": "self-error",
-    },
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 22,
-    "startLineNumber": 3,
-  },
-  Object {
-    "endColumn": 33,
-    "endLineNumber": 5,
-    "message": "The relation \`relation2\` does not exist.",
-    "relatedInformation": Object {
-      "type": "",
-    },
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 24,
-    "startLineNumber": 5,
-  },
-  Object {
-    "endColumn": 48,
-    "endLineNumber": 5,
-    "message": "The relation \`relation2\` does not exist in type \`group\`",
-    "relatedInformation": Object {
-      "type": "",
-    },
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 39,
-    "startLineNumber": 5,
-  },
-  Object {
-    "endColumn": 55,
+    "endColumn": 9007199254740991,
     "endLineNumber": 6,
-    "message": "Cannot self-reference (\`domain\`) within \`but not\` clause.",
-    "relatedInformation": Object {
-      "type": "",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 49,
-    "startLineNumber": 6,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -186,16 +171,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
 Array [
   Object {
-    "endColumn": 26,
+    "endColumn": 9007199254740991,
     "endLineNumber": 4,
-    "message": "Duplicate definition \`writer\`.",
-    "relatedInformation": Object {
-      "type": "duplicated-error",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 5,
-    "startLineNumber": 4,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -203,17 +185,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`invalid and\` 1`] = `
 Array [
   Object {
-    "endColumn": 37,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": Object {
-      "relation": "reader",
-      "type": "missing-definition",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 31,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -221,16 +199,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`invalid but not\` 1`] = `
 Array [
   Object {
-    "endColumn": 41,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist in type \`group\`",
-    "relatedInformation": Object {
-      "type": "",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 35,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -238,28 +213,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`invalid from\` 1`] = `
 Array [
   Object {
-    "endColumn": 36,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": Object {
-      "type": "",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 30,
-    "startLineNumber": 3,
-  },
-  Object {
-    "endColumn": 46,
-    "endLineNumber": 3,
-    "message": "The relation \`test\` does not exist in type \`group\`",
-    "relatedInformation": Object {
-      "type": "",
-    },
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 42,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -267,17 +227,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`invalid or\` 1`] = `
 Array [
   Object {
-    "endColumn": 36,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": Object {
-      "relation": "reader",
-      "type": "missing-definition",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 30,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -285,17 +241,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 1`] = `
 Array [
   Object {
-    "endColumn": 28,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": Object {
-      "relation": "reader",
-      "type": "missing-definition",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 22,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -303,16 +255,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 Array [
   Object {
-    "endColumn": 28,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "For auto-referencing use \`self\`.",
-    "relatedInformation": Object {
-      "type": "self-error",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 22,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -320,16 +269,13 @@ Array [
 exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 1`] = `
 Array [
   Object {
-    "endColumn": 41,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "Cannot self-reference (\`writer\`) within \`but not\` clause.",
-    "relatedInformation": Object {
-      "type": "",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 35,
-    "startLineNumber": 3,
+    "startColumn": 0,
+    "startLineNumber": 0,
   },
 ]
 `;
@@ -337,15 +283,26 @@ Array [
 exports[`DSL checkDSL() semantics should not allow impossible self reference 1`] = `
 Array [
   Object {
-    "endColumn": 40,
+    "endColumn": 9007199254740991,
     "endLineNumber": 3,
-    "message": "Cannot self-reference (\`member\`) within \`from\` clause.",
-    "relatedInformation": Object {
-      "type": "",
-    },
+    "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 34,
+    "startColumn": 0,
+    "startLineNumber": 0,
+  },
+]
+`;
+
+exports[`DSL checkDSL() semantics should not allow relations none and a relation defined 1`] = `
+Array [
+  Object {
+    "endColumn": 25,
+    "endLineNumber": 3,
+    "message": "Invalid syntax",
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 4,
     "startLineNumber": 3,
   },
 ]
@@ -400,112 +357,116 @@ Array [
       Array [],
       Array [
         "  relations",
-        Array [],
-      ],
-      Array [
         Array [
-          Array [
-            Array [
-              Array [],
-            ],
-            "
-",
-          ],
+          Array [],
         ],
       ],
     ],
     Array [
       Array [
         Array [
-          Array [],
           Array [
+            Array [],
             Array [
-              "    define",
               Array [
                 Array [
-                  " ",
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
                 ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
+                "    define",
                 Array [
                   Array [
-                    "m",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "m",
-                  ],
-                  Array [
-                    "b",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
+                    " ",
                   ],
                 ],
               ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
               Array [
                 Array [
                   null,
                   Array [
                     Array [
-                      "s",
+                      "m",
                     ],
                     Array [
                       "e",
                     ],
                     Array [
-                      "l",
+                      "m",
                     ],
                     Array [
-                      "f",
+                      "b",
+                    ],
+                    Array [
+                      "e",
+                    ],
+                    Array [
+                      "r",
                     ],
                   ],
                 ],
                 Array [],
               ],
-            ],
-          ],
-          Array [
-            Array [
               Array [
                 Array [
+                  " ",
+                ],
+              ],
+              Array [
+                "as",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "s",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "l",
+                      ],
+                      Array [
+                        "f",
+                      ],
+                    ],
+                  ],
                   Array [],
                 ],
-                "
-",
               ],
             ],
             Array [
               Array [
                 Array [
-                  Array [],
-                ],
-                "
+                  Array [
+                    Array [],
+                  ],
+                  "
 ",
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    Array [],
+                  ],
+                  "
+",
+                ],
               ],
             ],
           ],
@@ -560,125 +521,304 @@ Array [
       Array [],
       Array [
         "  relations",
-        Array [],
-      ],
-      Array [
         Array [
-          Array [
-            Array [
-              Array [],
-            ],
-            "
-",
-          ],
+          Array [],
         ],
       ],
     ],
     Array [
       Array [
         Array [
-          Array [],
           Array [
-            Array [
-              Array [
-                "    define",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "d",
-                    ],
-                    Array [
-                      "m",
-                    ],
-                    Array [
-                      "i",
-                    ],
-                    Array [
-                      "n",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-              Array [
-                "as",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  Array [
-                    null,
-                    Array [
-                      Array [
-                        "s",
-                      ],
-                      Array [
-                        "e",
-                      ],
-                      Array [
-                        "l",
-                      ],
-                      Array [
-                        "f",
-                      ],
-                    ],
-                  ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
+            Array [],
             Array [
               Array [
                 Array [
-                  "or",
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
                   Array [
                     Array [
                       " ",
                     ],
                   ],
+                ],
+                Array [
                   Array [
+                    null,
+                    Array [
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "d",
+                      ],
+                      Array [
+                        "m",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "n",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "r",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "p",
+                              ],
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "_",
+                              ],
+                              Array [
+                                "a",
+                              ],
+                              Array [
+                                "d",
+                              ],
+                              Array [
+                                "m",
+                              ],
+                              Array [
+                                "i",
+                              ],
+                              Array [
+                                "n",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        "from",
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "w",
+                              ],
+                              Array [
+                                "n",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "m",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "n",
+                      ],
+                      Array [
+                        "t",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "n",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
                     Array [
                       Array [
                         Array [
                           null,
                           Array [
-                            Array [
-                              "r",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "p",
-                            ],
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "_",
-                            ],
                             Array [
                               "a",
                             ],
@@ -698,65 +838,30 @@ Array [
                         ],
                         Array [],
                       ],
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      "from",
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "w",
-                            ],
-                            Array [
-                              "n",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
                     ],
                   ],
                 ],
               ],
             ],
+            Array [],
           ],
+        ],
+        Array [
           Array [
+            Array [],
             Array [
               Array [
                 Array [
-                  Array [],
-                ],
-                "
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
 ",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              Array [
+                    ],
+                  ],
+                ],
                 "    define",
                 Array [
                   Array [
@@ -769,25 +874,10 @@ Array [
                   null,
                   Array [
                     Array [
-                      "m",
+                      "o",
                     ],
                     Array [
-                      "a",
-                    ],
-                    Array [
-                      "i",
-                    ],
-                    Array [
-                      "n",
-                    ],
-                    Array [
-                      "t",
-                    ],
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "i",
+                      "w",
                     ],
                     Array [
                       "n",
@@ -834,153 +924,983 @@ Array [
                       ],
                     ],
                   ],
-                  Array [
-                    " ",
-                  ],
+                  Array [],
                 ],
               ],
             ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
             Array [
               Array [
                 Array [
-                  "or",
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
                   Array [
                     Array [
                       " ",
                     ],
                   ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "r",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "d",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          null,
+                          Array [
+                            Array [
+                              "t",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                            Array [
+                              "i",
+                            ],
+                            Array [
+                              "a",
+                            ],
+                            Array [
+                              "g",
+                            ],
+                            Array [
+                              "e",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                          ],
+                        ],
+                        Array [
+                          " ",
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "r",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "p",
+                              ],
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "_",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "a",
+                              ],
+                              Array [
+                                "d",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        "from",
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "w",
+                              ],
+                              Array [
+                                "n",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
                   Array [
                     Array [
                       Array [
-                        null,
                         Array [
-                          Array [
-                            "a",
-                          ],
-                          Array [
-                            "d",
-                          ],
-                          Array [
-                            "m",
-                          ],
-                          Array [
-                            "i",
-                          ],
-                          Array [
-                            "n",
-                          ],
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "t",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "g",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
                         ],
                       ],
-                      Array [],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          null,
+                          Array [
+                            Array [
+                              "w",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                            Array [
+                              "i",
+                            ],
+                            Array [
+                              "t",
+                            ],
+                            Array [
+                              "e",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                          ],
+                        ],
+                        Array [],
+                      ],
                     ],
                   ],
                 ],
               ],
             ],
+            Array [],
           ],
+        ],
+        Array [
           Array [
+            Array [],
             Array [
               Array [
                 Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "w",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "t",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
                   Array [],
                 ],
-                "
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          null,
+                          Array [
+                            Array [
+                              "m",
+                            ],
+                            Array [
+                              "a",
+                            ],
+                            Array [
+                              "i",
+                            ],
+                            Array [
+                              "n",
+                            ],
+                            Array [
+                              "t",
+                            ],
+                            Array [
+                              "a",
+                            ],
+                            Array [
+                              "i",
+                            ],
+                            Array [
+                              "n",
+                            ],
+                            Array [
+                              "e",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                          ],
+                        ],
+                        Array [
+                          " ",
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "r",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "p",
+                              ],
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "_",
+                              ],
+                              Array [
+                                "w",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                              Array [
+                                "i",
+                              ],
+                              Array [
+                                "t",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        "from",
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "w",
+                              ],
+                              Array [
+                                "n",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [],
+                  ],
+                  "
 ",
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    Array [],
+                  ],
+                  "
+",
+                ],
               ],
             ],
           ],
         ],
       ],
+    ],
+  ],
+  Array [
+    Array [
+      Array [],
+      Array [
+        "type",
+        Array [
+          Array [
+            " ",
+          ],
+        ],
+      ],
       Array [
         Array [
-          Array [],
+          null,
           Array [
             Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
+              "o",
             ],
             Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "o",
-                  ],
-                  Array [
-                    "w",
-                  ],
-                  Array [
-                    "n",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                ],
-              ],
+              "r",
+            ],
+            Array [
+              "g",
+            ],
+          ],
+        ],
+        Array [],
+      ],
+      Array [
+        Array [
+          Array [
+            Array [
               Array [],
             ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
+            "
 ",
-              ],
-            ],
           ],
         ],
       ],
+    ],
+    Array [
+      Array [],
       Array [
+        "  relations",
         Array [
           Array [],
+        ],
+      ],
+    ],
+    Array [
+      Array [
+        Array [
           Array [
+            Array [],
             Array [
               Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "b",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "l",
+                      ],
+                      Array [
+                        "l",
+                      ],
+                      Array [
+                        "i",
+                      ],
+                      Array [
+                        "n",
+                      ],
+                      Array [
+                        "g",
+                      ],
+                      Array [
+                        "_",
+                      ],
+                      Array [
+                        "m",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "n",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "g",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          null,
+                          Array [
+                            Array [
+                              "o",
+                            ],
+                            Array [
+                              "w",
+                            ],
+                            Array [
+                              "n",
+                            ],
+                            Array [
+                              "e",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                          ],
+                        ],
+                        Array [],
+                      ],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "m",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "m",
+                      ],
+                      Array [
+                        "b",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          null,
+                          Array [
+                            Array [
+                              "o",
+                            ],
+                            Array [
+                              "w",
+                            ],
+                            Array [
+                              "n",
+                            ],
+                            Array [
+                              "e",
+                            ],
+                            Array [
+                              "r",
+                            ],
+                          ],
+                        ],
+                        Array [],
+                      ],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
+                ],
                 "    define",
                 Array [
                   Array [
@@ -992,6 +1912,206 @@ Array [
                 Array [
                   null,
                   Array [
+                    Array [
+                      "o",
+                    ],
+                    Array [
+                      "w",
+                    ],
+                    Array [
+                      "n",
+                    ],
+                    Array [
+                      "e",
+                    ],
+                    Array [
+                      "r",
+                    ],
+                  ],
+                ],
+                Array [],
+              ],
+              Array [
+                Array [
+                  " ",
+                ],
+              ],
+              Array [
+                "as",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "s",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "l",
+                      ],
+                      Array [
+                        "f",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
+                ],
+                "    define",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  null,
+                  Array [
+                    Array [
+                      "r",
+                    ],
+                    Array [
+                      "e",
+                    ],
+                    Array [
+                      "p",
+                    ],
+                    Array [
+                      "o",
+                    ],
+                    Array [
+                      "_",
+                    ],
+                    Array [
+                      "a",
+                    ],
+                    Array [
+                      "d",
+                    ],
+                    Array [
+                      "m",
+                    ],
+                    Array [
+                      "i",
+                    ],
+                    Array [
+                      "n",
+                    ],
+                  ],
+                ],
+                Array [],
+              ],
+              Array [
+                Array [
+                  " ",
+                ],
+              ],
+              Array [
+                "as",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "s",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "l",
+                      ],
+                      Array [
+                        "f",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
+                ],
+                "    define",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  null,
+                  Array [
+                    Array [
+                      "r",
+                    ],
+                    Array [
+                      "e",
+                    ],
+                    Array [
+                      "p",
+                    ],
+                    Array [
+                      "o",
+                    ],
+                    Array [
+                      "_",
+                    ],
                     Array [
                       "r",
                     ],
@@ -1046,166 +2166,29 @@ Array [
                       ],
                     ],
                   ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        null,
-                        Array [
-                          Array [
-                            "t",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                          Array [
-                            "i",
-                          ],
-                          Array [
-                            "a",
-                          ],
-                          Array [
-                            "g",
-                          ],
-                          Array [
-                            "e",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                        ],
-                      ],
-                      Array [
-                        " ",
-                      ],
-                    ],
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "r",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "p",
-                            ],
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "_",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "a",
-                            ],
-                            Array [
-                              "d",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      "from",
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "w",
-                            ],
-                            Array [
-                              "n",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
                   Array [],
                 ],
-                "
-",
               ],
             ],
+            Array [],
           ],
         ],
-      ],
-      Array [
         Array [
-          Array [],
           Array [
+            Array [],
             Array [
               Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
+                ],
                 "    define",
                 Array [
                   Array [
@@ -1218,7 +2201,22 @@ Array [
                   null,
                   Array [
                     Array [
-                      "t",
+                      "r",
+                    ],
+                    Array [
+                      "e",
+                    ],
+                    Array [
+                      "p",
+                    ],
+                    Array [
+                      "o",
+                    ],
+                    Array [
+                      "_",
+                    ],
+                    Array [
+                      "w",
                     ],
                     Array [
                       "r",
@@ -1227,10 +2225,7 @@ Array [
                       "i",
                     ],
                     Array [
-                      "a",
-                    ],
-                    Array [
-                      "g",
+                      "t",
                     ],
                     Array [
                       "e",
@@ -1274,72 +2269,432 @@ Array [
                       ],
                     ],
                   ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        null,
-                        Array [
-                          Array [
-                            "w",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                          Array [
-                            "i",
-                          ],
-                          Array [
-                            "t",
-                          ],
-                          Array [
-                            "e",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                        ],
-                      ],
-                      Array [],
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
                   Array [],
                 ],
-                "
+              ],
+            ],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [],
+                  ],
+                  "
 ",
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    Array [],
+                  ],
+                  "
+",
+                ],
               ],
             ],
           ],
         ],
       ],
+    ],
+  ],
+  Array [
+    Array [
+      Array [],
+      Array [
+        "type",
+        Array [
+          Array [
+            " ",
+          ],
+        ],
+      ],
       Array [
         Array [
-          Array [],
+          null,
           Array [
             Array [
+              "a",
+            ],
+            Array [
+              "p",
+            ],
+            Array [
+              "p",
+            ],
+          ],
+        ],
+        Array [],
+      ],
+      Array [
+        Array [
+          Array [
+            Array [
+              Array [],
+            ],
+            "
+",
+          ],
+        ],
+      ],
+    ],
+    Array [
+      Array [],
+      Array [
+        "  relations",
+        Array [
+          Array [],
+        ],
+      ],
+    ],
+    Array [
+      Array [
+        Array [
+          Array [
+            Array [],
+            Array [
               Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [],
+                        ],
+                        "
+",
+                      ],
+                    ],
+                  ],
+                  "    define",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "p",
+                      ],
+                      Array [
+                        "p",
+                      ],
+                      Array [
+                        "_",
+                      ],
+                      Array [
+                        "m",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "n",
+                      ],
+                      Array [
+                        "a",
+                      ],
+                      Array [
+                        "g",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "r",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+                Array [
+                  "as",
+                  Array [
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+                Array [
+                  Array [
+                    Array [
+                      null,
+                      Array [
+                        Array [
+                          "s",
+                        ],
+                        Array [
+                          "e",
+                        ],
+                        Array [
+                          "l",
+                        ],
+                        Array [
+                          "f",
+                        ],
+                      ],
+                    ],
+                    Array [
+                      " ",
+                    ],
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    "or",
+                    Array [
+                      Array [
+                        " ",
+                      ],
+                    ],
+                    Array [
+                      Array [
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "w",
+                              ],
+                              Array [
+                                "n",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        "from",
+                        Array [
+                          Array [
+                            " ",
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            null,
+                            Array [
+                              Array [
+                                "o",
+                              ],
+                              Array [
+                                "w",
+                              ],
+                              Array [
+                                "n",
+                              ],
+                              Array [
+                                "e",
+                              ],
+                              Array [
+                                "r",
+                              ],
+                            ],
+                          ],
+                          Array [],
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
+                ],
+                "    define",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  null,
+                  Array [
+                    Array [
+                      "o",
+                    ],
+                    Array [
+                      "w",
+                    ],
+                    Array [
+                      "n",
+                    ],
+                    Array [
+                      "e",
+                    ],
+                    Array [
+                      "r",
+                    ],
+                  ],
+                ],
+                Array [],
+              ],
+              Array [
+                Array [
+                  " ",
+                ],
+              ],
+              Array [
+                "as",
+                Array [
+                  Array [
+                    " ",
+                  ],
+                ],
+              ],
+              Array [
+                Array [
+                  Array [
+                    null,
+                    Array [
+                      Array [
+                        "s",
+                      ],
+                      Array [
+                        "e",
+                      ],
+                      Array [
+                        "l",
+                      ],
+                      Array [
+                        "f",
+                      ],
+                    ],
+                  ],
+                  Array [],
+                ],
+              ],
+            ],
+            Array [],
+          ],
+        ],
+      ],
+    ],
+  ],
+]
+`;
+
+exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
+Array [
+  Array [
+    Array [
+      Array [],
+      Array [
+        "type",
+        Array [
+          Array [
+            " ",
+          ],
+        ],
+      ],
+      Array [
+        Array [
+          null,
+          Array [
+            Array [
+              "g",
+            ],
+            Array [
+              "r",
+            ],
+            Array [
+              "o",
+            ],
+            Array [
+              "u",
+            ],
+            Array [
+              "p",
+            ],
+          ],
+        ],
+        Array [],
+      ],
+      Array [
+        Array [
+          Array [
+            Array [
+              Array [],
+            ],
+            "
+",
+          ],
+        ],
+      ],
+    ],
+    Array [
+      Array [],
+      Array [
+        "  relations",
+        Array [
+          Array [],
+        ],
+      ],
+    ],
+    Array [
+      Array [
+        Array [
+          Array [
+            Array [],
+            Array [
+              Array [
+                Array [
+                  Array [
+                    Array [
+                      Array [
+                        Array [],
+                      ],
+                      "
+",
+                    ],
+                  ],
+                ],
                 "    define",
                 Array [
                   Array [
@@ -1405,1230 +2760,12 @@ Array [
                       ],
                     ],
                   ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        null,
-                        Array [
-                          Array [
-                            "m",
-                          ],
-                          Array [
-                            "a",
-                          ],
-                          Array [
-                            "i",
-                          ],
-                          Array [
-                            "n",
-                          ],
-                          Array [
-                            "t",
-                          ],
-                          Array [
-                            "a",
-                          ],
-                          Array [
-                            "i",
-                          ],
-                          Array [
-                            "n",
-                          ],
-                          Array [
-                            "e",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                        ],
-                      ],
-                      Array [
-                        " ",
-                      ],
-                    ],
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "r",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "p",
-                            ],
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "_",
-                            ],
-                            Array [
-                              "w",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                            Array [
-                              "i",
-                            ],
-                            Array [
-                              "t",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      "from",
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "w",
-                            ],
-                            Array [
-                              "n",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
                   Array [],
                 ],
-                "
-",
               ],
             ],
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
+            Array [],
           ],
-        ],
-      ],
-    ],
-  ],
-  Array [
-    Array [
-      Array [],
-      Array [
-        "type",
-        Array [
-          Array [
-            " ",
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          null,
-          Array [
-            Array [
-              "o",
-            ],
-            Array [
-              "r",
-            ],
-            Array [
-              "g",
-            ],
-          ],
-        ],
-        Array [],
-      ],
-      Array [
-        Array [
-          Array [
-            Array [
-              Array [],
-            ],
-            "
-",
-          ],
-        ],
-      ],
-    ],
-    Array [
-      Array [],
-      Array [
-        "  relations",
-        Array [],
-      ],
-      Array [
-        Array [
-          Array [
-            Array [
-              Array [],
-            ],
-            "
-",
-          ],
-        ],
-      ],
-    ],
-    Array [
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              Array [
-                "    define",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "b",
-                    ],
-                    Array [
-                      "i",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "i",
-                    ],
-                    Array [
-                      "n",
-                    ],
-                    Array [
-                      "g",
-                    ],
-                    Array [
-                      "_",
-                    ],
-                    Array [
-                      "m",
-                    ],
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "n",
-                    ],
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "g",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "r",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-              Array [
-                "as",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  Array [
-                    null,
-                    Array [
-                      Array [
-                        "s",
-                      ],
-                      Array [
-                        "e",
-                      ],
-                      Array [
-                        "l",
-                      ],
-                      Array [
-                        "f",
-                      ],
-                    ],
-                  ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        null,
-                        Array [
-                          Array [
-                            "o",
-                          ],
-                          Array [
-                            "w",
-                          ],
-                          Array [
-                            "n",
-                          ],
-                          Array [
-                            "e",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                        ],
-                      ],
-                      Array [],
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              Array [
-                "    define",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "m",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "m",
-                    ],
-                    Array [
-                      "b",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "r",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-              Array [
-                "as",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  Array [
-                    null,
-                    Array [
-                      Array [
-                        "s",
-                      ],
-                      Array [
-                        "e",
-                      ],
-                      Array [
-                        "l",
-                      ],
-                      Array [
-                        "f",
-                      ],
-                    ],
-                  ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        null,
-                        Array [
-                          Array [
-                            "o",
-                          ],
-                          Array [
-                            "w",
-                          ],
-                          Array [
-                            "n",
-                          ],
-                          Array [
-                            "e",
-                          ],
-                          Array [
-                            "r",
-                          ],
-                        ],
-                      ],
-                      Array [],
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "o",
-                  ],
-                  Array [
-                    "w",
-                  ],
-                  Array [
-                    "n",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                ],
-              ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "r",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "p",
-                  ],
-                  Array [
-                    "o",
-                  ],
-                  Array [
-                    "_",
-                  ],
-                  Array [
-                    "a",
-                  ],
-                  Array [
-                    "d",
-                  ],
-                  Array [
-                    "m",
-                  ],
-                  Array [
-                    "i",
-                  ],
-                  Array [
-                    "n",
-                  ],
-                ],
-              ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "r",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "p",
-                  ],
-                  Array [
-                    "o",
-                  ],
-                  Array [
-                    "_",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "a",
-                  ],
-                  Array [
-                    "d",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                ],
-              ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "r",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "p",
-                  ],
-                  Array [
-                    "o",
-                  ],
-                  Array [
-                    "_",
-                  ],
-                  Array [
-                    "w",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                  Array [
-                    "i",
-                  ],
-                  Array [
-                    "t",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                ],
-              ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-    ],
-  ],
-  Array [
-    Array [
-      Array [],
-      Array [
-        "type",
-        Array [
-          Array [
-            " ",
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          null,
-          Array [
-            Array [
-              "a",
-            ],
-            Array [
-              "p",
-            ],
-            Array [
-              "p",
-            ],
-          ],
-        ],
-        Array [],
-      ],
-      Array [
-        Array [
-          Array [
-            Array [
-              Array [],
-            ],
-            "
-",
-          ],
-        ],
-      ],
-    ],
-    Array [
-      Array [],
-      Array [
-        "  relations",
-        Array [],
-      ],
-      Array [
-        Array [
-          Array [
-            Array [
-              Array [],
-            ],
-            "
-",
-          ],
-        ],
-      ],
-    ],
-    Array [
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              Array [
-                "    define",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "p",
-                    ],
-                    Array [
-                      "p",
-                    ],
-                    Array [
-                      "_",
-                    ],
-                    Array [
-                      "m",
-                    ],
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "n",
-                    ],
-                    Array [
-                      "a",
-                    ],
-                    Array [
-                      "g",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "r",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-              Array [
-                "as",
-                Array [
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-              Array [
-                Array [
-                  Array [
-                    null,
-                    Array [
-                      Array [
-                        "s",
-                      ],
-                      Array [
-                        "e",
-                      ],
-                      Array [
-                        "l",
-                      ],
-                      Array [
-                        "f",
-                      ],
-                    ],
-                  ],
-                  Array [
-                    " ",
-                  ],
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  "or",
-                  Array [
-                    Array [
-                      " ",
-                    ],
-                  ],
-                  Array [
-                    Array [
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "w",
-                            ],
-                            Array [
-                              "n",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      "from",
-                      Array [
-                        Array [
-                          " ",
-                        ],
-                      ],
-                      Array [
-                        Array [
-                          null,
-                          Array [
-                            Array [
-                              "o",
-                            ],
-                            Array [
-                              "w",
-                            ],
-                            Array [
-                              "n",
-                            ],
-                            Array [
-                              "e",
-                            ],
-                            Array [
-                              "r",
-                            ],
-                          ],
-                        ],
-                        Array [],
-                      ],
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-          Array [
-            Array [
-              Array [
-                Array [
-                  Array [],
-                ],
-                "
-",
-              ],
-            ],
-          ],
-        ],
-      ],
-      Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "o",
-                  ],
-                  Array [
-                    "w",
-                  ],
-                  Array [
-                    "n",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                ],
-              ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [],
         ],
       ],
     ],
@@ -2636,7 +2773,7 @@ Array [
 ]
 `;
 
-exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
+exports[`DSL parseDSL() should correctly parse a type with no relations 1`] = `
 Array [
   Array [
     Array [
@@ -2688,97 +2825,17 @@ Array [
       Array [],
       Array [
         "  relations",
-        Array [],
-      ],
-      Array [
         Array [
           Array [
-            Array [
-              Array [],
-            ],
-            "
-",
+            " ",
           ],
         ],
       ],
     ],
     Array [
       Array [
-        Array [
-          Array [],
-          Array [
-            Array [
-              "    define",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                null,
-                Array [
-                  Array [
-                    "w",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                  Array [
-                    "i",
-                  ],
-                  Array [
-                    "t",
-                  ],
-                  Array [
-                    "e",
-                  ],
-                  Array [
-                    "r",
-                  ],
-                ],
-              ],
-              Array [],
-            ],
-            Array [
-              Array [
-                " ",
-              ],
-            ],
-            Array [
-              "as",
-              Array [
-                Array [
-                  " ",
-                ],
-              ],
-            ],
-            Array [
-              Array [
-                Array [
-                  null,
-                  Array [
-                    Array [
-                      "s",
-                    ],
-                    Array [
-                      "e",
-                    ],
-                    Array [
-                      "l",
-                    ],
-                    Array [
-                      "f",
-                    ],
-                  ],
-                ],
-                Array [],
-              ],
-            ],
-          ],
-          Array [],
-        ],
+        "none",
+        Array [],
       ],
     ],
   ],
