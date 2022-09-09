@@ -2,6 +2,41 @@ import { TypeDefinitions } from "@openfga/sdk";
 
 export const testModels: { name: string, json: TypeDefinitions, friendly: string }[] = [
   {
+    "name": "one type with no relations",
+    "json": {
+      "type_definitions": [
+        {
+          "type": "document",
+          "relations": {}
+        }
+      ]
+    },
+    "friendly": "type document\n  relations none\n"
+  },
+  {
+    "name": "one type with no relations and another with one relation",
+    "json": {
+      "type_definitions": [
+        {
+          "type": "group",
+          "relations": {}
+        },
+        {
+          "type": "document",
+          "relations": {
+            "viewer": {
+              "this": {}
+            },
+            "editor": {
+              "this": {}
+            }
+          }
+        }
+      ]
+    },
+    "friendly": "type group\n  relations none\ntype document\n  relations\n    define viewer as self\n    define editor as self\n"
+  },
+  {
     "name": "simple model",
     "json": {
       "type_definitions": [

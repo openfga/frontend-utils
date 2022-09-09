@@ -61,19 +61,23 @@ export const friendlySyntaxToApiSyntax = (config: string): TypeDefinitions => {
 
   result.forEach((r) => {
     const typeDef: TypeDefinition = { type: flattenDeep(r[0][2]).join(""), relations: {} };
-    const definitions = r[2];
+    const definitions = flatten(r[2]);
 
     definitions.forEach((def) => {
       const flattened: any = flatten(def);
       const definition = flattenDeep(flatten(flattened[1] as [])
         .filter((r: any) => flattenDeep(r).join("").trim().length)[1]).join("");
       const relations: any[] = [];
-      let rawRelations: any[] = [...flatten(flattened[1][4])];
+      let rawRelations: any[] = [];
 
-      if (flattened[1].length === 2) {
-        flattened[1][0][4] = flattened[1][0][4].concat(flatMapDeep(flattened[1][1]).join(""));
-        rawRelations = flattened[1][0][4];
-      }
+      if (!!flattened[1]) { // at least one relation defined
+        rawRelations = [...flatten(flattened[1][4])];
+
+        if (flattened[1].length === 2) {
+          flattened[1][0][4] = flattened[1][0][4].concat(flatMapDeep(flattened[1][1]).join(""));
+          rawRelations = flattened[1][0][4];
+        }
+      }    
 
       for (const rawRelation of rawRelations) {
         const flat = flattenDeep(rawRelation);
