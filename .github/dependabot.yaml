@@ -5,11 +5,4 @@ updates:
     schedule:
       interval: "weekly"
     allow:
-      dependency-type: "production"
-
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    allow:
-      dependency-type: "all"
+      - dependency-type: "production"

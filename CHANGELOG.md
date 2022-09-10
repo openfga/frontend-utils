@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.0.5
+
+### [0.0.5](https://github.com/openfga/syntax-transformer/compare/v0.0.4...v0.0.5) (2022-09-29)
+
+#### Changes
+- fix(grammar): compile beforehand (openfga/syntax-transformer#52)
+- fix(grammar): overhaul response returned by parser (openfga/syntax-transformer#52)
+- fix(parse-dsl): support types with no relations in the dsl (openfga/syntax-transformer#52)
+- fix(check-dsl): support types with no relations in the dsl (openfga/syntax-transformer#57)
+- chore(deps): bump dependencies
+
 ## v0.0.4
 
 ### [0.0.4](https://github.com/openfga/syntax-transformer/compare/v0.0.3...v0.0.4) (2022-08-16)
