@@ -10,8 +10,7 @@ describe("DSL", () => {
     });
 
     it("should correctly parse a type with no relations", () => {
-      const result = parseDSL(`type group
-  relations none`);
+      const result = parseDSL(`type group`);
 
       expect(result).toMatchSnapshot();
     });
@@ -196,13 +195,6 @@ type app
         const markers = checkDSL(`type group
   relations
     define member as self or member from member`);
-        expect(markers).toMatchSnapshot();
-      });
-
-      it("should not allow relations none and a relation defined", () => {
-        const markers = checkDSL(`type group
-  relations none
-    define member as self`);
         expect(markers).toMatchSnapshot();
       });
 
