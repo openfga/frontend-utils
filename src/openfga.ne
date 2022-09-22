@@ -1,34 +1,9 @@
-/* eslint-disable max-len */
-import { Parser, Grammar } from "nearley";
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
-import * as compile from "nearley/lib/compile";
-// @ts-ignore
-import * as generate from "nearley/lib/generate";
-// @ts-ignore
-import * as nearleyGrammar from "nearley/lib/nearley-language-bootstrapped";
-/* eslint-enable @typescript-eslint/ban-ts-comment */
+@preprocessor typescript
 
-// From: https://github.com/paul-kline/bnf-playground/blob/7e0155dc9a3aa92f507be27a6d04f663bc504e85/ts/BNFController.ts
-function compileGrammar(sourceCode: string): Grammar {
-  const grammarParser = new Parser(nearleyGrammar);
-  grammarParser.feed(sourceCode);
-  const grammarAst = grammarParser.results[0];
-  const grammarInfoObject = compile(grammarAst, {});
-  const grammarJs = generate(grammarInfoObject, "grammar");
-  const module = { exports: {} };
-  // eslint-disable-next-line no-eval
-  eval(grammarJs);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  return module.exports;
-}
-
-export const grammar: Grammar = compileGrammar(`
 types           -> (_newline):* (type (relations (define):+):*):* {%
-    data => data[1].map(datum => {
+    data => data[1].map((datum: any) => {
 		    const relations = datum[1][0] ? datum[1][0][1].flat() : [];
-		    return { ...datum[0], relations, raw: JSON.stringify(relations), rr: relations?.map(r => r)}
+		    return { ...datum[0], relations }
 		})
 %}
 
@@ -39,7 +14,14 @@ relations       -> _multiline_comment _relations {%
     data => data[1]
 %}
 define          -> _multiline_comment define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):* {%
-    data => {
+    (data, _location, reject) => {
+        const relation = data[1];
+
+        // self and this are reserved keywords
+        if (["self", "this"].includes(relation)) {
+            return reject;
+        }
+
         const def = data[3][0];
         const definition = def.type ? def :
             {
@@ -47,7 +29,7 @@ define          -> _multiline_comment define_initial _as (define_base | define_o
                 targets: [def]
             }
 
-        return { comment: data[0], relation: data[1], definition };
+        return { comment: data[0], relation, definition };
     }
 %}
 define_initial      -> _define _naming _spacing {%
@@ -75,10 +57,10 @@ define_base  -> _optional_space (_naming | from_phrase) _optional_space {%
 %}
 
 define_or       -> define_base (_spacing _or _spacing define_base):+ {%
-    data => ({ targets: [data[0], ...data[1].map(datum => datum[3])], type: "union" })
+    data => ({ targets: [data[0], ...data[1].map((datum: any) => datum[3])], type: "union" })
 %}
 define_and      -> define_base (_spacing _and _spacing define_base):+ {%
-    data => ({ targets: [data[0], ...data[1].map(datum => datum[3])], type: "intersection" })
+    data => ({ targets: [data[0], ...data[1].map((datum: any) => datum[3])], type: "intersection" })
 %}
 define_but_not  -> define_base _but_not define_base {%
     data => ({ base: data[0], diff: data[2], type: "exclusion" })
@@ -102,12 +84,11 @@ _naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) _optional
     data => data.flat(3).join('').trim()
 %}
 _multiline_comment        -> (_comment):* {%
-    data => data.flat(3).join('\\nn')
+    data => data.flat(3).join('\n')
 %}
-_comment        -> " ":* "#" _spacing [\\w]:* " ":* _newline {%
+_comment        -> " ":* "#" _spacing [\w]:* " ":* _newline {%
     data => data.flat(3).join('').substring(1).trim()
 %}
 _optional_space -> " ":*
 _spacing        -> " ":+
-_newline        -> _optional_space "\\n"
-`);
+_newline        -> _optional_space "\n"

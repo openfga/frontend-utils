@@ -1,6 +1,6 @@
-import { Parser } from "nearley";
+import { Grammar, Parser } from "nearley";
 
-import { grammar } from "./grammar";
+import grammar from "./grammar";
 
 export enum RewriteType {
   Direct = "direct",
@@ -38,8 +38,8 @@ export interface TypeDefParserResult {
   relations: RelationDefParserResult<RelationDefOperator>[];
 }
 
-export const parseDSL = (code: string): any | TypeDefParserResult => {
-  const parser = new Parser(grammar);
-  parser.feed(code.trim() + "\n");
+export const parseDSL = (code: string): any[] => {
+  const parser = new Parser(Grammar.fromCompiled(grammar));
+  parser.feed(code.trim());
   return parser.results[0];
 };
