@@ -69,6 +69,16 @@ from_phrase -> _naming _spacing _from _spacing _naming {%
     data => ({ target: data[0], from: data[4] })
 %}
 
+_multiline_comment        -> (_comment):* {%
+    data => data.flat(3).join('\n')
+%}
+_comment        -> " ":* "#" _spacing _naming (_spacing _word):*  _newline {%
+    data => data.flat(3).join('').substring(1).trim()
+%}
+_word           -> ([a-z] | [A-Z] | [0-9] |  "_" |  "-" | "," | "&" | "+" | "/" | "$" ):+ _optional_space {%
+    data => data.flat(3).join('').trim()
+%}
+
 _from           -> "from"
 _as             -> "as"
 _or             -> "or"
@@ -82,12 +92,6 @@ _type           -> "type" _spacing
 _no_relations   -> "none" (_newline):*
 _naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) _optional_space {%
     data => data.flat(3).join('').trim()
-%}
-_multiline_comment        -> (_comment):* {%
-    data => data.flat(3).join('\n')
-%}
-_comment        -> " ":* "#" _spacing [\w]:* " ":* _newline {%
-    data => data.flat(3).join('').substring(1).trim()
 %}
 _optional_space -> " ":*
 _spacing        -> " ":+
