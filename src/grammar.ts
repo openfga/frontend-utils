@@ -25,18 +25,67 @@ function compileGrammar(sourceCode: string): Grammar {
 }
 
 export const grammar: Grammar = compileGrammar(`
-types           -> (_newline):* (type (relations (define):+):*):*
+types           -> (_newline):* (type (relations (define):+):*):* {%
+    data => data[1].map(datum => {
+		    const relations = datum[1][0] ? datum[1][0][1].flat() : [];
+		    return { ...datum[0], relations, raw: JSON.stringify(relations), rr: relations?.map(r => r)}
+		})
+%}
 
-type            -> (_comment):* _type _naming (_newline):+
-relations       -> (_comment):* _relations
-define          -> (_comment):* define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):*
-define_initial      -> _define _naming _spacing 
+type            -> _multiline_comment _type _naming (_newline):+ {%
+    data => ({ comment: data[0], type: data[2] })
+%}
+relations       -> _multiline_comment _relations {%
+    data => data[1]
+%}
+define          -> _multiline_comment define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):* {%
+    data => {
+        const def = data[3][0];
+        const definition = def.type ? def :
+            {
+                type: 'single',
+                targets: [def]
+            }
 
-define_base  -> _optional_space (_naming | from_phrase) _optional_space
-define_or       -> define_base (_spacing _or _spacing define_base):+
-define_and      -> define_base (_spacing _and _spacing define_base):+
-define_but_not  -> define_base _but_not define_base
-from_phrase -> _naming _spacing _from _spacing _naming
+        return { comment: data[0], relation: data[1], definition };
+    }
+%}
+define_initial      -> _define _naming _spacing {%
+    data => data[1]
+%}
+
+define_base  -> _optional_space (_naming | from_phrase) _optional_space {%
+    data => {
+		const entry = data[1][0];
+		let target, rewrite, from
+		if (typeof entry === "string") {
+			if (entry === "self") {
+				rewrite = "direct";
+			} else {
+				rewrite = "computed_userset";
+				target = entry;
+			}
+		} else {
+			from = entry.from;
+		    target = entry.target;
+			rewrite = "tuple_to_userset";
+		}
+		return { rewrite, target, from  }
+	}
+%}
+
+define_or       -> define_base (_spacing _or _spacing define_base):+ {%
+    data => ({ targets: [data[0], ...data[1].map(datum => datum[3])], type: "union" })
+%}
+define_and      -> define_base (_spacing _and _spacing define_base):+ {%
+    data => ({ targets: [data[0], ...data[1].map(datum => datum[3])], type: "intersection" })
+%}
+define_but_not  -> define_base _but_not define_base {%
+    data => ({ base: data[0], diff: data[2], type: "exclusion" })
+%}
+from_phrase -> _naming _spacing _from _spacing _naming {%
+    data => ({ target: data[0], from: data[4] })
+%}
 
 _from           -> "from"
 _as             -> "as"
@@ -49,8 +98,15 @@ _define         -> (_newline):+ "    define" _spacing
 _relations      -> "  relations" _optional_space
 _type           -> "type" _spacing
 _no_relations   -> "none" (_newline):*
-_naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) " ":*
-_comment        -> " ":* "#" _spacing [\\w]:* " ":* _newline
+_naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) _optional_space {%
+    data => data.flat(3).join('').trim()
+%}
+_multiline_comment        -> (_comment):* {%
+    data => data.flat(3).join('\\nn')
+%}
+_comment        -> " ":* "#" _spacing [\\w]:* " ":* _newline {%
+    data => data.flat(3).join('').substring(1).trim()
+%}
 _optional_space -> " ":*
 _spacing        -> " ":+
 _newline        -> _optional_space "\\n"
