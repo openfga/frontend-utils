@@ -1,7 +1,6 @@
 export enum Keywords {
   NAMESPACE = "type",
   RELATIONS = "relations",
-  RELATIONS_NONE = "none",
   SELF = "self",
   DEFINE = "define",
   AS = "as",

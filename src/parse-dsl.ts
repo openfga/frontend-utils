@@ -40,6 +40,6 @@ export interface TypeDefParserResult {
 
 export const parseDSL = (code: string): any[] => {
   const parser = new Parser(Grammar.fromCompiled(grammar));
-  parser.feed(code.trim());
-  return parser.results[0];
+  parser.feed(code.trim() + "\n");
+  return parser.results[0] || [];
 };

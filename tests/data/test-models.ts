@@ -11,7 +11,7 @@ export const testModels: { name: string, json: TypeDefinitions, friendly: string
         }
       ]
     },
-    "friendly": "type document\n  relations none\n"
+    "friendly": "type document\n"
   },
   {
     "name": "one type with no relations and another with one relation",
@@ -34,7 +34,7 @@ export const testModels: { name: string, json: TypeDefinitions, friendly: string
         }
       ]
     },
-    "friendly": "type group\n  relations none\ntype document\n  relations\n    define viewer as self\n    define editor as self\n"
+    "friendly": "type group\ntype document\n  relations\n    define viewer as self\n    define editor as self\n"
   },
   {
     "name": "simple model",
