@@ -11,3 +11,7 @@ export enum Keywords {
   BUT_NOT = "but not",
   COMMENT = "comment",
 }
+
+export enum ReservedKeywords {
+  THIS = "this"
+}

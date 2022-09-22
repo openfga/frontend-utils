@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Parser, Grammar } from "nearley";
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -24,22 +25,26 @@ function compileGrammar(sourceCode: string): Grammar {
 }
 
 export const grammar: Grammar = compileGrammar(`
-types           -> (_newline):* (type relations (_no_relations | (define_or | define_and | define_but_not | define_base):*)):* 
+types           -> (_newline):* (type (relations (define):+):*):*
 
 type            -> (_comment):* _type _naming (_newline):+
 relations       -> (_comment):* _relations
-define_or       -> (_comment):* (define_raw (_or):+) (_newline):*
-define_and      -> (_comment):* (define_raw (_and):+) (_newline):*
-define_but_not  -> (_comment):* (define_raw (_but_not):+) (_newline):*
-define_base     -> (_comment):* define_raw (_newline):*
-define_raw      -> _define _naming _spacing _as (_naming | _from)
+define          -> (_comment):* define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):*
+define_initial      -> _define _naming _spacing 
 
-_as             -> "as" _spacing
-_or             -> "or" _spacing (_naming | _from)
-_and            -> "and" _spacing (_naming | _from)
-_but_not        -> "but not" _spacing (_naming | _from)
-_from           -> _naming _spacing "from" _spacing _naming
+define_base  -> _optional_space (_naming | from_phrase) _optional_space
+define_or       -> define_base (_spacing _or _spacing define_base):+
+define_and      -> define_base (_spacing _and _spacing define_base):+
+define_but_not  -> define_base _but_not define_base
+from_phrase -> _naming _spacing _from _spacing _naming
 
+_from           -> "from"
+_as             -> "as"
+_or             -> "or"
+_and            -> "and"
+_but_not        -> "but not"
+
+_self           -> "self"
 _define         -> (_newline):+ "    define" _spacing
 _relations      -> "  relations" _optional_space
 _type           -> "type" _spacing

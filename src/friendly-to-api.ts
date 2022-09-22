@@ -1,7 +1,7 @@
-import { flatMapDeep, flatten, flattenDeep, isEmpty } from "lodash";
+import { flatten, flattenDeep, get } from "lodash";
 
 import { parseDSL } from "./parse-dsl";
-import { Keywords } from "./keywords";
+import { Keywords, ReservedKeywords } from "./keywords";
 import { TypeDefinition, TypeDefinitions, Userset } from "@openfga/sdk";
 
 const resolveRelation = (relation: string): Userset => {
@@ -10,10 +10,10 @@ const resolveRelation = (relation: string): Userset => {
   if (relation === Keywords.SELF) {
     result = { this: {} };
   } else {
-    const isFrom = relation.includes(" from ");
+    const isFrom = relation.includes(` ${Keywords.FROM}`);
 
     if (isFrom) {
-      const data = relation.split(" from ");
+      const data = relation.split(` ${Keywords.FROM}`);
       const computed = data[0]?.trim();
       const tupleset = data[1]?.trim();
 
@@ -47,7 +47,7 @@ const resolveRelation = (relation: string): Userset => {
  * @param relations
  */
 const filterKeywords = (relations: string[]) =>
-  relations.filter((relation) => ![" ", Keywords.OR, Keywords.AND, Keywords.BUT_NOT, Keywords.FROM].includes(relation));
+  relations.filter((relation) => ![" ", Keywords.OR, Keywords.AND, Keywords.BUT_NOT, Keywords.FROM, ReservedKeywords.THIS].includes(relation));
 
 /**
  * Removes empty values from an array of strings and returns a trimmed list of strings
@@ -57,64 +57,56 @@ const filterBlanksAndTrim = (list: string[]) => list.filter((entry) => entry).ma
 
 export const friendlySyntaxToApiSyntax = (config: string): TypeDefinitions => {
   const typeDefinitions: TypeDefinitions = { type_definitions: [] };
-  const result: string[][][][] = parseDSL(config);
+  const rawResult: string[][][][] = parseDSL(config);
 
-  result.forEach((r) => {
-    const typeDef: TypeDefinition = { type: flattenDeep(r[0][2]).join(""), relations: {} };
-    const definitions = flatten(r[2]);
+  // rawResult[0] is just new lines
+  const result = get(rawResult, "0.1") || [];
 
-    definitions.forEach((def) => {
-      const flattened: any = flatten(def);
-      const definition = flattenDeep(flatten(flattened[1] as [])
-        .filter((r: any) => flattenDeep(r).join("").trim().length)[1]).join("");
-      const relations: any[] = [];
-      let rawRelations: any[] = [];
+  result.forEach((r: any) => {
+    const typeName = flattenDeep(get(r, "0.2")).join("").trim();
+    const typeDef: TypeDefinition = { type: typeName, relations: {} };
+    const rawRelations: any[] = flatten(get(r, "1.0.1"));
 
-      if (!!flattened[1]) { // at least one relation defined
-        rawRelations = [...flatten(flattened[1][4])];
+    console.log("typeDef", typeDef);
 
-        if (flattened[1].length === 2) {
-          flattened[1][0][4] = flattened[1][0][4].concat(flatMapDeep(flattened[1][1]).join(""));
-          rawRelations = flattened[1][0][4];
-        }
-      }    
+    rawRelations.forEach((def) => {
+      const flattened: any = flatten(get(def, "3"));
+      const relationName = flatten(get(def, "1.1.0.1")).join("");
 
-      for (const rawRelation of rawRelations) {
-        const flat = flattenDeep(rawRelation);
-        const value = flat.join("");
+      console.log("relationName", relationName);
 
-        if (isEmpty(flat)) {
-          break;
-        }
+      const relationDefinition = [flattenDeep(flattened[0]).join("").trim()]
+        .concat(flattened[1]?.map((flat: any) =>
+          flattenDeep(flat).join("").trim())).filter(rel => rel);
 
-        if (typeof value === "string") {
-          relations.push(value);
-        } else {
-          relations.push(...(value as any));
-        }
-      }
+      console.log("relationDefinition", relationDefinition);
 
-      if (relations.length === 1) {
-        typeDef.relations[definition] = resolveRelation(relations[0]);
-      } else {
-        const isOr = flattenDeep(relations).join("").includes(` ${Keywords.OR} `);
-        const isAnd = flattenDeep(relations).join("").includes(` ${Keywords.AND} `);
-        const isButNot = flattenDeep(relations).join("").includes(` ${Keywords.BUT_NOT} `);
-        const isFrom = flattenDeep(relations).join("").includes(` ${Keywords.FROM} `);
+      if (relationDefinition.length === 1) {
+        typeDef.relations[relationName] = resolveRelation(relationDefinition[0]);
+      } else if (relationDefinition.length) {
+        const relationDefinitionString = relationDefinition.join(" ");
+        const isOr = relationDefinitionString.includes(` ${Keywords.OR} `);
+        const isAnd = relationDefinitionString.includes(` ${Keywords.AND} `);
+        const isButNot = relationDefinitionString.includes(` ${Keywords.BUT_NOT} `);
+        const isFrom = relationDefinitionString.includes(` ${Keywords.FROM} `);
+
+        console.log(relationDefinition, isOr, isAnd, isButNot, isFrom);
 
         if (isFrom) {
-          typeDef.relations[definition] = resolveRelation(flattenDeep(relations).join(""));
+          typeDef.relations[relationName] = resolveRelation(relationDefinitionString);
         }
 
         if (isOr) {
           const child: Userset[] = [];
-          const list = [relations[0], ...relations[1].replace("or ", "").split(/\sor\s/)];
+          const list = [relationDefinition[0],
+            ...relationDefinition.slice(1).map(partialRelDef =>
+              partialRelDef.replace(`${Keywords.OR} `, ""))];
 
           filterKeywords(filterBlanksAndTrim(list)).forEach((relation) => {
             child.push(resolveRelation(relation));
           });
 
-          typeDef.relations[definition] = {
+          typeDef.relations[relationName] = {
             union: {
               child,
             },
@@ -123,13 +115,15 @@ export const friendlySyntaxToApiSyntax = (config: string): TypeDefinitions => {
 
         if (isAnd) {
           const child: Userset[] = [];
-          const list = [relations[0], ...relations[1].replace("and ", "").split(/\sand\s/)];
+          const list = [relationDefinition[0],
+            ...relationDefinition.slice(1).map(partialRelDef =>
+              partialRelDef.replace(`${Keywords.AND} `, ""))];
 
           filterKeywords(filterBlanksAndTrim(list)).forEach((relation) => {
             child.push(resolveRelation(relation));
           });
 
-          typeDef.relations[definition] = {
+          typeDef.relations[relationName] = {
             intersection: {
               child,
             },
@@ -137,13 +131,13 @@ export const friendlySyntaxToApiSyntax = (config: string): TypeDefinitions => {
         }
 
         if (isButNot) {
-          typeDef.relations[definition] = {
+          typeDef.relations[relationName] = {
             difference: {
               base: {
-                ...resolveRelation(relations[0].trim()),
+                ...resolveRelation(relationDefinition[0].trim()),
               },
               subtract: {
-                ...resolveRelation(relations[1].split("but not ")[1].trim()),
+                ...resolveRelation(relationDefinition[1].split(`${Keywords.BUT_NOT} `)[1].trim()),
               },
             },
           };
