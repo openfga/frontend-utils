@@ -1,7 +1,8 @@
 @preprocessor typescript
 
 types           -> (_newline):* (type (relations (define):+):*):* {%
-    data => data[1].map((datum: any) => {
+    // @ts-ignore
+    data => data[1].map((datum) => {
 		    const relations = datum[1][0] ? datum[1][0][1].flat() : [];
 		    return { ...datum[0], relations }
 		})
@@ -57,10 +58,12 @@ define_base  -> _optional_space (_naming | from_phrase) _optional_space {%
 %}
 
 define_or       -> define_base (_spacing _or _spacing define_base):+ {%
-    data => ({ targets: [data[0], ...data[1].map((datum: any) => datum[3])], type: "union" })
+    // @ts-ignore
+    data => ({ targets: [data[0], ...data[1].map((datum) => datum[3])], type: "union" })
 %}
 define_and      -> define_base (_spacing _and _spacing define_base):+ {%
-    data => ({ targets: [data[0], ...data[1].map((datum: any) => datum[3])], type: "intersection" })
+    // @ts-ignore
+    data => ({ targets: [data[0], ...data[1].map((datum) => datum[3])], type: "intersection" })
 %}
 define_but_not  -> define_base _but_not define_base {%
     data => ({ base: data[0], diff: data[2], type: "exclusion" })
