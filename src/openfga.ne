@@ -14,27 +14,28 @@ type            -> _multiline_comment _type _naming (_newline):+ {%
 relations       -> _multiline_comment _relations {%
     data => data[1]
 %}
-define          -> _multiline_comment define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):* {%
+define          -> (_newline):+ _multiline_comment define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):* {%
     (data, _location, reject) => {
-        const relation = data[1];
+        const relation = data[2];
 
         // self and this are reserved keywords
         if (["self", "this"].includes(relation)) {
             return reject;
         }
 
-        const def = data[3][0];
+        const def = data[4][0];
         const definition = def.type ? def :
             {
                 type: 'single',
                 targets: [def]
             }
 
-        return { comment: data[0], relation, definition };
+        return { comment: data[1], relation, definition };
     }
 %}
+
 define_initial      -> _define _naming _spacing {%
-    data => data[1]
+	data => data[1]
 %}
 
 define_base  -> _optional_space (_naming | from_phrase) _optional_space {%
@@ -76,7 +77,7 @@ _multiline_comment        -> (_comment):* {%
     data => data.flat(3).join('\n')
 %}
 _comment        -> " ":* "#" _spacing _naming (_spacing _word):*  _newline {%
-    data => data.flat(3).join('').substring(1).trim()
+    data => data.flat(3).join('').trim().substring(1).trim()
 %}
 _word           -> ([a-z] | [A-Z] | [0-9] |  "_" |  "-" | "," | "&" | "+" | "/" | "$" ):+ _optional_space {%
     data => data.flat(3).join('').trim()
@@ -89,7 +90,7 @@ _and            -> "and"
 _but_not        -> "but not"
 
 _self           -> "self"
-_define         -> (_newline):+ "    define" _spacing
+_define          -> "    define" _spacing
 _relations      -> "  relations" _optional_space
 _type           -> "type" _spacing
 _no_relations   -> "none" (_newline):*
