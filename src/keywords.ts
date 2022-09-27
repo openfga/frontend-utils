@@ -1,7 +1,6 @@
 export enum Keywords {
   NAMESPACE = "type",
   RELATIONS = "relations",
-  RELATIONS_NONE = "none",
   SELF = "self",
   DEFINE = "define",
   AS = "as",
@@ -10,4 +9,8 @@ export enum Keywords {
   FROM = "from",
   BUT_NOT = "but not",
   COMMENT = "comment",
+}
+
+export enum ReservedKeywords {
+  THIS = "this"
 }

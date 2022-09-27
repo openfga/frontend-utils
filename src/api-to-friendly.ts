@@ -84,8 +84,6 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
         const relationDefinition = (typeDef as TypeDefinition).relations[relation];
         apiToFriendlyRelation(relation, relationDefinition, relations, idx, newSyntax);
       });
-    } else {
-      newSyntax.push(`  ${Keywords.RELATIONS} ${Keywords.RELATIONS_NONE}`);
     }
   } else {
     // A subset of the type definition with only the relations object was passed
