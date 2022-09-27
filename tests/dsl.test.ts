@@ -50,6 +50,22 @@ type app
   });
 
   describe("checkDSL()", () => {
+    it("should correctly parse a simple sample", () => {
+      const markers = checkDSL(`type group
+  relations
+    define member as self
+
+type document
+  relations
+    define writer as self
+    define reader as writer or self
+    define commenter as member from writer
+    define owner as writer
+    define super as reader but not member from writer`);
+
+      expect(markers).toMatchSnapshot();
+    });
+
     describe("invalid code", () => {
       it("should handle `no relations`", () => {
         const markers = checkDSL("type group");
@@ -182,6 +198,14 @@ type app
     define hi as self
     define relation as relation2 from relation2
     define domain as domain from domain but not domain`);
+        expect(markers).toMatchSnapshot();
+      });
+
+      it("should allow reference from other relation", () => {
+        const markers = checkDSL(`type group
+  relations
+    define foo as self
+    define member as self or member from foo`);
         expect(markers).toMatchSnapshot();
       });
 

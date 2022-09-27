@@ -1,14 +1,12 @@
 import * as _ from "lodash";
 
 import { Keywords } from "./keywords";
-import { parseDSL } from "./parse-dsl";
+import { parseDSL, RewriteType } from "./parse-dsl";
 import { report } from "./reporters";
 
-const readTypeData = (r: any, lines: any) => {
-  const typeName = _.trim(_.flattenDeep(r[0][2]).join(""));
-  const typeDefinition = _.flattenDeep([r[0][1], r[0][2]]).join("");
-  const typeDefinitionLine = _.findIndex(lines, (l: string) => _.trim(l) === typeDefinition) + 1;
-  return { typeName, typeDefinition, typeDefinitionLine };
+// return the line number for the specified relation
+const getLineNumber = (relation: string, lines: string[]) => {
+  return _.findIndex(lines, (l: string) => _.trim(l).startsWith(`define ${relation}`));
 };
 
 export const checkDSL = (codeInEditor: string) => {
@@ -21,127 +19,100 @@ export const checkDSL = (codeInEditor: string) => {
     const relationsPerType: Record<string, string[]> = {};
     const globalRelations = [Keywords.SELF as string];
 
+    // FIXME: In the case of no relation - error
+
     // Reading relations per type
     _.forEach(results, (r) => {
-      const { typeName, typeDefinitionLine } = readTypeData(r, lines);
+      const typeName = r.type;
 
       // Include keyword
       const relations = [Keywords.SELF as string];
 
-      _.forEach(r[2], (r2, idx: number) => {
-        const relation = _.trim(_.flattenDeep(r2).join("")).match(/define\s+(.*)\s+as\s/)?.[1];
-        if (!relation) {
-          return;
+      _.forEach(r.relations, (relation) => {
+        if (relations.includes(relation.relation)) {
+          // figure out what is the lineIdx in question
+          const initialLineIdx = _.findIndex(lines, (l: string) => _.trim(l).startsWith(`define ${relation.relation}`));
+          const duplicateLineIdx = _.findIndex(
+            lines,
+            (l: string) => _.trim(l).startsWith(`define ${relation.relation}`),
+            initialLineIdx,
+          );
+          reporter.duplicateDefinition({ lineIndex: duplicateLineIdx, value: relation.relation });
         }
-        const lineIdx = typeDefinitionLine + idx + 1;
 
-        if (relations.includes(relation)) {
-          reporter.duplicateDefinition({ lineIndex: lineIdx, value: relation });
-        }
-
-        relations.push(relation);
-        globalRelations.push(relation);
+        relations.push(relation.relation);
+        globalRelations.push(relation.relation);
       });
 
       relationsPerType[typeName] = relations;
     });
 
     _.forEach(results, (r) => {
-      const { typeName, typeDefinitionLine } = readTypeData(r, lines);
-
-      _.forEach(r[2], (r2, idx: number) => {
-        const lineIndex = typeDefinitionLine + idx + 1;
-        let definition: any[] = _.flatten(r2[0][1]);
-
-        if (!definition[0].includes(Keywords.DEFINE)) {
-          definition = _.flatten(definition);
-        }
-
-        const definitionName = _.flattenDeep(definition[2]).join("");
-
-        if (definition[0].includes(Keywords.DEFINE)) {
-          const clauses = _.slice(definition, 7, definition.length);
-
-          _.forEach(clauses, (clause) => {
-            let value = _.trim(_.flattenDeep(clause).join(""));
-
-            if (value.indexOf(Keywords.OR) === 0) {
-              value = value.replace(`${Keywords.OR} `, "");
-            }
-
-            if (value.indexOf(Keywords.AND) === 0) {
-              value = value.replace(`${Keywords.AND} `, "");
-            }
-
-            const hasFrom = value.includes(Keywords.FROM);
-            const hasButNot = value.includes(Keywords.BUT_NOT);
-
-            if (hasButNot) {
-              const butNotValue = _.trim(_.last(value.split(Keywords.BUT_NOT)));
-
-              if (definitionName === butNotValue) {
-                reporter.invalidButNot({
-                  lineIndex,
-                  value: butNotValue,
-                  clause: value,
-                });
-              } else {
-                reporter.invalidRelationWithinClause({
-                  typeName,
-                  value: butNotValue,
-                  validRelations: relationsPerType,
-                  clause: value,
-                  reverse: true,
-                  lineIndex,
-                });
-              }
-            } else if (hasFrom) {
-              // Checking: `define share as owner from parent`
-              const values = value.split(Keywords.FROM).map((v) => _.trim(v));
-
-              reporter.invalidRelationWithinClause({
-                typeName,
-                reverse: false,
-                value: values[0],
-                validRelations: globalRelations,
-                clause: value,
-                lineIndex,
-              });
-
-              if (definitionName === values[1]) {
-                // Checking: `define owner as writer from owner`
-                if (clauses.length < 2) {
-                  reporter.invalidFrom({
-                    lineIndex,
-                    value: values[1],
-                    clause: value,
-                  });
-                }
-              } else {
-                reporter.invalidRelationWithinClause({
-                  typeName,
-                  value: values[1],
-                  validRelations: relationsPerType,
-                  clause: value,
-                  reverse: true,
-                  lineIndex,
-                });
-              }
-            } else if (definitionName === value) {
-              // Checking: `define owner as owner`
+      const typeName = r.type;
+      // parse through each of the relations to do validation
+      _.forEach(r.relations, (relation) => {
+        const relationName = relation.relation as string;
+        const validateTargetRelation = (typeName: string, relationName: string, target: any) => {
+          if (!target) {
+            // no need to continue to parse if there is no target
+            return;
+          }
+          if (relationName === target.target) {
+            if (target.rewrite != RewriteType.TupleToUserset) {
+              // the error case will be relation require self reference (i.e., define owner as owner)
+              const lineIndex = getLineNumber(relation.relation, lines);
               reporter.useSelf({
                 lineIndex,
-                value,
+                value: relationName,
               });
-            } else {
-              // Checking: `define owner as self`
-              reporter.invalidRelation({
+            } else if (relation.definition.targets.length < 2) {
+              // define owner as writer from owner
+              const lineIndex = getLineNumber(relation.relation, lines);
+              const value = target.rewrite;
+              reporter.invalidFrom({
                 lineIndex,
-                value,
-                validRelations: globalRelations,
+                value: target.rewrite,
+                clause: value, // FIXME
               });
             }
-          });
+          }
+
+          if (target.target && !globalRelations.includes(target.target)) {
+            // the target relation is not defined (i.e., define owner as foo) where foo is not defined
+            const lineIndex = getLineNumber(relation.relation, lines);
+            const value = target.target;
+            reporter.invalidRelation({
+              lineIndex,
+              value,
+              validRelations: globalRelations,
+            });
+          }
+
+          if (target.from && !relationsPerType[typeName].includes(target.from)) {
+            // The "from" is not defined for the current type `define owner as member from writer`
+            const lineIndex = getLineNumber(relation.relation, lines);
+            const value = target.from;
+            reporter.invalidRelationWithinClause({
+              typeName,
+              value: target.from,
+              validRelations: relationsPerType,
+              clause: value, // FIXME
+              reverse: true,
+              lineIndex,
+            });
+          }
+        };
+
+        _.forEach(relation.definition.targets, (target) => {
+          validateTargetRelation(typeName, relationName, target);
+        });
+
+        // check the but not
+        if (relation.definition.base) {
+          validateTargetRelation(typeName, relationName, relation.definition.base);
+        }
+        if (relation.definition.diff) {
+          validateTargetRelation(typeName, relationName, relation.definition.diff);
         }
       });
     });
