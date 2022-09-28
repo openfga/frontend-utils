@@ -148,6 +148,14 @@ type document
         expect(markers).toMatchSnapshot();
       });
 
+      it("should handle invalid `relation not define` where name is substring of other word", () => {
+        const markers = checkDSL(`type group
+  relations
+    define writer as def`);
+        expect(markers).toMatchSnapshot();
+      });
+
+
       it("should identify correct error line number if there are spaces", () => {
         const markers = checkDSL(`type group
   relations

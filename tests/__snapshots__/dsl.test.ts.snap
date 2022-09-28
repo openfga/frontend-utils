@@ -281,6 +281,24 @@ exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 
 ]
 `;
 
+exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` where name is substring of other word 1`] = `
+[
+  {
+    "endColumn": 25,
+    "endLineNumber": 3,
+    "message": "The relation \`def\` does not exist.",
+    "relatedInformation": {
+      "relation": "def",
+      "type": "missing-definition",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 22,
+    "startLineNumber": 3,
+  },
+]
+`;
+
 exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 [
   {

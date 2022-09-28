@@ -40,8 +40,8 @@ const reportError = ({
   relatedInformation = { type: "" },
 }: ErrorReporterOpts) => {
   const rawLine = lines[lineIndex];
-
-  let wordIdx = rawLine.indexOf(value) + 1;
+  const re = new RegExp("\\b" + value + "\\b");
+  let wordIdx = rawLine.search(re) + 1;
 
   if (typeof customResolver === "function") {
     wordIdx = customResolver(wordIdx, rawLine, value);
