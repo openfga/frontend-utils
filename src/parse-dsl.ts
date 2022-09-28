@@ -38,7 +38,7 @@ export interface TypeDefParserResult {
   relations: RelationDefParserResult<RelationDefOperator>[];
 }
 
-export const parseDSL = (code: string): any[] => {
+export const parseDSL = (code: string): TypeDefParserResult[] => {
   const parser = new Parser(Grammar.fromCompiled(grammar));
   parser.feed(code.trim() + "\n");
   return parser.results[0] || [];

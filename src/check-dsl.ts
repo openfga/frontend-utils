@@ -1,13 +1,11 @@
-import * as _ from "lodash";
-
 import { Keywords } from "./keywords";
 import { parseDSL, RewriteType } from "./parse-dsl";
 import { report } from "./reporters";
 
 // return the line number for the specified relation
-const getLineNumber = (relation: string, lines: string[]) => {
-  return _.findIndex(lines, (l: string) => _.trim(l).startsWith(`define ${relation}`));
-};
+const getLineNumber = (relation: string, lines: string[], skipIndex?: number) =>
+  lines.findIndex((line: string) =>
+    line.trim().replace(/ {2,}/g, " ").startsWith(`define ${relation}`), skipIndex);
 
 export const checkDSL = (codeInEditor: string) => {
   const lines = codeInEditor.split("\n");
@@ -15,43 +13,41 @@ export const checkDSL = (codeInEditor: string) => {
   const reporter = report({ lines, markers });
 
   try {
-    const results = parseDSL(codeInEditor);
-    const relationsPerType: Record<string, string[]> = {};
-    const globalRelations = [Keywords.SELF as string];
+    const parserResults = parseDSL(codeInEditor);
+    const relationsPerType: Record<string, Record<string, boolean>> = {};
+    const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
 
-    // FIXME: In the case of no relation - error
-
-    // Reading relations per type
-    _.forEach(results, (r) => {
-      const typeName = r.type;
+    // Looking at the types
+    parserResults.forEach((typeDef) => {
+      const typeName = typeDef.type;
 
       // Include keyword
-      const relations = [Keywords.SELF as string];
+      const encounteredRelationsInType: Record<string, boolean> = { [Keywords.SELF]: true };
 
-      _.forEach(r.relations, (relation) => {
-        if (relations.includes(relation.relation)) {
+      typeDef.relations.forEach((relationDef) => {
+        const { relation: relationName } = relationDef;
+
+        // Check if we have any duplicate relations
+        if (encounteredRelationsInType[relationName]) {
           // figure out what is the lineIdx in question
-          const initialLineIdx = _.findIndex(lines, (l: string) => _.trim(l).startsWith(`define ${relation.relation}`));
-          const duplicateLineIdx = _.findIndex(
-            lines,
-            (l: string) => _.trim(l).startsWith(`define ${relation.relation}`),
-            initialLineIdx,
-          );
-          reporter.duplicateDefinition({ lineIndex: duplicateLineIdx, value: relation.relation });
+          const initialLineIdx = getLineNumber(relationName, lines);
+          const duplicateLineIdx = getLineNumber(relationName, lines, initialLineIdx);
+          reporter.duplicateDefinition({ lineIndex: duplicateLineIdx, value: relationName });
         }
 
-        relations.push(relation.relation);
-        globalRelations.push(relation.relation);
+        encounteredRelationsInType[relationName] = true;
+        globalRelations[relationName] = true;
       });
 
-      relationsPerType[typeName] = relations;
+      relationsPerType[typeName] = encounteredRelationsInType;
     });
 
-    _.forEach(results, (r) => {
-      const typeName = r.type;
+    parserResults.forEach((typeDef) => {
+      const typeName = typeDef.type;
+
       // parse through each of the relations to do validation
-      _.forEach(r.relations, (relation) => {
-        const relationName = relation.relation as string;
+      typeDef.relations.forEach((relationDef) => {
+        const { relation: relationName } = relationDef;
         const validateTargetRelation = (typeName: string, relationName: string, target: any) => {
           if (!target) {
             // no need to continue to parse if there is no target
@@ -60,14 +56,14 @@ export const checkDSL = (codeInEditor: string) => {
           if (relationName === target.target) {
             if (target.rewrite != RewriteType.TupleToUserset) {
               // the error case will be relation require self reference (i.e., define owner as owner)
-              const lineIndex = getLineNumber(relation.relation, lines);
+              const lineIndex = getLineNumber(relationName, lines);
               reporter.useSelf({
                 lineIndex,
                 value: relationName,
               });
-            } else if (relation.definition.targets.length < 2) {
+            } else if (relationDef.definition.targets?.length === 1) {
               // define owner as writer from owner
-              const lineIndex = getLineNumber(relation.relation, lines);
+              const lineIndex = getLineNumber(relationName, lines);
               const value = target.rewrite;
               reporter.invalidFrom({
                 lineIndex,
@@ -77,20 +73,20 @@ export const checkDSL = (codeInEditor: string) => {
             }
           }
 
-          if (target.target && !globalRelations.includes(target.target)) {
+          if (target.target && !globalRelations[target.target]) {
             // the target relation is not defined (i.e., define owner as foo) where foo is not defined
-            const lineIndex = getLineNumber(relation.relation, lines);
+            const lineIndex = getLineNumber(relationName, lines);
             const value = target.target;
             reporter.invalidRelation({
               lineIndex,
               value,
-              validRelations: globalRelations,
+              validRelations: Object.keys(globalRelations),
             });
           }
 
-          if (target.from && !relationsPerType[typeName].includes(target.from)) {
+          if (target.from && !relationsPerType[typeName][target.from]) {
             // The "from" is not defined for the current type `define owner as member from writer`
-            const lineIndex = getLineNumber(relation.relation, lines);
+            const lineIndex = getLineNumber(relationName, lines);
             const value = target.from;
             reporter.invalidRelationWithinClause({
               typeName,
@@ -103,21 +99,21 @@ export const checkDSL = (codeInEditor: string) => {
           }
         };
 
-        _.forEach(relation.definition.targets, (target) => {
+        relationDef.definition.targets?.forEach((target) => {
           validateTargetRelation(typeName, relationName, target);
         });
 
         // check the but not
-        if (relation.definition.base) {
-          validateTargetRelation(typeName, relationName, relation.definition.base);
+        if (relationDef.definition.base) {
+          validateTargetRelation(typeName, relationName, relationDef.definition.base);
         }
-        if (relation.definition.diff) {
-          validateTargetRelation(typeName, relationName, relation.definition.diff);
+        if (relationDef.definition.diff) {
+          validateTargetRelation(typeName, relationName, relationDef.definition.diff);
         }
       });
     });
   } catch (e: any) {
-    if (!_.isUndefined(e.offset)) {
+    if (typeof e.offset === "undefined") {
       const line = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[1]);
       const column = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[2]);
 

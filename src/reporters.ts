@@ -1,5 +1,3 @@
-import * as _ from "lodash";
-
 import { Keywords } from "./keywords";
 
 interface BaseReporterOpts {
@@ -10,7 +8,7 @@ interface BaseReporterOpts {
 }
 
 interface ReporterOpts extends BaseReporterOpts {
-  validRelations?: string[] | Record<string, string[]>;
+  validRelations?: string[] | Record<string, Record<string, boolean>>;
   clause?: any;
   typeName?: string;
   reverse?: boolean;
@@ -24,12 +22,13 @@ interface ErrorReporterOpts extends BaseReporterOpts {
   }
 }
 
-const getValidRelationsArray = (validRelations?: string[] | Record<string, string[]>, typeName?: string): string[] => {
+const getValidRelationsArray = (validRelations?: ReporterOpts["validRelations"], typeName?: string): string[] => {
   if (!validRelations) {
     return [];
   }
+
   return Array.isArray(validRelations) ?
-    validRelations : typeName ? validRelations?.[typeName] : [];
+    validRelations : typeName ? Object.keys(validRelations?.[typeName]) : [];
 };
 
 const reportError = ({
@@ -43,11 +42,11 @@ const reportError = ({
 }: ErrorReporterOpts) => {
   const rawLine = lines[lineIndex];
 
-  const asIdx = rawLine.indexOf("as") + 1;
-  const definition = _.last(rawLine.split("as"))!;
-  let wordIdx = asIdx + definition.indexOf(value) + 2;
+  const asIdx = rawLine.indexOf(` ${Keywords.AS} `) + 2;
+  const partialDefinition = rawLine.split(` ${Keywords.AS} `).splice(0,1).join(` ${Keywords.AS} `);
+  let wordIdx = asIdx + partialDefinition.indexOf(value) + 1;
 
-  if (_.isFunction(customResolver)) {
+  if (typeof customResolver === "function") {
     wordIdx = customResolver(wordIdx, rawLine, value);
   }
 
@@ -66,7 +65,7 @@ const reportError = ({
 
 export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
-    message: "For auto-referencing use `self`.",
+    message: `For auto-referencing use '${Keywords.SELF}'.`,
     markers,
     lines,
     value,
@@ -77,7 +76,7 @@ export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts
 
 export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
-    message: `Cannot self-reference (\`${value}\`) within \`from\` clause.`,
+    message: `Cannot self-reference (\`${value}\`) within \`${Keywords.FROM}\` clause.`,
     markers,
     lines,
     value,
@@ -93,7 +92,7 @@ export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: 
 
 export const reportInvalidButNot = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
-    message: `Cannot self-reference (\`${value}\`) within \`but not\` clause.`,
+    message: `Cannot self-reference (\`${value}\`) within \`${Keywords.BUT_NOT}\` clause.`,
     markers,
     lineIndex,
     lines,
