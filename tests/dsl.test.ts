@@ -148,6 +148,15 @@ type document
         expect(markers).toMatchSnapshot();
       });
 
+      it("should identify correct error line number if there are spaces", () => {
+        const markers = checkDSL(`type group
+  relations
+
+    define owner as self
+    define writer as reader`);
+        expect(markers).toMatchSnapshot();
+      });
+
       it("should handle invalid `self-ref in but not`", () => {
         const markers = checkDSL(`type group
   relations
