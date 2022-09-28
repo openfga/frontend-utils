@@ -19,7 +19,7 @@ interface ErrorReporterOpts extends BaseReporterOpts {
   customResolver?: (wordIdx: number, rawLine: string, value: string) => number;
   relatedInformation?: {
     type: string;
-  }
+  };
 }
 
 const getValidRelationsArray = (validRelations?: ReporterOpts["validRelations"], typeName?: string): string[] => {
@@ -27,8 +27,7 @@ const getValidRelationsArray = (validRelations?: ReporterOpts["validRelations"],
     return [];
   }
 
-  return Array.isArray(validRelations) ?
-    validRelations : typeName ? Object.keys(validRelations?.[typeName]) : [];
+  return Array.isArray(validRelations) ? validRelations : typeName ? Object.keys(validRelations?.[typeName]) : [];
 };
 
 const reportError = ({
@@ -42,9 +41,7 @@ const reportError = ({
 }: ErrorReporterOpts) => {
   const rawLine = lines[lineIndex];
 
-  const asIdx = rawLine.indexOf(` ${Keywords.AS} `) + 2;
-  const partialDefinition = rawLine.split(` ${Keywords.AS} `).splice(0,1).join(` ${Keywords.AS} `);
-  let wordIdx = asIdx + partialDefinition.indexOf(value) + 1;
+  let wordIdx = rawLine.indexOf(value) + 1;
 
   if (typeof customResolver === "function") {
     wordIdx = customResolver(wordIdx, rawLine, value);
@@ -196,17 +193,23 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
         lines,
       }),
 
-    invalidRelationWithinClause:
-      ({ lineIndex, value, typeName, validRelations, clause, reverse }: Omit<ReporterOpts, "markers" | "lines">) =>
-        reportInvalidRelationWithinClause({
-          lineIndex,
-          value,
-          typeName,
-          validRelations,
-          clause,
-          reverse,
-          markers,
-          lines,
-        }),
+    invalidRelationWithinClause: ({
+      lineIndex,
+      value,
+      typeName,
+      validRelations,
+      clause,
+      reverse,
+    }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidRelationWithinClause({
+        lineIndex,
+        value,
+        typeName,
+        validRelations,
+        clause,
+        reverse,
+        markers,
+        lines,
+      }),
   };
 };

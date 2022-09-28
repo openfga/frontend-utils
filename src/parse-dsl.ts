@@ -18,7 +18,7 @@ export enum RelationDefOperator {
 export interface RelationTargetParserResult {
   target?: string;
   from?: string;
-  rewrite: RewriteType
+  rewrite: RewriteType;
 }
 
 export interface RelationDefParserResult<T extends RelationDefOperator> {
@@ -29,7 +29,7 @@ export interface RelationDefParserResult<T extends RelationDefOperator> {
     targets: T extends RelationDefOperator.Exclusion ? undefined : RelationTargetParserResult[];
     base: T extends RelationDefOperator.Exclusion ? RelationTargetParserResult : undefined;
     diff: T extends RelationDefOperator.Exclusion ? RelationTargetParserResult : undefined;
-  }
+  };
 }
 
 export interface TypeDefParserResult {

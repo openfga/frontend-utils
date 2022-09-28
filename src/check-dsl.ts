@@ -3,9 +3,16 @@ import { parseDSL, RewriteType } from "./parse-dsl";
 import { report } from "./reporters";
 
 // return the line number for the specified relation
-const getLineNumber = (relation: string, lines: string[], skipIndex?: number) =>
-  lines.findIndex((line: string) =>
-    line.trim().replace(/ {2,}/g, " ").startsWith(`define ${relation}`), skipIndex);
+const getLineNumber = (relation: string, lines: string[], skipIndex?: number) => {
+  if (!skipIndex) {
+    skipIndex = 0;
+  }
+  return (
+    lines
+      .slice(skipIndex)
+      .findIndex((line: string) => line.trim().replace(/ {2,}/g, " ").startsWith(`define ${relation}`)) + skipIndex
+  );
+};
 
 export const checkDSL = (codeInEditor: string) => {
   const lines = codeInEditor.split("\n");
@@ -31,7 +38,7 @@ export const checkDSL = (codeInEditor: string) => {
         if (encounteredRelationsInType[relationName]) {
           // figure out what is the lineIdx in question
           const initialLineIdx = getLineNumber(relationName, lines);
-          const duplicateLineIdx = getLineNumber(relationName, lines, initialLineIdx);
+          const duplicateLineIdx = getLineNumber(relationName, lines, initialLineIdx + 1);
           reporter.duplicateDefinition({ lineIndex: duplicateLineIdx, value: relationName });
         }
 
@@ -64,11 +71,10 @@ export const checkDSL = (codeInEditor: string) => {
             } else if (relationDef.definition.targets?.length === 1) {
               // define owner as writer from owner
               const lineIndex = getLineNumber(relationName, lines);
-              const value = target.rewrite;
               reporter.invalidFrom({
                 lineIndex,
-                value: target.rewrite,
-                clause: value, // FIXME
+                value: target.target,
+                clause: target.target,
               });
             }
           }
@@ -92,7 +98,7 @@ export const checkDSL = (codeInEditor: string) => {
               typeName,
               value: target.from,
               validRelations: relationsPerType,
-              clause: value, // FIXME
+              clause: value,
               reverse: true,
               lineIndex,
             });
@@ -113,7 +119,7 @@ export const checkDSL = (codeInEditor: string) => {
       });
     });
   } catch (e: any) {
-    if (typeof e.offset === "undefined") {
+    if (typeof e.offset !== "undefined") {
       const line = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[1]);
       const column = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[2]);
 

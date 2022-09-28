@@ -12,5 +12,5 @@ export enum Keywords {
 }
 
 export enum ReservedKeywords {
-  THIS = "this"
+  THIS = "this",
 }

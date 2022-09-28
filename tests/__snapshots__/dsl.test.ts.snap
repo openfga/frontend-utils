@@ -111,15 +111,15 @@ exports[`DSL checkDSL() semantics should allow self reference 1`] = `[]`;
 exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
 [
   {
-    "endColumn": 28,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "For auto-referencing use \`self\`.",
+    "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
       "type": "self-error",
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 22,
+    "startColumn": 12,
     "startLineNumber": 3,
   },
   {
@@ -148,13 +148,16 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
     "startLineNumber": 5,
   },
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 18,
     "endLineNumber": 6,
-    "message": "Invalid syntax",
+    "message": "For auto-referencing use 'self'.",
+    "relatedInformation": {
+      "type": "self-error",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 12,
+    "startLineNumber": 6,
   },
 ]
 `;
@@ -163,7 +166,7 @@ exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
 [
   {
     "endColumn": 26,
-    "endLineNumber": 3,
+    "endLineNumber": 4,
     "message": "Duplicate definition \`writer\`.",
     "relatedInformation": {
       "type": "duplicated-error",
@@ -171,7 +174,7 @@ exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
     "severity": 8,
     "source": "linter",
     "startColumn": 5,
-    "startLineNumber": 3,
+    "startLineNumber": 4,
   },
 ]
 `;
@@ -281,15 +284,15 @@ exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 
 exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 [
   {
-    "endColumn": 28,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "For auto-referencing use \`self\`.",
+    "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
       "type": "self-error",
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 22,
+    "startColumn": 12,
     "startLineNumber": 3,
   },
 ]
@@ -298,15 +301,15 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 1`] = `
 [
   {
-    "endColumn": 41,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "For auto-referencing use \`self\`.",
+    "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
       "type": "self-error",
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 35,
+    "startColumn": 12,
     "startLineNumber": 3,
   },
 ]
@@ -315,15 +318,15 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 
 exports[`DSL checkDSL() semantics should not allow impossible self reference 1`] = `
 [
   {
-    "endColumn": 15,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "Cannot self-reference (\`tuple_to_userset\`) within \`from\` clause.",
+    "message": "Cannot self-reference (\`member\`) within \`from\` clause.",
     "relatedInformation": {
       "type": "",
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": -1,
+    "startColumn": 12,
     "startLineNumber": 3,
   },
 ]
