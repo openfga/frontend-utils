@@ -14,6 +14,19 @@ const getLineNumber = (relation: string, lines: string[], skipIndex?: number) =>
   );
 };
 
+const defaultError = (lines: any) => {
+  return {
+    // monaco.MarkerSeverity.Error,
+    severity: 8,
+    startColumn: 0,
+    endColumn: Number.MAX_SAFE_INTEGER,
+    startLineNumber: 0,
+    endLineNumber: lines.length,
+    message: "Invalid syntax",
+    source: "linter",
+  };
+};
+
 export const checkDSL = (codeInEditor: string) => {
   const lines = codeInEditor.split("\n");
   const markers: any = [];
@@ -120,34 +133,27 @@ export const checkDSL = (codeInEditor: string) => {
     });
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {
-      const line = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[1]);
-      const column = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[2]);
+      try {
+        let line = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[1]);
+        const column = Number.parseInt(e.message.match(/line\s([0-9]*)\scol\s([0-9]*)/m)[2]);
+        line = line <= lines.length ? line : lines.length;
 
-      const marker = {
-        // monaco.MarkerSeverity.Error,
-        severity: 8,
-        startColumn: column - 1,
-        endColumn: lines[line - 1].length,
-        startLineNumber: column === 0 ? line - 1 : line,
-        endLineNumber: column === 0 ? line - 1 : line,
-        message: "Invalid syntax",
-        source: "linter",
-      };
-
-      markers.push(marker);
+        const marker = {
+          // monaco.MarkerSeverity.Error,
+          severity: 8,
+          startColumn: column - 1 < 0 ? 0 : column - 1,
+          endColumn: lines[line - 1].length,
+          startLineNumber: column === 0 ? line - 1 : line,
+          endLineNumber: column === 0 ? line - 1 : line,
+          message: "Invalid syntax",
+          source: "linter",
+        };
+        markers.push(marker);
+      } catch (e: any) {
+        markers.push(defaultError(lines));
+      }
     } else {
-      const marker = {
-        // monaco.MarkerSeverity.Error,
-        severity: 8,
-        startColumn: 0,
-        endColumn: Number.MAX_SAFE_INTEGER,
-        startLineNumber: 0,
-        endLineNumber: lines.length,
-        message: "Invalid syntax",
-        source: "linter",
-      };
-
-      markers.push(marker);
+      markers.push(defaultError(lines));
     }
   }
 

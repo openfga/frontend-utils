@@ -162,6 +162,20 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
 ]
 `;
 
+exports[`DSL checkDSL() semantics should gracefully handle error 1`] = `
+[
+  {
+    "endColumn": 7,
+    "endLineNumber": 15,
+    "message": "Invalid syntax",
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 0,
+    "startLineNumber": 15,
+  },
+]
+`;
+
 exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
 [
   {

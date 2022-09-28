@@ -258,6 +258,27 @@ type permission
     define associated_feature as self`);
         expect(markers).toMatchSnapshot();
       });
+
+      it("should gracefully handle error", () => {
+        const markers = checkDSL(`type group
+  relations
+    define member as self
+    define admin as self
+
+    define can_add as can_manage_group
+    define can_edit as can_manage_group
+    define can_delete as can_manage_group
+    define can_read as can_manage
+
+    define can_manage_group as admin
+    define can_manage_users as admin
+    define can_view_group as admin or member
+    define can_view_users as admin or member
+
+    def`);
+        expect(markers).toMatchSnapshot();
+      });
+
     });
   });
 });
