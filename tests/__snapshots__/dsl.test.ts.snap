@@ -111,7 +111,7 @@ exports[`DSL checkDSL() semantics should allow self reference 1`] = `[]`;
 exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
 [
   {
-    "endColumn": 18,
+    "endColumn": 28,
     "endLineNumber": 3,
     "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
@@ -119,7 +119,7 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 12,
+    "startColumn": 22,
     "startLineNumber": 3,
   },
   {
@@ -148,7 +148,7 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
     "startLineNumber": 5,
   },
   {
-    "endColumn": 18,
+    "endColumn": 28,
     "endLineNumber": 6,
     "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
@@ -156,7 +156,7 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 12,
+    "startColumn": 22,
     "startLineNumber": 6,
   },
 ]
@@ -316,7 +316,7 @@ exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 
 exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 [
   {
-    "endColumn": 18,
+    "endColumn": 28,
     "endLineNumber": 3,
     "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
@@ -324,7 +324,7 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 12,
+    "startColumn": 22,
     "startLineNumber": 3,
   },
 ]
@@ -333,7 +333,7 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 1`] = `
 [
   {
-    "endColumn": 18,
+    "endColumn": 41,
     "endLineNumber": 3,
     "message": "For auto-referencing use 'self'.",
     "relatedInformation": {
@@ -341,7 +341,7 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 12,
+    "startColumn": 35,
     "startLineNumber": 3,
   },
 ]
@@ -368,7 +368,7 @@ exports[`DSL checkDSL() semantics should identify correct error line number if t
 exports[`DSL checkDSL() semantics should not allow impossible self reference 1`] = `
 [
   {
-    "endColumn": 18,
+    "endColumn": 40,
     "endLineNumber": 3,
     "message": "Cannot self-reference (\`member\`) within \`from\` clause.",
     "relatedInformation": {
@@ -376,7 +376,7 @@ exports[`DSL checkDSL() semantics should not allow impossible self reference 1`]
     },
     "severity": 8,
     "source": "linter",
-    "startColumn": 12,
+    "startColumn": 34,
     "startLineNumber": 3,
   },
 ]

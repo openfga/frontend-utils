@@ -68,6 +68,12 @@ export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts
     value,
     relatedInformation: { type: "self-error" },
     lineIndex,
+    customResolver: (wordIdx, rawLine, value) => {
+      const fromStartsAt = wordIdx;
+      wordIdx = fromStartsAt + value.length + rawLine.slice(fromStartsAt + value.length).search(value) + 1;
+
+      return wordIdx;
+    },
   });
 };
 
@@ -80,7 +86,7 @@ export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: 
     lineIndex,
     customResolver: (wordIdx, rawLine, value) => {
       const fromStartsAt = rawLine.indexOf(clause);
-      wordIdx = fromStartsAt + rawLine.slice(fromStartsAt, fromStartsAt + clause.length).lastIndexOf(value) + 1;
+      wordIdx = fromStartsAt + clause.length + rawLine.slice(fromStartsAt + clause.length).search(value) + 1;
 
       return wordIdx;
     },
