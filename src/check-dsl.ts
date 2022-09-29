@@ -87,7 +87,7 @@ export const checkDSL = (codeInEditor: string) => {
               reporter.invalidFrom({
                 lineIndex,
                 value: target.target,
-                clause: target.target,
+                clause: Keywords.FROM,
               });
             }
           }
