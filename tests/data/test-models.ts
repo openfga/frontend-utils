@@ -1,6 +1,6 @@
-import { TypeDefinitions } from "@openfga/sdk";
+import { WriteAuthorizationModelRequest } from "@openfga/sdk";
 
-export const testModels: { name: string, json: TypeDefinitions, friendly: string }[] = [
+export const testModels: { name: string, json: WriteAuthorizationModelRequest, friendly: string }[] = [
   {
     "name": "one type with no relations",
     "json": {

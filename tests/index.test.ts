@@ -65,7 +65,7 @@ describe("friendlySyntaxToApiSyntax()", () => {
 
     const typeDf = result.type_definitions![0];
     const relations = typeDf.relations;
-    const relation = relations.r1;
+    const relation = relations!.r1;
 
     expect(result.type_definitions).toHaveLength(1);
 
@@ -91,7 +91,7 @@ describe("friendlySyntaxToApiSyntax()", () => {
 
     const typeDf = result.type_definitions![0];
     const relations = typeDf.relations;
-    const relation = relations.$r1;
+    const relation = relations!.$r1;
 
     expect(result.type_definitions).toHaveLength(1);
 
@@ -115,7 +115,7 @@ describe("friendlySyntaxToApiSyntax()", () => {
 
     const typeDf = result.type_definitions![0];
     const relations = typeDf.relations;
-    const relation = relations.r1;
+    const relation = relations!.r1;
 
     expect(result.type_definitions).toHaveLength(1);
 
@@ -139,7 +139,7 @@ describe("friendlySyntaxToApiSyntax()", () => {
 `);
     const typeDef = result.type_definitions![0];
     const relations = typeDef.relations;
-    const relation = relations.r1;
+    const relation = relations!.r1;
 
     expect(result.type_definitions).toHaveLength(1);
 

@@ -1,4 +1,4 @@
-import { TypeDefinition, TypeDefinitions, Userset } from "@openfga/sdk";
+import { TypeDefinition, WriteAuthorizationModelRequest, Userset } from "@openfga/sdk";
 import { Keywords } from "./keywords";
 
 const readFrom = (obj: Userset, define: string[]) => {
@@ -72,7 +72,7 @@ const apiToFriendlyRelation = (
 };
 
 const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"], newSyntax: string[]) => {
-  if (typeDef.relations) {
+  if (typeDef?.relations) {
     // A full type definition was passed
     newSyntax.push(`${Keywords.NAMESPACE} ${typeDef.type}`);
     if (Object.keys(typeDef.relations).length) {
@@ -81,27 +81,27 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
       const relations = Object.keys(typeDef.relations);
 
       relations.forEach((relation: any, idx: number) => {
-        const relationDefinition = (typeDef as TypeDefinition).relations[relation];
+        const relationDefinition = (typeDef.relations as any)[relation];
         apiToFriendlyRelation(relation, relationDefinition, relations, idx, newSyntax);
       });
     }
   } else {
     // A subset of the type definition with only the relations object was passed
-    const relations = Object.keys(typeDef as TypeDefinition["relations"]);
+    const relations = Object.keys(typeDef || {});
     if (!relations.length) {
       return;
     }
     const relation = relations[0];
-    const userSet = (typeDef as TypeDefinition["relations"])[relation];
+    const userSet = (typeDef as any)[relation];
     apiToFriendlyRelation(relation, userSet, relations, 0, newSyntax);
   }
 };
 
 export const apiSyntaxToFriendlySyntax = (
-  config: TypeDefinitions | TypeDefinition,
+  config: WriteAuthorizationModelRequest | TypeDefinition,
   newSyntax: string[] = [],
 ): string => {
-  const typeDefs = (config as TypeDefinitions)?.type_definitions;
+  const typeDefs = (config as WriteAuthorizationModelRequest)?.type_definitions;
   if (typeDefs) {
     typeDefs.forEach((typeDef) => {
       apiSyntaxToFriendlySyntax(typeDef, newSyntax);
