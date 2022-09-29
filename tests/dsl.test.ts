@@ -50,6 +50,22 @@ type app
   });
 
   describe("checkDSL()", () => {
+    it("should correctly parse a simple sample", () => {
+      const markers = checkDSL(`type group
+  relations
+    define member as self
+
+type document
+  relations
+    define writer as self
+    define reader as writer or self
+    define commenter as member from writer
+    define owner as writer
+    define super as reader but not member from writer`);
+
+      expect(markers).toMatchSnapshot();
+    });
+
     describe("invalid code", () => {
       it("should handle `no relations`", () => {
         const markers = checkDSL("type group");
@@ -132,6 +148,23 @@ type app
         expect(markers).toMatchSnapshot();
       });
 
+      it("should handle invalid `relation not define` where name is substring of other word", () => {
+        const markers = checkDSL(`type group
+  relations
+    define writer as def`);
+        expect(markers).toMatchSnapshot();
+      });
+
+
+      it("should identify correct error line number if there are spaces", () => {
+        const markers = checkDSL(`type group
+  relations
+
+    define owner as self
+    define writer as reader`);
+        expect(markers).toMatchSnapshot();
+      });
+
       it("should handle invalid `self-ref in but not`", () => {
         const markers = checkDSL(`type group
   relations
@@ -185,6 +218,14 @@ type app
         expect(markers).toMatchSnapshot();
       });
 
+      it("should allow reference from other relation", () => {
+        const markers = checkDSL(`type group
+  relations
+    define foo as self
+    define member as self or member from foo`);
+        expect(markers).toMatchSnapshot();
+      });
+
       it("should allow self reference", () => {
         const markers = checkDSL(`type group
   relations
@@ -217,6 +258,27 @@ type permission
     define associated_feature as self`);
         expect(markers).toMatchSnapshot();
       });
+
+      it("should gracefully handle error", () => {
+        const markers = checkDSL(`type group
+  relations
+    define member as self
+    define admin as self
+
+    define can_add as can_manage_group
+    define can_edit as can_manage_group
+    define can_delete as can_manage_group
+    define can_read as can_manage
+
+    define can_manage_group as admin
+    define can_manage_users as admin
+    define can_view_group as admin or member
+    define can_view_users as admin or member
+
+    def`);
+        expect(markers).toMatchSnapshot();
+      });
+
     });
   });
 });

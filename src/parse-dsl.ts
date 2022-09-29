@@ -18,7 +18,7 @@ export enum RelationDefOperator {
 export interface RelationTargetParserResult {
   target?: string;
   from?: string;
-  rewrite: RewriteType
+  rewrite: RewriteType;
 }
 
 export interface RelationDefParserResult<T extends RelationDefOperator> {
@@ -29,7 +29,7 @@ export interface RelationDefParserResult<T extends RelationDefOperator> {
     targets: T extends RelationDefOperator.Exclusion ? undefined : RelationTargetParserResult[];
     base: T extends RelationDefOperator.Exclusion ? RelationTargetParserResult : undefined;
     diff: T extends RelationDefOperator.Exclusion ? RelationTargetParserResult : undefined;
-  }
+  };
 }
 
 export interface TypeDefParserResult {
@@ -38,7 +38,7 @@ export interface TypeDefParserResult {
   relations: RelationDefParserResult<RelationDefOperator>[];
 }
 
-export const parseDSL = (code: string): any[] => {
+export const parseDSL = (code: string): TypeDefParserResult[] => {
   const parser = new Parser(Grammar.fromCompiled(grammar));
   parser.feed(code.trim() + "\n");
   return parser.results[0] || [];

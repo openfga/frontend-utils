@@ -2,19 +2,7 @@
 
 exports[`DSL checkDSL() invalid code should handle \`no definitions\` 1`] = `[]`;
 
-exports[`DSL checkDSL() invalid code should handle \`no relations\` 1`] = `
-[
-  {
-    "endColumn": 9007199254740991,
-    "endLineNumber": 1,
-    "message": "Invalid syntax",
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
-  },
-]
-`;
+exports[`DSL checkDSL() invalid code should handle \`no relations\` 1`] = `[]`;
 
 exports[`DSL checkDSL() invalid keywords should handle invalid \`and\` 1`] = `
 [
@@ -114,44 +102,76 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`self\` 1`] = `
 ]
 `;
 
-exports[`DSL checkDSL() semantics should allow model with relations starting with as 1`] = `
+exports[`DSL checkDSL() semantics should allow model with relations starting with as 1`] = `[]`;
+
+exports[`DSL checkDSL() semantics should allow reference from other relation 1`] = `[]`;
+
+exports[`DSL checkDSL() semantics should allow self reference 1`] = `[]`;
+
+exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 18,
+    "endLineNumber": 3,
+    "message": "For auto-referencing use 'self'.",
+    "relatedInformation": {
+      "type": "self-error",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 12,
+    "startLineNumber": 3,
+  },
+  {
+    "endColumn": 33,
+    "endLineNumber": 5,
+    "message": "The relation \`relation2\` does not exist.",
+    "relatedInformation": {
+      "relation": "relation2",
+      "type": "missing-definition",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 24,
+    "startLineNumber": 5,
+  },
+  {
+    "endColumn": 33,
+    "endLineNumber": 5,
+    "message": "The relation \`relation2\` does not exist in type \`group\`",
+    "relatedInformation": {
+      "type": "",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 24,
+    "startLineNumber": 5,
+  },
+  {
+    "endColumn": 18,
+    "endLineNumber": 6,
+    "message": "For auto-referencing use 'self'.",
+    "relatedInformation": {
+      "type": "self-error",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 12,
+    "startLineNumber": 6,
+  },
+]
+`;
+
+exports[`DSL checkDSL() semantics should gracefully handle error 1`] = `
+[
+  {
+    "endColumn": 7,
     "endLineNumber": 15,
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
     "startColumn": 0,
-    "startLineNumber": 0,
-  },
-]
-`;
-
-exports[`DSL checkDSL() semantics should allow self reference 1`] = `
-[
-  {
-    "endColumn": 9007199254740991,
-    "endLineNumber": 3,
-    "message": "Invalid syntax",
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
-  },
-]
-`;
-
-exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
-[
-  {
-    "endColumn": 9007199254740991,
-    "endLineNumber": 6,
-    "message": "Invalid syntax",
-    "severity": 8,
-    "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startLineNumber": 15,
   },
 ]
 `;
@@ -159,13 +179,16 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
 exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 26,
     "endLineNumber": 4,
-    "message": "Invalid syntax",
+    "message": "Duplicate definition \`writer\`.",
+    "relatedInformation": {
+      "type": "duplicated-error",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 5,
+    "startLineNumber": 4,
   },
 ]
 `;
@@ -173,13 +196,17 @@ exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`invalid and\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 37,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "The relation \`reader\` does not exist.",
+    "relatedInformation": {
+      "relation": "reader",
+      "type": "missing-definition",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 31,
+    "startLineNumber": 3,
   },
 ]
 `;
@@ -187,13 +214,17 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid and\` 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`invalid but not\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 41,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "The relation \`reader\` does not exist.",
+    "relatedInformation": {
+      "relation": "reader",
+      "type": "missing-definition",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 35,
+    "startLineNumber": 3,
   },
 ]
 `;
@@ -201,13 +232,29 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid but not\` 1`] 
 exports[`DSL checkDSL() semantics should handle invalid \`invalid from\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 36,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "The relation \`reader\` does not exist.",
+    "relatedInformation": {
+      "relation": "reader",
+      "type": "missing-definition",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 30,
+    "startLineNumber": 3,
+  },
+  {
+    "endColumn": 46,
+    "endLineNumber": 3,
+    "message": "The relation \`test\` does not exist in type \`group\`",
+    "relatedInformation": {
+      "type": "",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 42,
+    "startLineNumber": 3,
   },
 ]
 `;
@@ -215,13 +262,17 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid from\` 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`invalid or\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 36,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "The relation \`reader\` does not exist.",
+    "relatedInformation": {
+      "relation": "reader",
+      "type": "missing-definition",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 30,
+    "startLineNumber": 3,
   },
 ]
 `;
@@ -229,13 +280,35 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid or\` 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 28,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "The relation \`reader\` does not exist.",
+    "relatedInformation": {
+      "relation": "reader",
+      "type": "missing-definition",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 22,
+    "startLineNumber": 3,
+  },
+]
+`;
+
+exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` where name is substring of other word 1`] = `
+[
+  {
+    "endColumn": 25,
+    "endLineNumber": 3,
+    "message": "The relation \`def\` does not exist.",
+    "relatedInformation": {
+      "relation": "def",
+      "type": "missing-definition",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 22,
+    "startLineNumber": 3,
   },
 ]
 `;
@@ -243,13 +316,16 @@ exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 
 exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "For auto-referencing use 'self'.",
+    "relatedInformation": {
+      "type": "self-error",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 12,
+    "startLineNumber": 3,
   },
 ]
 `;
@@ -257,13 +333,34 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
 exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "For auto-referencing use 'self'.",
+    "relatedInformation": {
+      "type": "self-error",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 12,
+    "startLineNumber": 3,
+  },
+]
+`;
+
+exports[`DSL checkDSL() semantics should identify correct error line number if there are spaces 1`] = `
+[
+  {
+    "endColumn": 28,
+    "endLineNumber": 5,
+    "message": "The relation \`reader\` does not exist.",
+    "relatedInformation": {
+      "relation": "reader",
+      "type": "missing-definition",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 22,
+    "startLineNumber": 5,
   },
 ]
 `;
@@ -271,16 +368,21 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 
 exports[`DSL checkDSL() semantics should not allow impossible self reference 1`] = `
 [
   {
-    "endColumn": 9007199254740991,
+    "endColumn": 18,
     "endLineNumber": 3,
-    "message": "Invalid syntax",
+    "message": "Cannot self-reference (\`member\`) within \`from\` clause.",
+    "relatedInformation": {
+      "type": "",
+    },
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
-    "startLineNumber": 0,
+    "startColumn": 12,
+    "startLineNumber": 3,
   },
 ]
 `;
+
+exports[`DSL checkDSL() should correctly parse a simple sample 1`] = `[]`;
 
 exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
 [

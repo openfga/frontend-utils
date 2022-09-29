@@ -28,7 +28,6 @@
   "author": "OpenFGA",
   "dependencies": {
     "@openfga/sdk": "^0.0.2",
-    "lodash": "^4.17.21",
     "nearley": "^2.20.1"
   },
   "devDependencies": {

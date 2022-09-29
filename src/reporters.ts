@@ -1,5 +1,3 @@
-import * as _ from "lodash";
-
 import { Keywords } from "./keywords";
 
 interface BaseReporterOpts {
@@ -10,7 +8,7 @@ interface BaseReporterOpts {
 }
 
 interface ReporterOpts extends BaseReporterOpts {
-  validRelations?: string[] | Record<string, string[]>;
+  validRelations?: string[] | Record<string, Record<string, boolean>>;
   clause?: any;
   typeName?: string;
   reverse?: boolean;
@@ -21,15 +19,15 @@ interface ErrorReporterOpts extends BaseReporterOpts {
   customResolver?: (wordIdx: number, rawLine: string, value: string) => number;
   relatedInformation?: {
     type: string;
-  }
+  };
 }
 
-const getValidRelationsArray = (validRelations?: string[] | Record<string, string[]>, typeName?: string): string[] => {
+const getValidRelationsArray = (validRelations?: ReporterOpts["validRelations"], typeName?: string): string[] => {
   if (!validRelations) {
     return [];
   }
-  return Array.isArray(validRelations) ?
-    validRelations : typeName ? validRelations?.[typeName] : [];
+
+  return Array.isArray(validRelations) ? validRelations : typeName ? Object.keys(validRelations?.[typeName]) : [];
 };
 
 const reportError = ({
@@ -42,12 +40,10 @@ const reportError = ({
   relatedInformation = { type: "" },
 }: ErrorReporterOpts) => {
   const rawLine = lines[lineIndex];
+  const re = new RegExp("\\b" + value + "\\b");
+  let wordIdx = rawLine.search(re) + 1;
 
-  const asIdx = rawLine.indexOf("as") + 1;
-  const definition = _.last(rawLine.split("as"))!;
-  let wordIdx = asIdx + definition.indexOf(value) + 2;
-
-  if (_.isFunction(customResolver)) {
+  if (typeof customResolver === "function") {
     wordIdx = customResolver(wordIdx, rawLine, value);
   }
 
@@ -66,7 +62,7 @@ const reportError = ({
 
 export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
-    message: "For auto-referencing use `self`.",
+    message: `For auto-referencing use '${Keywords.SELF}'.`,
     markers,
     lines,
     value,
@@ -77,7 +73,7 @@ export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts
 
 export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
-    message: `Cannot self-reference (\`${value}\`) within \`from\` clause.`,
+    message: `Cannot self-reference (\`${value}\`) within \`${Keywords.FROM}\` clause.`,
     markers,
     lines,
     value,
@@ -93,7 +89,7 @@ export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: 
 
 export const reportInvalidButNot = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
-    message: `Cannot self-reference (\`${value}\`) within \`but not\` clause.`,
+    message: `Cannot self-reference (\`${value}\`) within \`${Keywords.BUT_NOT}\` clause.`,
     markers,
     lineIndex,
     lines,
@@ -197,17 +193,23 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
         lines,
       }),
 
-    invalidRelationWithinClause:
-      ({ lineIndex, value, typeName, validRelations, clause, reverse }: Omit<ReporterOpts, "markers" | "lines">) =>
-        reportInvalidRelationWithinClause({
-          lineIndex,
-          value,
-          typeName,
-          validRelations,
-          clause,
-          reverse,
-          markers,
-          lines,
-        }),
+    invalidRelationWithinClause: ({
+      lineIndex,
+      value,
+      typeName,
+      validRelations,
+      clause,
+      reverse,
+    }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidRelationWithinClause({
+        lineIndex,
+        value,
+        typeName,
+        validRelations,
+        clause,
+        reverse,
+        markers,
+        lines,
+      }),
   };
 };

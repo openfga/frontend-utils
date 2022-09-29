@@ -5,36 +5,36 @@ import {
   RelationDefOperator,
   RelationTargetParserResult,
   RewriteType,
-  TypeDefParserResult
+  TypeDefParserResult,
 } from "./parse-dsl";
 import { assertNever } from "./utils/assert-never";
 
 const resolveRelation = (relation: RelationTargetParserResult): Userset => {
   switch (relation.rewrite) {
-  case RewriteType.Direct:
-    return { this: {} };
-  case RewriteType.ComputedUserset:
-    return {
-      computedUserset: {
-        object: "",
-        relation: relation.target,
-      },
-    };
-  case RewriteType.TupleToUserset:
-    return {
-      tupleToUserset: {
-        tupleset: {
-          object: "",
-          relation: relation.from,
-        },
+    case RewriteType.Direct:
+      return { this: {} };
+    case RewriteType.ComputedUserset:
+      return {
         computedUserset: {
           object: "",
           relation: relation.target,
         },
-      },
-    };
-  default:
-    assertNever(relation.rewrite);
+      };
+    case RewriteType.TupleToUserset:
+      return {
+        tupleToUserset: {
+          tupleset: {
+            object: "",
+            relation: relation.from,
+          },
+          computedUserset: {
+            object: "",
+            relation: relation.target,
+          },
+        },
+      };
+    default:
+      assertNever(relation.rewrite);
   }
 };
 
@@ -44,37 +44,37 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
   const typeDefinitions = result.map(({ type: typeName, relations: rawRelations }) => {
     const relationsMap: Record<string, Userset> = {};
 
-    rawRelations.forEach(rawRelation => {
+    rawRelations.forEach((rawRelation) => {
       const { relation: relationName, definition } = rawRelation;
 
       switch (definition.type) {
-      case RelationDefOperator.Single:
-        relationsMap[relationName] = resolveRelation(definition.targets![0]);
-        break;
-      case RelationDefOperator.Exclusion:
-        relationsMap[relationName] = {
-          difference: {
-            base: {
-              ...resolveRelation(definition.base!),
+        case RelationDefOperator.Single:
+          relationsMap[relationName] = resolveRelation(definition.targets![0]);
+          break;
+        case RelationDefOperator.Exclusion:
+          relationsMap[relationName] = {
+            difference: {
+              base: {
+                ...resolveRelation(definition.base!),
+              },
+              subtract: {
+                ...resolveRelation(definition.diff!),
+              },
             },
-            subtract: {
-              ...resolveRelation(definition.diff!),
-            },
-          },
-        };
-        break;
-      case RelationDefOperator.Union:
-        relationsMap[relationName] = {
-          union: { child: definition.targets!.map(target => resolveRelation(target)) },
-        };
-        break;
-      case RelationDefOperator.Intersection:
-        relationsMap[relationName] = {
-          intersection: { child: definition.targets!.map(target => resolveRelation(target)) },
-        };
-        break;
-      default:
-        assertNever(definition.type);
+          };
+          break;
+        case RelationDefOperator.Union:
+          relationsMap[relationName] = {
+            union: { child: definition.targets!.map((target) => resolveRelation(target)) },
+          };
+          break;
+        case RelationDefOperator.Intersection:
+          relationsMap[relationName] = {
+            intersection: { child: definition.targets!.map((target) => resolveRelation(target)) },
+          };
+          break;
+        default:
+          assertNever(definition.type);
       }
     });
 
