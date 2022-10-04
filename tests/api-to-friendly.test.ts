@@ -4,10 +4,16 @@ import { apiSyntaxToFriendlySyntax } from "../src";
 import { testModels } from "./data";
 
 describe("api-to-friendly", () => {
-  testModels.forEach(testCase => {
+  testModels.forEach((testCase) => {
     it(`should transform ${testCase.name}`, () => {
       const friendlySyntax = apiSyntaxToFriendlySyntax(testCase.json);
       expect(friendlySyntax).toEqual(testCase.friendly);
     });
+  });
+
+  it("Having no relations should still yield correct DSL", () => {
+    const friendlySyntax = apiSyntaxToFriendlySyntax({ type_definitions: [{ type: "user" }] });
+    const expectedOutput = "type user\n";
+    expect(friendlySyntax).toEqual(expectedOutput);
   });
 });
