@@ -72,10 +72,10 @@ const apiToFriendlyRelation = (
 };
 
 const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"], newSyntax: string[]) => {
-  if (typeDef?.relations) {
+  if (typeDef?.type) {
     // A full type definition was passed
     newSyntax.push(`${Keywords.NAMESPACE} ${typeDef.type}`);
-    if (Object.keys(typeDef.relations).length) {
+    if (typeDef?.relations && Object.keys(typeDef?.relations).length) {
       newSyntax.push(`  ${Keywords.RELATIONS}`);
 
       const relations = Object.keys(typeDef.relations);
