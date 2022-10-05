@@ -294,7 +294,10 @@ type permission
         }
       ]
     },
-    "friendly": "type document\n  relations\n    define viewer: [team#member] as self\n"
+    "friendly": `type document
+  relations
+    define viewer: [team#member] as self
+`
   },
   {
     "name": "one type with one relation that supports two types",
@@ -315,6 +318,9 @@ type permission
         }
       ]
     },
-    "friendly": "type document\n  relations\n    define viewer: [user,group] as self\n"
+    "friendly": `type document
+  relations
+    define viewer: [user,group] as self
+`
   },
 ];

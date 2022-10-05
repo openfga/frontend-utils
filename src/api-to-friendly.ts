@@ -29,8 +29,7 @@ const apiToFriendlyRelation = (
 ) => {
   const relationKeys = Object.keys(relationDefinition);
   const relationMetadata = (metadata as Metadata)?.relations?.[relation];
-
-  let allowedTypes = "";
+  
   let allowedTypesArray = relationMetadata?.directly_related_user_types?.map((relationReference) => {
     if (relationReference.relation) {
       return `${relationReference.type}#${relationReference.relation}`;
@@ -38,10 +37,8 @@ const apiToFriendlyRelation = (
     return relationReference.type;
   }) || [];
   
-  if (allowedTypesArray.length > 0) {
-    // e.g. : [user,team#member]
-    allowedTypes = `: [${allowedTypesArray.join(",")}]`;
-  }
+  let allowedTypes = allowedTypesArray.length > 0 ? `: [${allowedTypesArray.join(",")}]` : "";
+
   const define = [`    ${Keywords.DEFINE} ${relation}${allowedTypes}${relationKeys?.length ? ` ${Keywords.AS} ` : ""}`];
 
   // Read simple definitions
