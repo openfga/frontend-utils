@@ -275,4 +275,46 @@ type permission
     define associated_feature as self
 `
   },
+  {
+    "name": "one type with one relation that supports one type",
+    "json": {
+      "type_definitions": [
+        {
+          "type": "document",
+          "relations": {
+            "viewer": {
+              "this": {}
+            }
+          },
+          "metadata": {
+            "relations": {
+              "viewer": { "directly_related_user_types": [{ "type": "team", "relation": "member" }] }
+            }
+          }
+        }
+      ]
+    },
+    "friendly": "type document\n  relations\n    define viewer: [team#member] as self\n"
+  },
+  {
+    "name": "one type with one relation that supports two types",
+    "json": {
+      "type_definitions": [
+        {
+          "type": "document",
+          "relations": {
+            "viewer": {
+              "this": {}
+            }
+          },
+          "metadata": {
+            "relations": {
+              "viewer": { "directly_related_user_types": [{ "type": "user" }, {"type": "group"}] }
+            }
+          }
+        }
+      ]
+    },
+    "friendly": "type document\n  relations\n    define viewer: [user,group] as self\n"
+  },
 ];

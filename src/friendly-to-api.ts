@@ -43,9 +43,11 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
 
   const typeDefinitions = result.map(({ type: typeName, relations: rawRelations }) => {
     const relationsMap: Record<string, Userset> = {};
+    const relationsMetadataMap: Record<string, any> = {}
+    let metadataAvailable = false;
 
     rawRelations.forEach((rawRelation) => {
-      const { relation: relationName, definition } = rawRelation;
+      const { relation: relationName, allowedTypes, definition } = rawRelation;
 
       switch (definition.type) {
         case RelationDefOperator.Single:
@@ -76,7 +78,28 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
         default:
           assertNever(definition.type);
       }
+
+      relationsMetadataMap[relationName] = {
+        directly_related_user_types: []
+      };
+
+      allowedTypes?.forEach((allowedType: string) => {
+        metadataAvailable = true;
+          let objectAndRelation = allowedType.split("#");
+          let toAdd: any = {
+            "type": objectAndRelation[0]
+          };
+          if (objectAndRelation.length == 2) {
+            toAdd["relation"] = objectAndRelation[1];
+          }
+          relationsMetadataMap[relationName]["directly_related_user_types"].push(toAdd);
+      })
+
     });
+
+    if (metadataAvailable) {
+      return { type: typeName, relations: relationsMap, metadata: {relations: relationsMetadataMap} };
+    }
 
     return { type: typeName, relations: relationsMap };
   });

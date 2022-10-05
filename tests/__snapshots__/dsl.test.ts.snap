@@ -390,6 +390,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
     "comment": "",
     "relations": [
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -410,6 +411,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
     "comment": "",
     "relations": [
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -429,6 +431,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "admin",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -448,6 +451,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "maintainer",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -462,6 +466,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "owner",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -486,6 +491,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "reader",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -505,6 +511,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "triager",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -535,6 +542,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
     "comment": "",
     "relations": [
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -554,6 +562,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "billing_manager",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -573,6 +582,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "member",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -587,6 +597,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "owner",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -601,6 +612,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "repo_admin",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -615,6 +627,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "repo_reader",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -635,6 +648,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
     "comment": "",
     "relations": [
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -654,6 +668,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
         "relation": "app_manager",
       },
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
@@ -679,6 +694,7 @@ exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
     "comment": "",
     "relations": [
       {
+        "allowedTypes": [],
         "comment": "",
         "definition": {
           "targets": [
