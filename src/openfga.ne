@@ -1,11 +1,25 @@
 @preprocessor typescript
 
 types           -> (_newline):* (type (relations (define):+):*):* {%
-    // @ts-ignore
-    data => data[1].map((datum) => {
+    data => {
+         // @ts-ignore
+		const types = data[1].map((datum : any) => {
 		    const relations = datum[1][0] ? datum[1][0][1].flat() : [];
 		    return { ...datum[0], relations }
 		})
+		let schemaVersion = "1.0"
+        // @ts-ignore
+		types.forEach(type => {
+             // @ts-ignore
+			type.relations.forEach(relation => {
+				if (relation.allowedTypes.length > 0) {
+					schemaVersion = "1.1"
+				}
+			})
+		})
+		return {types: types, schemaVersion: schemaVersion}
+	}	
+	
 %}
 
 type            -> _multiline_comment _type _naming (_newline):+ {%
@@ -29,7 +43,7 @@ define          -> (_newline):+ _multiline_comment define_initial (_relation_typ
                 type: 'single',
                 targets: [def]
             }
-        const allowedTypes = data[3] ? data[3][0] : []
+		const allowedTypes = data[3] ? data[3][0] : []
 
         return { comment: data[1], allowedTypes, relation, definition };
     }
@@ -88,7 +102,7 @@ _relation_types -> ":" _optional_space "[" _array_of_types "]" _spacing {%
     data => data[3]
 %}
 
-_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):* {%
+_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):+ {%
     data => data.flat(3).join('').split(",").map(i => i.trim())
 %}
 

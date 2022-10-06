@@ -38,7 +38,7 @@ export const checkDSL = (codeInEditor: string) => {
     const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
 
     // Looking at the types
-    parserResults.forEach((typeDef) => {
+    parserResults.types.forEach((typeDef) => {
       const typeName = typeDef.type;
 
       // Include keyword
@@ -62,7 +62,7 @@ export const checkDSL = (codeInEditor: string) => {
       relationsPerType[typeName] = encounteredRelationsInType;
     });
 
-    parserResults.forEach((typeDef) => {
+    parserResults.types.forEach((typeDef) => {
       const typeName = typeDef.type;
 
       // parse through each of the relations to do validation

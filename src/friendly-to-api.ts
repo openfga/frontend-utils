@@ -2,6 +2,7 @@ import { AuthorizationModel, Userset } from "@openfga/sdk";
 
 import {
   parseDSL,
+  ParserResult,
   RelationDefOperator,
   RelationTargetParserResult,
   RewriteType,
@@ -38,10 +39,10 @@ const resolveRelation = (relation: RelationTargetParserResult): Userset => {
   }
 };
 
-export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<AuthorizationModel, "type_definitions">> => {
-  const result: TypeDefParserResult[] = parseDSL(config);
+export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<AuthorizationModel, "type_definitions" | "schema_version">> => {
+  const result: ParserResult = parseDSL(config);
 
-  const typeDefinitions = result.map(({ type: typeName, relations: rawRelations }) => {
+  const typeDefinitions = result.types.map(({ type: typeName, relations: rawRelations }) => {
     const relationsMap: Record<string, Userset> = {};
     const relationsMetadataMap: Record<string, any> = {}
     let metadataAvailable = false;
@@ -104,5 +105,5 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
     return { type: typeName, relations: relationsMap };
   });
 
-  return { type_definitions: typeDefinitions };
+  return { type_definitions: typeDefinitions, schema_version: result.schemaVersion };
 };
