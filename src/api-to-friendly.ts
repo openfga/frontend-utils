@@ -30,14 +30,14 @@ const apiToFriendlyRelation = (
   const relationKeys = Object.keys(relationDefinition);
   const relationMetadata = (metadata as Metadata)?.relations?.[relation];
   
-  let allowedTypesArray = relationMetadata?.directly_related_user_types?.map((relationReference) => {
+  const allowedTypesArray = relationMetadata?.directly_related_user_types?.map((relationReference) => {
     if (relationReference.relation) {
       return `${relationReference.type}#${relationReference.relation}`;
     }
     return relationReference.type;
   }) || [];
   
-  let allowedTypes = allowedTypesArray.length > 0 ? `: [${allowedTypesArray.join(",")}]` : "";
+  const allowedTypes = allowedTypesArray.length ? `: [${allowedTypesArray.join(",")}]` : "";
 
   const define = [`    ${Keywords.DEFINE} ${relation}${allowedTypes}${relationKeys?.length ? ` ${Keywords.AS} ` : ""}`];
 
@@ -105,7 +105,7 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
     }
     const relation = relations[0];
     const userSet = (typeDef as any)[relation];
-    apiToFriendlyRelation(relation, userSet, relations, 0, typeDef?.metadata, newSyntax);
+    apiToFriendlyRelation(relation, userSet, relations, 0, undefined, newSyntax);
   }
 };
 

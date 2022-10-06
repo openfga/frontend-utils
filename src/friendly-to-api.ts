@@ -85,12 +85,12 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
 
       allowedTypes?.forEach((allowedType: string) => {
         metadataAvailable = true;
-          let objectAndRelation = allowedType.split("#");
+          const [userType, usersetRelation] = allowedType.split("#");
           let toAdd: any = {
-            "type": objectAndRelation[0]
+            "type": userType
           };
-          if (objectAndRelation.length == 2) {
-            toAdd["relation"] = objectAndRelation[1];
+          if (usersetRelation) {
+            toAdd["relation"] = usersetRelation;
           }
           relationsMetadataMap[relationName]["directly_related_user_types"].push(toAdd);
       })

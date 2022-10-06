@@ -88,8 +88,7 @@ _relation_types -> ":" _optional_space "[" _array_of_types "]" _spacing {%
     data => data[3]
 %}
 
-
-_array_of_types -> ([a-zA-Z0-9_#,\s]):* {%
+_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):* {%
     data => data.flat(3).join('').split(",").map(i => i.trim())
 %}
 
