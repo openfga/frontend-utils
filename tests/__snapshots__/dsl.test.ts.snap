@@ -68,7 +68,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`define\` 1`] = 
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 6,
+    "startColumn": 0,
     "startLineNumber": 3,
   },
 ]
@@ -166,12 +166,12 @@ exports[`DSL checkDSL() semantics should gracefully handle error 1`] = `
 [
   {
     "endColumn": 3,
-    "endLineNumber": 12,
+    "endLineNumber": 13,
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
     "startColumn": 0,
-    "startLineNumber": 12,
+    "startLineNumber": 13,
   },
 ]
 `;

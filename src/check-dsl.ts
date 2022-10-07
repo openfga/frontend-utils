@@ -57,12 +57,13 @@ const indentDSL = (rawDsl: string) => {
 }
 
 export const checkDSL = (codeInEditor: string) => {
-  const lines = indentDSL(codeInEditor).split("\n");
+  const dslIndented = indentDSL(codeInEditor);
+  const lines = dslIndented.split("\n");
   const markers: any = [];
   const reporter = report({ lines, markers });
 
   try {
-    const parserResults = parseDSL(codeInEditor);
+    const parserResults = parseDSL(dslIndented);
     const relationsPerType: Record<string, Record<string, boolean>> = {};
     const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
 
