@@ -27,8 +27,37 @@ const defaultError = (lines: any) => {
   };
 };
 
+const indentDSL = (rawDsl: string) => {
+  const indentType = "";
+  const indentRelation = "  ";
+  const indentDefine = "    ";
+
+  return rawDsl.split("\n")
+    .filter((el: string) => el.trim().length > 0)
+    .map((line: string) => {
+      const selectedLine = line.trim();
+      const keyword = selectedLine.split(" ")[0];
+      let indentation: string = "";
+      switch (keyword) {
+        case "type":
+          indentation = indentType;
+          break;
+        case "relations":
+          indentation = indentRelation;
+          break;
+        case "define":
+          indentation = indentDefine;
+          break;
+        default:
+          break;
+      }
+      return `${indentation}${selectedLine}`;
+    })
+    .join("\n");
+}
+
 export const checkDSL = (codeInEditor: string) => {
-  const lines = codeInEditor.split("\n");
+  const lines = indentDSL(codeInEditor).split("\n");
   const markers: any = [];
   const reporter = report({ lines, markers });
 
