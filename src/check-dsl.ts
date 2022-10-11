@@ -86,7 +86,7 @@ export const checkDSL = (codeInEditor: string) => {
             const lineIndex = getLineNumber(relationName, lines);
             reporter.invalidFrom({
               lineIndex,
-              value: target.target,
+              value: target.from,
               clause: Keywords.FROM,
             });
           }
