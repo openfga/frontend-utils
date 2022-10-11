@@ -7,6 +7,7 @@ VERSION.txt
 tests/coverage
 .idea/
 .vscode/
+.dccache
 
 .env
 credentials.json

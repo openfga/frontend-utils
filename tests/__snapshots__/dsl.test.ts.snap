@@ -106,6 +106,8 @@ exports[`DSL checkDSL() semantics should allow model with relations starting wit
 
 exports[`DSL checkDSL() semantics should allow reference from other relation 1`] = `[]`;
 
+exports[`DSL checkDSL() semantics should allow same relation name in from 1`] = `[]`;
+
 exports[`DSL checkDSL() semantics should allow self reference 1`] = `[]`;
 
 exports[`DSL checkDSL() semantics should be able to handle more than one error 1`] = `
