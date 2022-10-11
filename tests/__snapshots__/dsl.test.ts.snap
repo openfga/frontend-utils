@@ -384,6 +384,23 @@ exports[`DSL checkDSL() semantics should not allow impossible self reference 1`]
 ]
 `;
 
+exports[`DSL checkDSL() semantics should not allow self reference in from relation 1`] = `
+[
+  {
+    "endColumn": 57,
+    "endLineNumber": 4,
+    "message": "Cannot self-reference (\`subscriber\`) within \`from\` clause.",
+    "relatedInformation": {
+      "type": "",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 47,
+    "startLineNumber": 4,
+  },
+]
+`;
+
 exports[`DSL checkDSL() should correctly parse a simple sample 1`] = `[]`;
 
 exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
