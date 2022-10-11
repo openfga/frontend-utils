@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.0.6
+
+### [0.0.6](https://github.com/openfga/syntax-transformer/compare/v0.0.5...v0.0.6) (2022-10-11)
+
+#### Changes
+- fix(check-dsl): allow same relation in computedUserset of from clause (openfga/syntax-transformer#70)
+- chore(deps): bump dependencies
+
 ## v0.0.5
 
 ### [0.0.5](https://github.com/openfga/syntax-transformer/compare/v0.0.4...v0.0.5) (2022-09-29)
