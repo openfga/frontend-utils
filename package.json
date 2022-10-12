@@ -14,8 +14,8 @@
     "typecheck": "npm run build:grammar; tsc  --skipLibCheck",
     "lint": "eslint . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
-    "format:check": "prettier --check src/**",
-    "format:fix": "prettier --write src/**"
+    "format:check": "prettier --check {src,tests}/**",
+    "format:fix": "prettier --write {src,tests}/**"
   },
   "keywords": [
     "openfga",

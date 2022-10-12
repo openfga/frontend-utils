@@ -84,6 +84,14 @@ jobs:
       - name: Check for circular dependencies
         run: npx madge --circular . --extensions ts,js
 
+      # Run Prettier
+      - name: Run Prettier
+        run: npm run format:check
+
+      # Run ESLint
+      - name: Run eslint
+        run: npm run lint
+
       - name: Run tests
         run: npm test
 
