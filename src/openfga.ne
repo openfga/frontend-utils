@@ -2,10 +2,20 @@
 
 types           -> (_newline):* (type (relations (define):+):*):* {%
     // @ts-ignore
-    data => data[1].map((datum) => {
-		    const relations = datum[1][0] ? datum[1][0][1].flat() : [];
-		    return { ...datum[0], relations }
-		})
+    (data) => {
+        // @ts-ignore
+        const types = data[1].map((datum) => {
+            const relations = datum[1][0] ? datum[1][0][1].flat() : [];
+
+            return { ...datum[0], relations }
+        })
+
+        // @ts-ignore
+        const hasTypes = types.some(type => type.relations.some(relation => relation.allowedTypes.length));
+        const schemaVersion = hasTypes ? "1.1" : "1.0";
+
+        return {types: types, schemaVersion: schemaVersion}
+    }
 %}
 
 type            -> _multiline_comment _type _naming (_newline):+ {%
@@ -14,7 +24,7 @@ type            -> _multiline_comment _type _naming (_newline):+ {%
 relations       -> _multiline_comment _relations {%
     data => data[1]
 %}
-define          -> (_newline):+ _multiline_comment define_initial _as (define_base | define_or | define_and | define_but_not) (_newline):* {%
+define          -> (_newline):+ _multiline_comment define_initial (_relation_types):? _as (define_base | define_or | define_and | define_but_not) (_newline):* {%
     (data, _location, reject) => {
         const relation = data[2];
 
@@ -23,18 +33,19 @@ define          -> (_newline):+ _multiline_comment define_initial _as (define_ba
             return reject;
         }
 
-        const def = data[4][0];
+        const def = data[5][0];
         const definition = def.type ? def :
             {
                 type: 'single',
                 targets: [def]
             }
+        const allowedTypes = data[3] ? data[3][0] : []
 
-        return { comment: data[1], relation, definition };
+        return { comment: data[1], allowedTypes, relation, definition };
     }
 %}
 
-define_initial      -> _define _naming _spacing {%
+define_initial      -> _define _naming {%
 	data => data[1]
 %}
 
@@ -81,6 +92,14 @@ _comment        -> " ":* "#" _spacing _naming (_spacing _word):*  _newline {%
 %}
 _word           -> ([a-z] | [A-Z] | [0-9] |  "_" |  "-" | "," | "&" | "+" | "/" | "$" ):+ _optional_space {%
     data => data.flat(3).join('').trim()
+%}
+
+_relation_types -> ":" _optional_space "[" _array_of_types "]" _spacing {%
+    data => data[3]
+%}
+
+_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):+ {%
+    data => data.flat(3).join('').split(",").map(i => i.trim())
 %}
 
 _from           -> "from"

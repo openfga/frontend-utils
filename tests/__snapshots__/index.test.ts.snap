@@ -47,6 +47,7 @@ type doc
 
 exports[`friendlySyntaxToApiSyntax() should be able to handle single character type 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -62,6 +63,7 @@ exports[`friendlySyntaxToApiSyntax() should be able to handle single character t
 
 exports[`friendlySyntaxToApiSyntax() should correctly read from \`and\` definition 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -89,6 +91,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`and\` definiti
 
 exports[`friendlySyntaxToApiSyntax() should correctly read from \`and\` definition with $ as prefix 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -116,6 +119,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`and\` definiti
 
 exports[`friendlySyntaxToApiSyntax() should correctly read from \`basic\` definition 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -131,6 +135,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`basic\` defini
 
 exports[`friendlySyntaxToApiSyntax() should correctly read from \`but not\` definition 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -156,6 +161,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`but not\` defi
 
 exports[`friendlySyntaxToApiSyntax() should correctly read from \`from\` definition 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -180,6 +186,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`from\` definit
 
 exports[`friendlySyntaxToApiSyntax() should correctly read from \`or\` definition 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -207,6 +214,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`or\` definitio
 
 exports[`friendlySyntaxToApiSyntax() should read a complex definition 1`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -321,6 +329,7 @@ exports[`friendlySyntaxToApiSyntax() should read a complex definition 1`] = `
 
 exports[`friendlySyntaxToApiSyntax() should read a complex definition 2`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {
@@ -408,6 +417,7 @@ exports[`friendlySyntaxToApiSyntax() should read a complex definition 2`] = `
 
 exports[`friendlySyntaxToApiSyntax() should read a complex definition 3`] = `
 {
+  "schema_version": "1.0",
   "type_definitions": [
     {
       "relations": {

@@ -4,6 +4,7 @@ export const testModels: { name: string, json: WriteAuthorizationModelRequest, f
   {
     "name": "one type with no relations",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         {
           "type": "document",
@@ -16,6 +17,7 @@ export const testModels: { name: string, json: WriteAuthorizationModelRequest, f
   {
     "name": "one type with no relations and another with one relation",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         {
           "type": "group",
@@ -39,6 +41,7 @@ export const testModels: { name: string, json: WriteAuthorizationModelRequest, f
   {
     "name": "simple model",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         {
           "type": "document",
@@ -58,6 +61,7 @@ export const testModels: { name: string, json: WriteAuthorizationModelRequest, f
   {
     "name": "multiple types",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         {
           "type": "folder",
@@ -110,6 +114,7 @@ type document
   {
     "name": "difference",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         {
           "type": "document",
@@ -154,6 +159,7 @@ type team
   {
     "name": "intersection",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         {
           "type": "document",
@@ -220,6 +226,7 @@ type organization
   {
     "name": "relations-starting-with-as",
     "json": {
+      "schema_version": "1.0",
       "type_definitions": [
         { "type": "org", "relations": { "member": { "this": {} } } },
         {
@@ -273,6 +280,56 @@ type permission
   relations
     define access_feature as access from associated_feature
     define associated_feature as self
+`
+  },
+  {
+    "name": "one type with one relation that supports one type",
+    "json": {
+      "schema_version": "1.1",
+      "type_definitions": [
+        {
+          "type": "document",
+          "relations": {
+            "viewer": {
+              "this": {}
+            }
+          },
+          "metadata": {
+            "relations": {
+              "viewer": { "directly_related_user_types": [{ "type": "team", "relation": "member" }] }
+            }
+          }
+        }
+      ]
+    },
+    "friendly": `type document
+  relations
+    define viewer: [team#member] as self
+`
+  },
+  {
+    "name": "one type with one relation that supports two types",
+    "json": {
+      "schema_version": "1.1",
+      "type_definitions": [
+        {
+          "type": "document",
+          "relations": {
+            "viewer": {
+              "this": {}
+            }
+          },
+          "metadata": {
+            "relations": {
+              "viewer": { "directly_related_user_types": [{ "type": "user" }, {"type": "group"}] }
+            }
+          }
+        }
+      ]
+    },
+    "friendly": `type document
+  relations
+    define viewer: [user,group] as self
 `
   },
 ];
