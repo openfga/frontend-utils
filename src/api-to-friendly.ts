@@ -29,14 +29,15 @@ const apiToFriendlyRelation = (
 ) => {
   const relationKeys = Object.keys(relationDefinition);
   const relationMetadata = (metadata as Metadata)?.relations?.[relation];
-  
-  const allowedTypesArray = relationMetadata?.directly_related_user_types?.map((relationReference) => {
-    if (relationReference.relation) {
-      return `${relationReference.type}#${relationReference.relation}`;
-    }
-    return relationReference.type;
-  }) || [];
-  
+
+  const allowedTypesArray =
+    relationMetadata?.directly_related_user_types?.map((relationReference) => {
+      if (relationReference.relation) {
+        return `${relationReference.type}#${relationReference.relation}`;
+      }
+      return relationReference.type;
+    }) || [];
+
   const allowedTypes = allowedTypesArray.length ? `: [${allowedTypesArray.join(",")}]` : "";
 
   const define = [`    ${Keywords.DEFINE} ${relation}${allowedTypes}${relationKeys?.length ? ` ${Keywords.AS} ` : ""}`];

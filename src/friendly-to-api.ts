@@ -1,13 +1,6 @@
 import { AuthorizationModel, Userset } from "@openfga/sdk";
 
-import {
-  parseDSL,
-  ParserResult,
-  RelationDefOperator,
-  RelationTargetParserResult,
-  RewriteType,
-  TypeDefParserResult,
-} from "./parse-dsl";
+import { parseDSL, ParserResult, RelationDefOperator, RelationTargetParserResult, RewriteType } from "./parse-dsl";
 import { assertNever } from "./utils/assert-never";
 
 const resolveRelation = (relation: RelationTargetParserResult): Userset => {
@@ -39,12 +32,14 @@ const resolveRelation = (relation: RelationTargetParserResult): Userset => {
   }
 };
 
-export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<AuthorizationModel, "type_definitions" | "schema_version">> => {
+export const friendlySyntaxToApiSyntax = (
+  config: string,
+): Required<Pick<AuthorizationModel, "type_definitions" | "schema_version">> => {
   const result: ParserResult = parseDSL(config);
 
   const typeDefinitions = result.types.map(({ type: typeName, relations: rawRelations }) => {
     const relationsMap: Record<string, Userset> = {};
-    const relationsMetadataMap: Record<string, any> = {}
+    const relationsMetadataMap: Record<string, any> = {};
     let metadataAvailable = false;
 
     rawRelations.forEach((rawRelation) => {
@@ -81,25 +76,24 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
       }
 
       relationsMetadataMap[relationName] = {
-        directly_related_user_types: []
+        directly_related_user_types: [],
       };
 
       allowedTypes?.forEach((allowedType: string) => {
         metadataAvailable = true;
-          const [userType, usersetRelation] = allowedType.split("#");
-          let toAdd: any = {
-            "type": userType
-          };
-          if (usersetRelation) {
-            toAdd["relation"] = usersetRelation;
-          }
-          relationsMetadataMap[relationName]["directly_related_user_types"].push(toAdd);
-      })
-
+        const [userType, usersetRelation] = allowedType.split("#");
+        const toAdd: any = {
+          type: userType,
+        };
+        if (usersetRelation) {
+          toAdd["relation"] = usersetRelation;
+        }
+        relationsMetadataMap[relationName]["directly_related_user_types"].push(toAdd);
+      });
     });
 
     if (metadataAvailable) {
-      return { type: typeName, relations: relationsMap, metadata: {relations: relationsMetadataMap} };
+      return { type: typeName, relations: relationsMap, metadata: { relations: relationsMetadataMap } };
     }
 
     return { type: typeName, relations: relationsMap };
