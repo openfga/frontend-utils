@@ -1,4 +1,4 @@
-import { Keywords } from "./keywords";
+import { Keywords, ReservedKeywords } from "./keywords";
 
 interface BaseReporterOpts {
   markers: any;
@@ -57,6 +57,28 @@ const reportError = ({
     endLineNumber: lineIndex + 1,
     message,
     source: "linter",
+  });
+};
+
+export const reportReservedTypeName = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    message: `A type cannot be named '${Keywords.SELF}' or '${ReservedKeywords.THIS}'.`,
+    markers,
+    lines,
+    value,
+    relatedInformation: { type: "reserved-type-keywords" },
+    lineIndex,
+  });
+};
+
+export const reportReservedRelationName = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    message: `A relation cannot be named '${Keywords.SELF}' or '${ReservedKeywords.THIS}'.`,
+    markers,
+    lines,
+    value,
+    relatedInformation: { type: "reserved-relation-keywords" },
+    lineIndex,
   });
 };
 
@@ -180,6 +202,12 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
   return {
     useSelf: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportUseSelf({ value, lineIndex, markers, lines }),
+
+    reservedType: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportReservedTypeName({ value, lineIndex, markers, lines }),
+
+    reservedRelation: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportReservedRelationName({ value, lineIndex, markers, lines }),
 
     invalidFrom: ({ lineIndex, value, clause }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidFrom({ value, clause, lineIndex, markers, lines }),

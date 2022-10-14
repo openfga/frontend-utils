@@ -28,11 +28,6 @@ define          -> (_newline):+ _multiline_comment define_initial (_relation_typ
     (data, _location, reject) => {
         const relation = data[2];
 
-        // self and this are reserved keywords
-        if (["self", "this"].includes(relation)) {
-            return reject;
-        }
-
         const def = data[5][0];
         const definition = def.type ? def :
             {
