@@ -33,7 +33,8 @@ const indentDSL = (rawDsl: string) => {
   const indentDefine = "    ";
 
   return rawDsl.split("\n")
-    .filter((el: string) => el.trim().length > 0)
+    // filter out any empty lines
+    .filter((line: string) => line.trim().length)
     .map((line: string) => {
       const selectedLine = line.trim();
       const keyword = selectedLine.split(" ")[0];
