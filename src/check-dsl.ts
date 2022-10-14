@@ -1,5 +1,12 @@
 import { Keywords, ReservedKeywords } from "./keywords";
-import { parseDSL, ParserResult, RewriteType } from "./parse-dsl";
+import {
+  parseDSL,
+  ParserResult,
+  RelationDefOperator,
+  RelationDefParserResult,
+  RewriteType,
+  TransformedType,
+} from "./parse-dsl";
 import { report } from "./reporters";
 
 const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number) => {
@@ -40,8 +47,8 @@ const populateRelation = (
   lines: string[],
   reporter: any,
   parserResults: ParserResult,
-  relationsPerType: Record<string, Record<string, boolean>>,
   globalRelations: Record<string, boolean>,
+  transformedTypes: Record<string, TransformedType>,
 ) => {
   // Looking at the types
   parserResults.types.forEach((typeDef) => {
@@ -55,9 +62,11 @@ const populateRelation = (
 
     // Include keyword
     const encounteredRelationsInType: Record<string, boolean> = { [Keywords.SELF]: true };
+    const relations: Record<string, RelationDefParserResult<RelationDefOperator>> = {};
 
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
+      relations[relationName] = relationDef;
 
       if (relationName === Keywords.SELF || relationName === ReservedKeywords.THIS) {
         const lineIndex = getRelationLineNumber(relationName, lines);
@@ -73,8 +82,11 @@ const populateRelation = (
       encounteredRelationsInType[relationName] = true;
       globalRelations[relationName] = true;
     });
-
-    relationsPerType[typeName] = encounteredRelationsInType;
+    transformedTypes[typeName] = {
+      comment: "",
+      type: typeName,
+      relations,
+    };
   });
 };
 
@@ -82,7 +94,7 @@ export const basicValidateRelation = (
   lines: string[],
   reporter: any,
   parserResults: ParserResult,
-  relationsPerType: Record<string, Record<string, boolean>>,
+  relationsPerType: Record<string, TransformedType>,
   globalRelations: Record<string, boolean>,
 ) => {
   parserResults.types.forEach((typeDef) => {
@@ -125,7 +137,7 @@ export const basicValidateRelation = (
           });
         }
 
-        if (target.from && !relationsPerType[typeName][target.from]) {
+        if (target.from && !relationsPerType[typeName].relations[target.from]) {
           // The "from" is not defined for the current type `define owner as member from writer`
           const lineIndex = getRelationLineNumber(relationName, lines);
           const value = target.from;
@@ -162,11 +174,11 @@ export const checkDSL = (codeInEditor: string) => {
 
   try {
     const parserResults = parseDSL(codeInEditor);
-    const relationsPerType: Record<string, Record<string, boolean>> = {};
     const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
+    const transformedTypes: Record<string, TransformedType> = {};
 
-    populateRelation(lines, reporter, parserResults, relationsPerType, globalRelations);
-    basicValidateRelation(lines, reporter, parserResults, relationsPerType, globalRelations);
+    populateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
+    basicValidateRelation(lines, reporter, parserResults, transformedTypes, globalRelations);
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {
       try {

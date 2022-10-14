@@ -49,3 +49,10 @@ export const parseDSL = (code: string): ParserResult => {
   parser.feed(code.trim() + "\n");
   return parser.results[0] || [];
 };
+
+// The TransformedType allows us to quickly access the various relations unique by  
+export interface TransformedType {
+  comment: string;
+  type: string;
+  relations: Record<string, RelationDefParserResult<RelationDefOperator>>
+}

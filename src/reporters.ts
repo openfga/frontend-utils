@@ -1,4 +1,5 @@
 import { Keywords, ReservedKeywords } from "./keywords";
+import { TransformedType } from "./parse-dsl";
 
 interface BaseReporterOpts {
   markers: any;
@@ -8,7 +9,7 @@ interface BaseReporterOpts {
 }
 
 interface ReporterOpts extends BaseReporterOpts {
-  validRelations?: string[] | Record<string, Record<string, boolean>>;
+  validRelations?: string[] | Record<string, TransformedType>;
   clause?: any;
   typeName?: string;
   reverse?: boolean;
@@ -27,7 +28,11 @@ const getValidRelationsArray = (validRelations?: ReporterOpts["validRelations"],
     return [];
   }
 
-  return Array.isArray(validRelations) ? validRelations : typeName ? Object.keys(validRelations?.[typeName]) : [];
+  return Array.isArray(validRelations)
+    ? validRelations
+    : typeName
+    ? Object.keys(validRelations?.[typeName].relations)
+    : [];
 };
 
 const reportError = ({
