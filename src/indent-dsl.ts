@@ -1,4 +1,4 @@
-export const indentDSL = (rawDsl: string, removeEmptyLines: boolean = false) => {
+export const indentDSL = (rawDsl: string, removeEmptyLines = false) => {
   const indentType = "";
   const indentRelation = "  ";
   const indentDefine = "    ";
@@ -9,7 +9,7 @@ export const indentDSL = (rawDsl: string, removeEmptyLines: boolean = false) => 
     .map((line: string) => {
       const selectedLine = line.trim();
       const keyword = selectedLine.split(" ")[0];
-      let indentation: string = "";
+      let indentation = "";
       switch (keyword) {
         case "type":
           indentation = indentType;
