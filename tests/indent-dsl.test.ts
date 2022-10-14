@@ -7,16 +7,12 @@ const getRandomNumber = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const repeatSequence = (sequence: string, times: number) => {
-    return sequence.repeat(times);
-}
-
 const generateRandomNumberOfSpaces = () => {
-    return repeatSequence(" ", getRandomNumber(0, 30));
+    return " ".repeat(getRandomNumber(0, 30));
 };
 
 const generateRandomNewLines = () => {
-    return repeatSequence("\n", getRandomNumber(0, 15));
+    return "\n".repeat(getRandomNumber(0, 15));
 };
 
 describe("indent-dsl", () => {
