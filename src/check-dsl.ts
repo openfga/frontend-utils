@@ -42,14 +42,14 @@ const defaultError = (lines: string[]) => {
 };
 
 // helper function to populate the relationsPerType and globalRelations list
-// will throw error if there are duplication relations
-const populateRelation = (
+// will report error if there are duplication relations
+function populateRelations(
   lines: string[],
   reporter: any,
   parserResults: ParserResult,
-  globalRelations: Record<string, boolean>,
-  transformedTypes: Record<string, TransformedType>,
-) => {
+): [Record<string, boolean>, Record<string, TransformedType>] {
+  const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
+  const transformedTypes: Record<string, TransformedType> = {};
   // Looking at the types
   parserResults.types.forEach((typeDef) => {
     const typeName = typeDef.type;
@@ -88,14 +88,15 @@ const populateRelation = (
       relations,
     };
   });
-};
+  return [globalRelations, transformedTypes];
+}
 
 export const basicValidateRelation = (
   lines: string[],
   reporter: any,
   parserResults: ParserResult,
-  relationsPerType: Record<string, TransformedType>,
   globalRelations: Record<string, boolean>,
+  relationsPerType: Record<string, TransformedType>,
 ) => {
   parserResults.types.forEach((typeDef) => {
     const typeName = typeDef.type;
@@ -174,11 +175,9 @@ export const checkDSL = (codeInEditor: string) => {
 
   try {
     const parserResults = parseDSL(codeInEditor);
-    const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
-    const transformedTypes: Record<string, TransformedType> = {};
 
-    populateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
-    basicValidateRelation(lines, reporter, parserResults, transformedTypes, globalRelations);
+    const [globalRelations, transformedTypes] = populateRelations(lines, reporter, parserResults);
+    basicValidateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {
       try {
