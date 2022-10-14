@@ -82,7 +82,6 @@ describe("friendlySyntaxToApiSyntax()", () => {
     expect(result).toMatchSnapshot();
   });
 
-
   it("should correctly read from `and` definition with $ as prefix", () => {
     const result = friendlySyntaxToApiSyntax(`type $t1
   relations
@@ -214,211 +213,201 @@ type doc
 
 describe("apiSyntaxToFriendlySyntax", () => {
   it("should correctly read from `basic` definition", () => {
-    const result = apiSyntaxToFriendlySyntax(
-      {
-        type_definitions: [
-          {
-            type: "t1",
-            relations: {
-              r1: {
-                this: {},
-              },
+    const result = apiSyntaxToFriendlySyntax({
+      type_definitions: [
+        {
+          type: "t1",
+          relations: {
+            r1: {
+              this: {},
             },
           },
-        ],
-      },
-    );
+        },
+      ],
+    });
 
     expect(result).toMatchSnapshot();
   });
 
   it("should correctly read from `and` definition", () => {
-    const result = apiSyntaxToFriendlySyntax(
-      {
-        type_definitions: [
-          {
-            type: "t1",
-            relations: {
-              r1: {
-                intersection: {
-                  child: [
-                    {
-                      this: {},
-                    },
-                    {
-                      computedUserset: {
-                        object: "",
-                        relation: "writer",
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        ],
-      },
-    );
-
-    expect(result).toMatchSnapshot();
-  });
-
-  it("should correctly read from `or` definition", () => {
-    const result = apiSyntaxToFriendlySyntax(
-      {
-        type_definitions: [
-          {
-            type: "t1",
-            relations: {
-              r1: {
-                union: {
-                  child: [
-                    {
-                      this: {},
-                    },
-                    {
-                      computedUserset: {
-                        object: "",
-                        relation: "writer",
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        ],
-      },
-    );
-
-    expect(result).toMatchSnapshot();
-  });
-
-  it("should correctly read from `but not` definition", () => {
-    const result = apiSyntaxToFriendlySyntax(
-      {
-        type_definitions: [
-          {
-            type: "t1",
-            relations: {
-              r1: {
-                difference: {
-                  base: {
+    const result = apiSyntaxToFriendlySyntax({
+      type_definitions: [
+        {
+          type: "t1",
+          relations: {
+            r1: {
+              intersection: {
+                child: [
+                  {
                     this: {},
                   },
-                  subtract: {
+                  {
                     computedUserset: {
                       object: "",
                       relation: "writer",
                     },
                   },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it("should correctly read from `or` definition", () => {
+    const result = apiSyntaxToFriendlySyntax({
+      type_definitions: [
+        {
+          type: "t1",
+          relations: {
+            r1: {
+              union: {
+                child: [
+                  {
+                    this: {},
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "writer",
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it("should correctly read from `but not` definition", () => {
+    const result = apiSyntaxToFriendlySyntax({
+      type_definitions: [
+        {
+          type: "t1",
+          relations: {
+            r1: {
+              difference: {
+                base: {
+                  this: {},
+                },
+                subtract: {
+                  computedUserset: {
+                    object: "",
+                    relation: "writer",
+                  },
                 },
               },
             },
           },
-        ],
-      },
-    );
+        },
+      ],
+    });
 
     expect(result).toMatchSnapshot();
   });
 
   it("should read a complex definition", () => {
-    const result = apiSyntaxToFriendlySyntax(
-      {
-        type_definitions: [
-          {
-            type: "folder",
-            relations: {
-              deleter: {
-                this: {},
-              },
+    const result = apiSyntaxToFriendlySyntax({
+      type_definitions: [
+        {
+          type: "folder",
+          relations: {
+            deleter: {
+              this: {},
             },
           },
-          {
-            type: "doc",
-            relations: {
-              blocked_reader: {
-                this: {},
-              },
-              delete: {
-                intersection: {
-                  child: [
-                    {
-                      computedUserset: {
-                        object: "",
-                        relation: "writer",
-                      },
-                    },
-                    {
-                      tupleToUserset: {
-                        computedUserset: {
-                          object: "",
-                          relation: "deleter",
-                        },
-                        tupleset: {
-                          object: "",
-                          relation: "parent",
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              glass: {
-                computedUserset: {
-                  object: "",
-                  relation: "writer",
-                },
-              },
-              parent: {
-                this: {},
-              },
-              read: {
-                union: {
-                  child: [
-                    {
-                      computedUserset: {
-                        object: "",
-                        relation: "reader",
-                      },
-                    },
-                    {
-                      computedUserset: {
-                        object: "",
-                        relation: "writer",
-                      },
-                    },
-                  ],
-                },
-              },
-              reader: {
-                difference: {
-                  base: {
+        },
+        {
+          type: "doc",
+          relations: {
+            blocked_reader: {
+              this: {},
+            },
+            delete: {
+              intersection: {
+                child: [
+                  {
                     computedUserset: {
                       object: "",
-                      relation: "shared_reader",
+                      relation: "writer",
                     },
                   },
-                  subtract: {
+                  {
+                    tupleToUserset: {
+                      computedUserset: {
+                        object: "",
+                        relation: "deleter",
+                      },
+                      tupleset: {
+                        object: "",
+                        relation: "parent",
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+            glass: {
+              computedUserset: {
+                object: "",
+                relation: "writer",
+              },
+            },
+            parent: {
+              this: {},
+            },
+            read: {
+              union: {
+                child: [
+                  {
                     computedUserset: {
                       object: "",
-                      relation: "blocked_reader",
+                      relation: "reader",
                     },
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "writer",
+                    },
+                  },
+                ],
+              },
+            },
+            reader: {
+              difference: {
+                base: {
+                  computedUserset: {
+                    object: "",
+                    relation: "shared_reader",
+                  },
+                },
+                subtract: {
+                  computedUserset: {
+                    object: "",
+                    relation: "blocked_reader",
                   },
                 },
               },
-              shared_reader: {
-                this: {},
-              },
-              writer: {
-                this: {},
-              },
+            },
+            shared_reader: {
+              this: {},
+            },
+            writer: {
+              this: {},
             },
           },
-        ],
-      },
-    );
+        },
+      ],
+    });
 
     expect(result).toMatchSnapshot();
   });
