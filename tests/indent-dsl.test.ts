@@ -59,15 +59,4 @@ describe("indent-dsl", () => {
       expect(apiSyntax).toEqual(testCase.json);
     });
   });
-
-  testModels.forEach((testCase) => {
-    it(`should fail if indent ${testCase.name} is not correctly indented`, () => {
-      const rawFriendly = testCase.friendly
-        .split("\n")
-        .map((line) => line.trim())
-        .join("\n");
-      const apiSyntax = friendlySyntaxToApiSyntax(rawFriendly);
-      expect(apiSyntax).toEqual(testCase.json);
-    });
-  });
 });
