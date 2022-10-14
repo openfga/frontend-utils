@@ -27,44 +27,13 @@ const defaultError = (lines: any) => {
   };
 };
 
-const indentDSL = (rawDsl: string) => {
-  const indentType = "";
-  const indentRelation = "  ";
-  const indentDefine = "    ";
-
-  return rawDsl.split("\n")
-    // filter out any empty lines
-    .filter((line: string) => line.trim().length)
-    .map((line: string) => {
-      const selectedLine = line.trim();
-      const keyword = selectedLine.split(" ")[0];
-      let indentation: string = "";
-      switch (keyword) {
-        case "type":
-          indentation = indentType;
-          break;
-        case "relations":
-          indentation = indentRelation;
-          break;
-        case "define":
-          indentation = indentDefine;
-          break;
-        default:
-          break;
-      }
-      return `${indentation}${selectedLine}`;
-    })
-    .join("\n");
-}
-
 export const checkDSL = (codeInEditor: string) => {
-  const dslIndented = indentDSL(codeInEditor);
-  const lines = dslIndented.split("\n");
+  const lines = codeInEditor.split("\n");
   const markers: any = [];
   const reporter = report({ lines, markers });
 
   try {
-    const parserResults = parseDSL(dslIndented);
+    const parserResults = parseDSL(codeInEditor);
     const relationsPerType: Record<string, Record<string, boolean>> = {};
     const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
 

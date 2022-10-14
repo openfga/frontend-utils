@@ -63,12 +63,12 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`but not\` 1`] =
 exports[`DSL checkDSL() invalid keywords should handle invalid \`define\` 1`] = `
 [
   {
-    "endColumn": 23,
+    "endColumn": 27,
     "endLineNumber": 3,
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 0,
+    "startColumn": 6,
     "startLineNumber": 3,
   },
 ]
@@ -165,13 +165,13 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
 exports[`DSL checkDSL() semantics should gracefully handle error 1`] = `
 [
   {
-    "endColumn": 3,
-    "endLineNumber": 13,
+    "endColumn": 7,
+    "endLineNumber": 15,
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
     "startColumn": 0,
-    "startLineNumber": 13,
+    "startLineNumber": 15,
   },
 ]
 `;
@@ -351,7 +351,7 @@ exports[`DSL checkDSL() semantics should identify correct error line number if t
 [
   {
     "endColumn": 28,
-    "endLineNumber": 4,
+    "endLineNumber": 5,
     "message": "The relation \`reader\` does not exist.",
     "relatedInformation": {
       "relation": "reader",
@@ -360,7 +360,7 @@ exports[`DSL checkDSL() semantics should identify correct error line number if t
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
-    "startLineNumber": 4,
+    "startLineNumber": 5,
   },
 ]
 `;
