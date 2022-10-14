@@ -50,9 +50,9 @@ export const parseDSL = (code: string): ParserResult => {
   return parser.results[0] || [];
 };
 
-// The TransformedType allows us to quickly access the various relations unique by  
+// The TransformedType allows us to quickly access the various relations unique by
 export interface TransformedType {
   comment: string;
   type: string;
-  relations: Record<string, RelationDefParserResult<RelationDefOperator>>
+  relations: Record<string, RelationDefParserResult<RelationDefOperator>>;
 }
