@@ -18,15 +18,13 @@ module.exports = {
   "plugins": [
     "@typescript-eslint"
   ],
+  "ignorePatterns": ["src/grammar.ts"],
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
     "linebreak-style": [
       "error",
       "unix"
     ],
+    "@typescript-eslint/ban-ts-comment": "off",
     "quotes": [
       "error",
       "double"
@@ -36,7 +34,7 @@ module.exports = {
       "always"
     ],
     "max-len": [
-      "error",
+      "warn",
       {
         "code": 120
       }

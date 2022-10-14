@@ -1,6 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DSL checkDSL() invalid code should handle \`no definitions\` 1`] = `[]`;
+exports[`DSL checkDSL() invalid code should handle \`no definitions\` 1`] = `
+[
+  {
+    "endColumn": 9007199254740991,
+    "endLineNumber": 2,
+    "message": "Invalid syntax",
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 0,
+    "startLineNumber": 0,
+  },
+]
+`;
 
 exports[`DSL checkDSL() invalid code should handle \`no relations\` 1`] = `[]`;
 
@@ -105,6 +117,8 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`self\` 1`] = `
 exports[`DSL checkDSL() semantics should allow model with relations starting with as 1`] = `[]`;
 
 exports[`DSL checkDSL() semantics should allow reference from other relation 1`] = `[]`;
+
+exports[`DSL checkDSL() semantics should allow same relation name in from 1`] = `[]`;
 
 exports[`DSL checkDSL() semantics should allow self reference 1`] = `[]`;
 
@@ -382,328 +396,370 @@ exports[`DSL checkDSL() semantics should not allow impossible self reference 1`]
 ]
 `;
 
+exports[`DSL checkDSL() semantics should not allow self reference in from relation 1`] = `
+[
+  {
+    "endColumn": 57,
+    "endLineNumber": 4,
+    "message": "Cannot self-reference (\`subscriber\`) within \`from\` clause.",
+    "relatedInformation": {
+      "type": "",
+    },
+    "severity": 8,
+    "source": "linter",
+    "startColumn": 47,
+    "startLineNumber": 4,
+  },
+]
+`;
+
 exports[`DSL checkDSL() should correctly parse a simple sample 1`] = `[]`;
 
 exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
-[
-  {
-    "comment": "",
-    "relations": [
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+{
+  "schemaVersion": "1.0",
+  "types": [
+    {
+      "comment": "",
+      "relations": [
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "member",
         },
-        "relation": "member",
-      },
-    ],
-    "type": "team",
-  },
-  {
-    "comment": "",
-    "relations": [
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": "owner",
-              "rewrite": "tuple_to_userset",
-              "target": "repo_admin",
-            },
-          ],
-          "type": "union",
+      ],
+      "type": "team",
+    },
+    {
+      "comment": "",
+      "relations": [
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": "owner",
+                "rewrite": "tuple_to_userset",
+                "target": "repo_admin",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "admin",
         },
-        "relation": "admin",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": undefined,
-              "rewrite": "computed_userset",
-              "target": "admin",
-            },
-          ],
-          "type": "union",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": undefined,
+                "rewrite": "computed_userset",
+                "target": "admin",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "maintainer",
         },
-        "relation": "maintainer",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "owner",
         },
-        "relation": "owner",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": undefined,
-              "rewrite": "computed_userset",
-              "target": "triager",
-            },
-            {
-              "from": "owner",
-              "rewrite": "tuple_to_userset",
-              "target": "repo_reader",
-            },
-          ],
-          "type": "union",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": undefined,
+                "rewrite": "computed_userset",
+                "target": "triager",
+              },
+              {
+                "from": "owner",
+                "rewrite": "tuple_to_userset",
+                "target": "repo_reader",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "reader",
         },
-        "relation": "reader",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": undefined,
-              "rewrite": "computed_userset",
-              "target": "writer",
-            },
-          ],
-          "type": "union",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": undefined,
+                "rewrite": "computed_userset",
+                "target": "writer",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "triager",
         },
-        "relation": "triager",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": undefined,
-              "rewrite": "computed_userset",
-              "target": "maintainer",
-            },
-            {
-              "from": "owner",
-              "rewrite": "tuple_to_userset",
-              "target": "repo_writer",
-            },
-          ],
-          "type": "union",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": undefined,
+                "rewrite": "computed_userset",
+                "target": "maintainer",
+              },
+              {
+                "from": "owner",
+                "rewrite": "tuple_to_userset",
+                "target": "repo_writer",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "writer",
         },
-        "relation": "writer",
-      },
-    ],
-    "type": "repo",
-  },
-  {
-    "comment": "",
-    "relations": [
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": undefined,
-              "rewrite": "computed_userset",
-              "target": "owner",
-            },
-          ],
-          "type": "union",
+      ],
+      "type": "repo",
+    },
+    {
+      "comment": "",
+      "relations": [
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": undefined,
+                "rewrite": "computed_userset",
+                "target": "owner",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "billing_manager",
         },
-        "relation": "billing_manager",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": undefined,
-              "rewrite": "computed_userset",
-              "target": "owner",
-            },
-          ],
-          "type": "union",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": undefined,
+                "rewrite": "computed_userset",
+                "target": "owner",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "member",
         },
-        "relation": "member",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "owner",
         },
-        "relation": "owner",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "repo_admin",
         },
-        "relation": "repo_admin",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "repo_reader",
         },
-        "relation": "repo_reader",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "repo_writer",
         },
-        "relation": "repo_writer",
-      },
-    ],
-    "type": "org",
-  },
-  {
-    "comment": "",
-    "relations": [
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-            {
-              "from": "owner",
-              "rewrite": "tuple_to_userset",
-              "target": "owner",
-            },
-          ],
-          "type": "union",
+      ],
+      "type": "org",
+    },
+    {
+      "comment": "",
+      "relations": [
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+              {
+                "from": "owner",
+                "rewrite": "tuple_to_userset",
+                "target": "owner",
+              },
+            ],
+            "type": "union",
+          },
+          "relation": "app_manager",
         },
-        "relation": "app_manager",
-      },
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "owner",
         },
-        "relation": "owner",
-      },
-    ],
-    "type": "app",
-  },
-]
+      ],
+      "type": "app",
+    },
+  ],
+}
 `;
 
 exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
-[
-  {
-    "comment": "",
-    "relations": [
-      {
-        "comment": "",
-        "definition": {
-          "targets": [
-            {
-              "from": undefined,
-              "rewrite": "direct",
-              "target": undefined,
-            },
-          ],
-          "type": "single",
+{
+  "schemaVersion": "1.0",
+  "types": [
+    {
+      "comment": "",
+      "relations": [
+        {
+          "allowedTypes": [],
+          "comment": "",
+          "definition": {
+            "targets": [
+              {
+                "from": undefined,
+                "rewrite": "direct",
+                "target": undefined,
+              },
+            ],
+            "type": "single",
+          },
+          "relation": "writer",
         },
-        "relation": "writer",
-      },
-    ],
-    "type": "group",
-  },
-]
+      ],
+      "type": "group",
+    },
+  ],
+}
 `;
 
 exports[`DSL parseDSL() should correctly parse a type with no relations 1`] = `
-[
-  {
-    "comment": "",
-    "relations": [],
-    "type": "group",
-  },
-]
+{
+  "schemaVersion": "1.0",
+  "types": [
+    {
+      "comment": "",
+      "relations": [],
+      "type": "group",
+    },
+  ],
+}
 `;

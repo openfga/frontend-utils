@@ -38,7 +38,7 @@ export const checkDSL = (codeInEditor: string) => {
     const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
 
     // Looking at the types
-    parserResults.forEach((typeDef) => {
+    parserResults.types.forEach((typeDef) => {
       const typeName = typeDef.type;
 
       // Include keyword
@@ -62,7 +62,7 @@ export const checkDSL = (codeInEditor: string) => {
       relationsPerType[typeName] = encounteredRelationsInType;
     });
 
-    parserResults.forEach((typeDef) => {
+    parserResults.types.forEach((typeDef) => {
       const typeName = typeDef.type;
 
       // parse through each of the relations to do validation
@@ -73,23 +73,22 @@ export const checkDSL = (codeInEditor: string) => {
             // no need to continue to parse if there is no target
             return;
           }
-          if (relationName === target.target) {
-            if (target.rewrite != RewriteType.TupleToUserset) {
-              // the error case will be relation require self reference (i.e., define owner as owner)
-              const lineIndex = getLineNumber(relationName, lines);
-              reporter.useSelf({
-                lineIndex,
-                value: relationName,
-              });
-            } else if (relationDef.definition.targets?.length === 1) {
-              // define owner as writer from owner
-              const lineIndex = getLineNumber(relationName, lines);
-              reporter.invalidFrom({
-                lineIndex,
-                value: target.target,
-                clause: Keywords.FROM,
-              });
-            }
+          if (relationName === target.target && target.rewrite != RewriteType.TupleToUserset) {
+            // the error case will be relation require self reference (i.e., define owner as owner)
+            const lineIndex = getLineNumber(relationName, lines);
+            reporter.useSelf({
+              lineIndex,
+              value: relationName,
+            });
+          }
+          if (relationName === target.from && relationDef.definition.targets?.length === 1) {
+            // define owner as writer from owner
+            const lineIndex = getLineNumber(relationName, lines);
+            reporter.invalidFrom({
+              lineIndex,
+              value: target.from,
+              clause: Keywords.FROM,
+            });
           }
 
           if (target.target && !globalRelations[target.target]) {

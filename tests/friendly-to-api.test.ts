@@ -4,7 +4,7 @@ import { friendlySyntaxToApiSyntax } from "../src";
 import { testModels } from "./data";
 
 describe("friendly-to-api", () => {
-  testModels.forEach(testCase => {
+  testModels.forEach((testCase) => {
     it(`should transform ${testCase.name}`, () => {
       const apiSyntax = friendlySyntaxToApiSyntax(testCase.friendly);
       expect(apiSyntax).toEqual(testCase.json);

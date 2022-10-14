@@ -1,12 +1,6 @@
 import { AuthorizationModel, Userset } from "@openfga/sdk";
 
-import {
-  parseDSL,
-  RelationDefOperator,
-  RelationTargetParserResult,
-  RewriteType,
-  TypeDefParserResult,
-} from "./parse-dsl";
+import { parseDSL, ParserResult, RelationDefOperator, RelationTargetParserResult, RewriteType } from "./parse-dsl";
 import { assertNever } from "./utils/assert-never";
 
 const resolveRelation = (relation: RelationTargetParserResult): Userset => {
@@ -38,14 +32,18 @@ const resolveRelation = (relation: RelationTargetParserResult): Userset => {
   }
 };
 
-export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<AuthorizationModel, "type_definitions">> => {
-  const result: TypeDefParserResult[] = parseDSL(config);
+export const friendlySyntaxToApiSyntax = (
+  config: string,
+): Required<Pick<AuthorizationModel, "type_definitions" | "schema_version">> => {
+  const result: ParserResult = parseDSL(config);
 
-  const typeDefinitions = result.map(({ type: typeName, relations: rawRelations }) => {
+  const typeDefinitions = result.types.map(({ type: typeName, relations: rawRelations }) => {
     const relationsMap: Record<string, Userset> = {};
+    const relationsMetadataMap: Record<string, any> = {};
+    let metadataAvailable = false;
 
     rawRelations.forEach((rawRelation) => {
-      const { relation: relationName, definition } = rawRelation;
+      const { relation: relationName, allowedTypes, definition } = rawRelation;
 
       switch (definition.type) {
         case RelationDefOperator.Single:
@@ -76,10 +74,30 @@ export const friendlySyntaxToApiSyntax = (config: string): Required<Pick<Authori
         default:
           assertNever(definition.type);
       }
+
+      relationsMetadataMap[relationName] = {
+        directly_related_user_types: [],
+      };
+
+      allowedTypes?.forEach((allowedType: string) => {
+        metadataAvailable = true;
+        const [userType, usersetRelation] = allowedType.split("#");
+        const toAdd: any = {
+          type: userType,
+        };
+        if (usersetRelation) {
+          toAdd["relation"] = usersetRelation;
+        }
+        relationsMetadataMap[relationName]["directly_related_user_types"].push(toAdd);
+      });
     });
+
+    if (metadataAvailable) {
+      return { type: typeName, relations: relationsMap, metadata: { relations: relationsMetadataMap } };
+    }
 
     return { type: typeName, relations: relationsMap };
   });
 
-  return { type_definitions: typeDefinitions };
+  return { type_definitions: typeDefinitions, schema_version: result.schemaVersion };
 };

@@ -155,7 +155,6 @@ type document
         expect(markers).toMatchSnapshot();
       });
 
-
       it("should identify correct error line number if there are spaces", () => {
         const markers = checkDSL(`type group
   relations
@@ -233,6 +232,22 @@ type document
         expect(markers).toMatchSnapshot();
       });
 
+      it("should allow same relation name in from", () => {
+        const markers = checkDSL(`type feature
+  relations
+    define associated_plan as self
+    define subscriber as subscriber from associated_plan`);
+        expect(markers).toMatchSnapshot();
+      });
+
+      it("should not allow self reference in from relation", () => {
+        const markers = checkDSL(`type feature
+  relations
+    define associated_plan as self
+    define subscriber as associated_plan from subscriber`);
+        expect(markers).toMatchSnapshot();
+      });
+
       it("should not allow impossible self reference", () => {
         const markers = checkDSL(`type group
   relations
@@ -278,7 +293,6 @@ type permission
     def`);
         expect(markers).toMatchSnapshot();
       });
-
     });
   });
 });

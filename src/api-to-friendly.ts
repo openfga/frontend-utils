@@ -1,4 +1,4 @@
-import { TypeDefinition, WriteAuthorizationModelRequest, Userset } from "@openfga/sdk";
+import { TypeDefinition, WriteAuthorizationModelRequest, Userset, Metadata } from "@openfga/sdk";
 import { Keywords } from "./keywords";
 
 const readFrom = (obj: Userset, define: string[]) => {
@@ -24,10 +24,23 @@ const apiToFriendlyRelation = (
   relationDefinition: Userset,
   relations: string[],
   idx: number,
+  metadata: Userset | Metadata | undefined,
   newSyntax: string[],
 ) => {
   const relationKeys = Object.keys(relationDefinition);
-  const define = [`    ${Keywords.DEFINE} ${relation}${relationKeys?.length ? ` ${Keywords.AS} ` : ""}`];
+  const relationMetadata = (metadata as Metadata)?.relations?.[relation];
+
+  const allowedTypesArray =
+    relationMetadata?.directly_related_user_types?.map((relationReference) => {
+      if (relationReference.relation) {
+        return `${relationReference.type}#${relationReference.relation}`;
+      }
+      return relationReference.type;
+    }) || [];
+
+  const allowedTypes = allowedTypesArray.length ? `: [${allowedTypesArray.join(",")}]` : "";
+
+  const define = [`    ${Keywords.DEFINE} ${relation}${allowedTypes}${relationKeys?.length ? ` ${Keywords.AS} ` : ""}`];
 
   // Read simple definitions
   readFrom(relationDefinition, define);
@@ -82,7 +95,7 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
 
       relations.forEach((relation: any, idx: number) => {
         const relationDefinition = (typeDef.relations as any)[relation];
-        apiToFriendlyRelation(relation, relationDefinition, relations, idx, newSyntax);
+        apiToFriendlyRelation(relation, relationDefinition, relations, idx, typeDef.metadata, newSyntax);
       });
     }
   } else {
@@ -93,7 +106,7 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
     }
     const relation = relations[0];
     const userSet = (typeDef as any)[relation];
-    apiToFriendlyRelation(relation, userSet, relations, 0, newSyntax);
+    apiToFriendlyRelation(relation, userSet, relations, 0, undefined, newSyntax);
   }
 };
 

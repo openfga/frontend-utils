@@ -24,6 +24,7 @@ export interface RelationTargetParserResult {
 export interface RelationDefParserResult<T extends RelationDefOperator> {
   comment: string;
   relation: string;
+  allowedTypes: string[];
   definition: {
     type: T;
     targets: T extends RelationDefOperator.Exclusion ? undefined : RelationTargetParserResult[];
@@ -38,7 +39,12 @@ export interface TypeDefParserResult {
   relations: RelationDefParserResult<RelationDefOperator>[];
 }
 
-export const parseDSL = (code: string): TypeDefParserResult[] => {
+export interface ParserResult {
+  schemaVersion: string;
+  types: TypeDefParserResult[];
+}
+
+export const parseDSL = (code: string): ParserResult => {
   const parser = new Parser(Grammar.fromCompiled(grammar));
   parser.feed(code.trim() + "\n");
   return parser.results[0] || [];
