@@ -17,6 +17,7 @@ This module transforms between the JSON syntax accepted by the OpenFGA API and t
 - [Resources](#resources)
 - [Installation](#installation)
 - [Contributing](#contributing)
+- [Community Parsers](#community-parsers)
 - [Author](#author)
 - [License](#license)
 
@@ -142,6 +143,15 @@ type document
     define editor as self or editor from parent
 
 ```
+
+## Community Parsers
+
+| Repo                                                                   | License                                                                            | Maintainers                                                                           | Language   | Schema v1.0 | Schema v1.1 | Package Managers                                                                                                                                                                                                                                                                                               | Other Links                                                                                                                    |
+|------------------------------------------------------------------------|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------|-------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| [syntax-transformer](https://github.com/openfga/syntax-transformer)    | [Apache-2.0](https://github.com/openfga/syntax-transformer/blob/main/LICENSE)      | [@openfga](https://github.com/orgs/openfga/people)                                    | Typescript | Yes         | No          | [![npm:@openfga/syntax-transformer](https://img.shields.io/npm/v/@openfga/syntax-transformer.svg?style=flat)](https://www.npmjs.com/package/@openfga/syntax-transformer)                                                                                                                                       |                                                                                                                                |
+| [openfga-dsl-parser](https://github.com/maxmindlin/openfga-dsl-parser) | [Apache-2.0](https://github.com/maxmindlin/openfga-dsl-parser/blob/master/LICENSE) | [@maxmindlin](https://github.com/maxmindlin) - [@dblclik](https://github.com/dblclik) | Rust       | Yes         | No          | [![crates:openfga-dsl-parser](https://img.shields.io/crates/v/openfga-dsl-parser.svg?style=flat)](https://crates.io/crates/openfga-dsl-parser)[![pypi:openfga-dsl-parser-python](https://img.shields.io/pypi/v/openfga-dsl-parser-python.svg?style=flat)](https://pypi.org/project/openfga-dsl-parser-python/) | [WASM](https://github.com/dblclik/openfga-dsl-parser-wasm) - [Python](https://github.com/maxmindlin/openfga-dsl-parser-python) |
+| [openfga-rs](https://github.com/iammathew/openfga-rs)                  | [Apache-2.0](https://github.com/iammathew/openfga-rs/blob/main/LICENSE.md)         | [@iammathew](https://github.com/iammathew)                                            | Rust       | Yes         | No          |                                                                                                                                                                                                                                                                                                                |                                                                                                                                |
+
 
 ## Contributing
 Take a look at our [Contributing Guide](./CONTRIBUTING.md)
