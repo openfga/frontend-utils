@@ -12,6 +12,7 @@ interface ReporterOpts extends BaseReporterOpts {
   validRelations?: string[] | Record<string, TransformedType>;
   clause?: any;
   typeName?: string;
+  relationName?: string;
   reverse?: boolean;
 }
 
@@ -201,6 +202,66 @@ export const reportInvalidRelation = ({ markers, lines, lineIndex, value, validR
   }
 };
 
+export const reportInvalidTypeRelation = ({
+  markers,
+  lines,
+  lineIndex,
+  value,
+  typeName,
+  relationName,
+}: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: `\`${relationName}\` is not a valid relation for \`${typeName}\`.`,
+    relatedInformation: { type: "invalid-relation-type", relation: relationName, typeName: typeName } as any,
+  });
+};
+
+export const reportInvalidType = ({ markers, lines, lineIndex, value, typeName }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: `\`${typeName}\` is not a valid type.`,
+    relatedInformation: { type: "invalid-relation-type", typeName: typeName } as any,
+  });
+};
+
+export const noEntryPoint = ({ markers, lines, lineIndex, value, validRelations }: ReporterOpts) => {
+  const data = getValidRelationsArray(validRelations);
+  const isInValid = !data?.includes(value);
+  if (isInValid) {
+    reportError({
+      markers,
+      lines,
+      lineIndex,
+      value,
+      message: `\`${value}\` is an impossible relation (no entrypoint).`,
+      relatedInformation: { type: "relation-no-entry-point", relation: value } as any,
+    });
+  }
+};
+
+export const reportTupleUsersetRequireDirect = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: `\`${value}\` relation used inside from allows only direct relation.`,
+    relatedInformation: { type: "tupleuset-not-direct", relation: value } as any,
+    customResolver: (wordIdx, rawLine, value) => {
+      const clauseStartsAt = rawLine.indexOf("from") + "from".length + 1;
+      wordIdx = clauseStartsAt + rawLine.slice(clauseStartsAt).indexOf(value) + 1;
+      return wordIdx;
+    },
+  });
+};
+
 export const reportDuplicate = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   const rawLine = lines[lineIndex];
 
@@ -237,8 +298,20 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
     invalidButNot: ({ lineIndex, value, clause }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidButNot({ lineIndex, value, clause, markers, lines }),
 
+    tupleUsersetRequiresDirect: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportTupleUsersetRequireDirect({ lineIndex, value, markers, lines }),
+
     duplicateDefinition: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportDuplicate({ lineIndex, value, markers, lines }),
+
+    noEntryPoint: ({ lineIndex, value, typeName }: Omit<ReporterOpts, "markers" | "lines">) =>
+      noEntryPoint({ lineIndex, value, typeName, markers, lines }),
+
+    invalidTypeRelation: ({ lineIndex, value, typeName, relationName }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidTypeRelation({ lineIndex, value, typeName, relationName, markers, lines }),
+
+    invalidType: ({ lineIndex, value, typeName }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidType({ lineIndex, value, typeName, markers, lines }),
 
     invalidRelation: ({ lineIndex, value, validRelations }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidRelation({

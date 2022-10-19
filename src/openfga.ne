@@ -98,8 +98,8 @@ _relation_types -> _optional_space ":" _optional_space "[" _array_of_types "]" _
     data => data[4]
 %}
 
-_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):+ {%
-    data => data.flat(3).join('').split(",").map(i => i.trim())
+_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):* {%
+    data => data.flat(3).join('').split(",").map(i => i.trim()).filter(word => word.length > 0)
 %}
 
 _from           -> "from"
