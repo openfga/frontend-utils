@@ -326,6 +326,43 @@ type app
 `);
       expect(result.length).toEqual(1);
     });
+
+    it("should parse DSL in reasonable time", () => {
+      const time1 = new Date();
+      // Add in addition `define R as X from Y but not Z` to increase the time
+      const result = innerParseDSL(`type T1
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T2
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T3
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T4
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T5
+  relations
+    define A as A1 from A2 but not A3
+`);
+const time2 = new Date();
+expect(result.length).toEqual(1);
+expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
+    });
+
   });
 
   describe("checkDSL()", () => {
