@@ -104,6 +104,17 @@ export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts
   });
 };
 
+export const reportInvalidName = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
+  reportError({
+    message: `Name '${value}' does not match naming rule: '${clause}'.`,
+    markers,
+    lines,
+    value,
+    relatedInformation: { type: "invalid-name" },
+    lineIndex,
+  });
+};
+
 export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
     message: `Cannot self-reference (\`${value}\`) within \`${Keywords.FROM}\` clause.`,
@@ -207,6 +218,9 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
   return {
     useSelf: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportUseSelf({ value, lineIndex, markers, lines }),
+
+    invalidName: ({ lineIndex, value, clause }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidName({ value, lineIndex, markers, lines, clause }),
 
     reservedType: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportReservedTypeName({ value, lineIndex, markers, lines }),
