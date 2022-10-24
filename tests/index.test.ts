@@ -163,7 +163,7 @@ describe("friendlySyntaxToApiSyntax()", () => {
     expect(result).toMatchSnapshot();
   });
 
-  it("should read a complex definition", () => {
+  it("should read a complex definition 1", () => {
     const result = friendlySyntaxToApiSyntax(`type folder
   relations
     define deleter as self
@@ -184,7 +184,7 @@ type doc
     expect(result).toMatchSnapshot();
   });
 
-  it("should read a complex definition", () => {
+  it("should read a complex definition 2", () => {
     const result = friendlySyntaxToApiSyntax(`type website
   relations
     define admin as self or owner
@@ -198,7 +198,7 @@ type doc
     expect(result).toMatchSnapshot();
   });
 
-  it("should read a complex definition", () => {
+  it("should read a complex definition 3", () => {
     const result = friendlySyntaxToApiSyntax(`type website
   relations
     define admin as self or randy
@@ -314,7 +314,7 @@ describe("apiSyntaxToFriendlySyntax", () => {
     expect(result).toMatchSnapshot();
   });
 
-  it("should read a complex definition", () => {
+  it("should read a complex definition 4", () => {
     const result = apiSyntaxToFriendlySyntax({
       type_definitions: [
         {

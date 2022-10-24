@@ -28,7 +28,7 @@ exports[`apiSyntaxToFriendlySyntax should correctly read from \`or\` definition 
 "
 `;
 
-exports[`apiSyntaxToFriendlySyntax should read a complex definition 1`] = `
+exports[`apiSyntaxToFriendlySyntax should read a complex definition 4 1`] = `
 "type folder
   relations
     define deleter as self
@@ -212,7 +212,7 @@ exports[`friendlySyntaxToApiSyntax() should correctly read from \`or\` definitio
 }
 `;
 
-exports[`friendlySyntaxToApiSyntax() should read a complex definition 1`] = `
+exports[`friendlySyntaxToApiSyntax() should read a complex definition 1 1`] = `
 {
   "schema_version": "1.0",
   "type_definitions": [
@@ -327,7 +327,7 @@ exports[`friendlySyntaxToApiSyntax() should read a complex definition 1`] = `
 }
 `;
 
-exports[`friendlySyntaxToApiSyntax() should read a complex definition 2`] = `
+exports[`friendlySyntaxToApiSyntax() should read a complex definition 2 1`] = `
 {
   "schema_version": "1.0",
   "type_definitions": [
@@ -415,7 +415,7 @@ exports[`friendlySyntaxToApiSyntax() should read a complex definition 2`] = `
 }
 `;
 
-exports[`friendlySyntaxToApiSyntax() should read a complex definition 3`] = `
+exports[`friendlySyntaxToApiSyntax() should read a complex definition 3 1`] = `
 {
   "schema_version": "1.0",
   "type_definitions": [

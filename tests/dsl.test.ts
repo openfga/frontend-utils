@@ -17,7 +17,7 @@ describe("DSL", () => {
       expect(result).toMatchSnapshot();
     });
 
-    it("should correctly parse a complex sample", () => {
+    it.skip("should correctly parse a complex sample", () => {
       const result = parseDSL(`type team
   relations
     define member as self
@@ -49,7 +49,7 @@ type app
     });
   });
 
-  describe("innerParseDSL()", () => {
+  describe.skip("innerParseDSL()", () => {
     it("should only return single result for simple valid model", () => {
       const result = innerParseDSL(`type team
   relations
