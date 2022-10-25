@@ -46,7 +46,12 @@ export interface ParserResult {
 
 export const innerParseDSL = (code: string): ParserResult[] => {
   const parser = new Parser(Grammar.fromCompiled(grammar));
-  parser.feed(code.trim() + "\n");
+  const cleanedCode =
+    code
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .join("\n") + "\n";
+  parser.feed(cleanedCode);
   return parser.results;
 };
 

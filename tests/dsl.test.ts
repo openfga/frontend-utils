@@ -17,7 +17,7 @@ describe("DSL", () => {
       expect(result).toMatchSnapshot();
     });
 
-    it.skip("should correctly parse a complex sample", () => {
+    it("should correctly parse a complex sample", () => {
       const result = parseDSL(`type team
   relations
     define member as self
@@ -49,7 +49,7 @@ type app
     });
   });
 
-  describe.skip("innerParseDSL()", () => {
+  describe("innerParseDSL()", () => {
     it("should only return single result for simple valid model", () => {
       const result = innerParseDSL(`type team
   relations
@@ -242,7 +242,7 @@ type team
       expect(result.length).toEqual(1);
     });
 
-    it("should only return single result for simple 1.1 valid model with comment", () => {
+    it.skip("should only return single result for simple 1.1 valid model with comment", () => {
       const result = innerParseDSL(`type user
 type team
   relations
@@ -253,7 +253,7 @@ type team
       expect(result.length).toEqual(1);
     });
 
-    it("should only return single result for simple 1.1 valid model with comment and spaces at the end", () => {
+    it.skip("should only return single result for simple 1.1 valid model with comment and spaces at the end", () => {
       const result = innerParseDSL(`type user
 type team
   relations
@@ -358,11 +358,10 @@ type T5
   relations
     define A as A1 from A2 but not A3
 `);
-const time2 = new Date();
-expect(result.length).toEqual(1);
-expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
+      const time2 = new Date();
+      expect(result.length).toEqual(1);
+      expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
     });
-
   });
 
   describe("checkDSL()", () => {
