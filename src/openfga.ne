@@ -1,10 +1,10 @@
 @preprocessor typescript
 
-types           ->   (_newline):* (type (_relations (_multiline_comment define):+):*):* {%
+types           ->   (_newline):* (model_schema):? (type (_relations (_multiline_comment define):+):*):* {%
     // @ts-ignore
     (data) => {
         // @ts-ignore
-        const types = data[1].map((datum) => {
+        const types = data[2].map((datum) => {
             // @ts-ignore
             const relations = (datum[1] && datum[1][0] && datum[1][0][1].map(innerDatum => innerDatum[1])) || [];
 
@@ -12,11 +12,14 @@ types           ->   (_newline):* (type (_relations (_multiline_comment define):
         })
 
         // @ts-ignore
-        const hasTypes = types.some(type => type.relations.some(relation => relation.allowedTypes.length));
-        const schemaVersion = hasTypes ? "1.1" : "1.0";
+        const schemaVersion = data[1]? data[1].flat(3).join("") : "1.0";
 
         return {types: types, schemaVersion: schemaVersion}
     }
+%}
+
+model_schema    ->  _multiline_comment _model (_newline):+ _schema _spacing _version (_newline):+ {%
+    data => data[5]
 %}
 
 type            ->  _multiline_comment _type _naming (_newline):+{%
@@ -119,3 +122,7 @@ _naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) {%
 _optional_space -> " ":*
 _spacing        -> " ":+
 _newline        -> _optional_space "\n"
+_model          -> "model"
+_schema         -> "  schema"
+_period         -> "."
+_version        -> (([0-9]):+) _period (([0-9]):+)

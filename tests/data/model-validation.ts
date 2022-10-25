@@ -2,7 +2,9 @@
 export const validation_cases: { name: string; friendly: string; expectedError: any }[] = [
   {
     name: "invalid type name for self",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type self
   relations
     define member: [user] as self
@@ -10,7 +12,7 @@ type self
     expectedError: [
       {
         endColumn: 10,
-        endLineNumber: 2,
+        endLineNumber: 4,
         message: "A type cannot be named 'self' or 'this'.",
         relatedInformation: {
           type: "reserved-type-keywords",
@@ -18,14 +20,15 @@ type self
         severity: 8,
         source: "linter",
         startColumn: 6,
-        startLineNumber: 2,
+        startLineNumber: 4,
       },
     ],
   },
-
   {
     name: "invalid type name for this",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type this
   relations
     define member: [user] as self
@@ -33,7 +36,7 @@ type this
     expectedError: [
       {
         endColumn: 10,
-        endLineNumber: 2,
+        endLineNumber: 4,
         message: "A type cannot be named 'self' or 'this'.",
         relatedInformation: {
           type: "reserved-type-keywords",
@@ -41,13 +44,15 @@ type this
         severity: 8,
         source: "linter",
         startColumn: 6,
-        startLineNumber: 2,
+        startLineNumber: 4,
       },
     ],
   },
   {
     name: "invalid relation name for self",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define self: [user] as self
@@ -55,7 +60,7 @@ type group
     expectedError: [
       {
         endColumn: 16,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "A relation cannot be named 'self' or 'this'.",
         relatedInformation: {
           type: "reserved-relation-keywords",
@@ -63,13 +68,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
   {
     name: "invalid relation name for this",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define this: [user] as self
@@ -77,7 +84,7 @@ type group
     expectedError: [
       {
         endColumn: 16,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "A relation cannot be named 'self' or 'this'.",
         relatedInformation: {
           type: "reserved-relation-keywords",
@@ -85,13 +92,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
   {
     name: "invalid type name",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   relations
     define member: [user] as self
@@ -99,7 +108,7 @@ type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     expectedError: [
       {
         endColumn: 350,
-        endLineNumber: 2,
+        endLineNumber: 4,
         message:
           "Type 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' does not match naming rule: '^[^:#@\\s]{1,254}$'.",
         relatedInformation: {
@@ -108,13 +117,15 @@ type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         severity: 8,
         source: "linter",
         startColumn: 6,
-        startLineNumber: 2,
+        startLineNumber: 4,
       },
     ],
   },
   {
     name: "invalid relation name",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: [user] as self
@@ -122,7 +133,7 @@ type org
     expectedError: [
       {
         endColumn: 112,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message:
           "Relation 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' of type 'org' does not match naming rule: '^[^:#@\\s]{1,50}$'.",
         relatedInformation: {
@@ -131,7 +142,7 @@ type org
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
@@ -165,7 +176,9 @@ type outlet
   },
   {
     name: "no entry point for multiple type",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type team
   relations
     define parent: [group] as self
@@ -178,7 +191,7 @@ type group
     expectedError: [
       {
         endColumn: 18,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "`viewer` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "viewer",
@@ -187,12 +200,12 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
 
       {
         endColumn: 18,
-        endLineNumber: 9,
+        endLineNumber: 11,
         message: "`viewer` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "viewer",
@@ -201,23 +214,23 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 9,
+        startLineNumber: 11,
       },
     ],
   },
   {
-    // For now, we purposely add a member relation to force model be recognized as 1.1
     name: "no entry point for single type single relation",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define group as group from group
-    define member: [user] as self
 `,
     expectedError: [
       {
         endColumn: 17,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "`group` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "group",
@@ -226,19 +239,44 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
   {
-    // For now, we purposely add a member relation to force model be recognized as 1.1
     name: "no entry point for single type multiple relations",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define parent: [group] as self
     define viewer as viewer from parent
 `,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        message: "`viewer` is an impossible relation (no entrypoint).",
+        relatedInformation: {
+          relation: "viewer",
+          type: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "no entry point if directly assignable value is itself",
+    friendly: `model
+  schema 1.1
+type group
+  relations
+    define viewer: [group#viewer] as self
+ `,
     expectedError: [
       {
         endColumn: 18,
@@ -256,31 +294,10 @@ type group
     ],
   },
   {
-    // For now, we purposely add a member relation to force model be recognized as 1.1
-    name: "no entry point if directly assignable value is itself",
-    friendly: `type group
-  relations
-    define viewer: [group#viewer] as self
- `,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 3,
-        message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
-          relation: "viewer",
-          type: "relation-no-entry-point",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 3,
-      },
-    ],
-  },
-  {
     name: "from target relation is valid",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define parent: [group] as self
@@ -289,7 +306,7 @@ type group
     expectedError: [
       {
         endColumn: 40,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "`reader` is not a valid relation for `group`.",
         relatedInformation: {
           relation: "reader",
@@ -299,13 +316,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 22,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "from target relation is not a valid relation for the from child",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
 type group
   relations
@@ -315,7 +334,7 @@ type group
     expectedError: [
       {
         endColumn: 37,
-        endLineNumber: 6,
+        endLineNumber: 8,
         message: "`org` is not a valid relation for `group`.",
         relatedInformation: {
           relation: "org",
@@ -325,13 +344,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 22,
-        startLineNumber: 6,
+        startLineNumber: 8,
       },
     ],
   },
   {
     name: "org is not a relation for group",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
 type group
   relations
@@ -341,7 +362,7 @@ type group
     expectedError: [
       {
         endColumn: 37,
-        endLineNumber: 6,
+        endLineNumber: 8,
         message: "`org` is not a valid relation for `group`.",
         relatedInformation: {
           relation: "org",
@@ -351,13 +372,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 22,
-        startLineNumber: 6,
+        startLineNumber: 8,
       },
     ],
   },
   {
     name: "direct relation assignment not found",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
 type group
   relations
@@ -366,7 +389,7 @@ type group
     expectedError: [
       {
         endColumn: 37,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "`org` is not a valid relation for `group`.",
         relatedInformation: {
           relation: "org",
@@ -376,13 +399,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 28,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "group viewer no entry point",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define viewer: [user] as self
@@ -394,7 +419,7 @@ type group
     expectedError: [
       {
         endColumn: 18,
-        endLineNumber: 8,
+        endLineNumber: 10,
         message: "`viewer` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "viewer",
@@ -403,14 +428,16 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 8,
+        startLineNumber: 10,
       },
     ],
   },
   {
     // TODO: discuss whether parent is impossible as well
     name: "mixture of 1.0 and 1.1 should yield error",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define member: [user] as self
@@ -422,7 +449,7 @@ type group
     expectedError: [
       {
         endColumn: 18,
-        endLineNumber: 7,
+        endLineNumber: 9,
         message: "`parent` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "parent",
@@ -431,11 +458,11 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 7,
+        startLineNumber: 9,
       },
       {
         endColumn: 18,
-        endLineNumber: 8,
+        endLineNumber: 10,
         message: "`viewer` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "viewer",
@@ -444,25 +471,23 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 8,
+        startLineNumber: 10,
       },
     ],
   },
   {
-    // note that for now we have to add sub-document to trick recognition as version 1.1
     name: "cyclic loop",
-    friendly: `type document
+    friendly: `model
+  schema 1.1
+type document
   relations
     define reader as writer
     define writer as reader
-type subdocument
-  relations
-    define parent: [document] as self
 `,
     expectedError: [
       {
         endColumn: 18,
-        endLineNumber: 3,
+        endLineNumber: 5,
         message: "`reader` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "reader",
@@ -471,11 +496,11 @@ type subdocument
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 3,
+        startLineNumber: 5,
       },
       {
         endColumn: 18,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "`writer` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "writer",
@@ -484,13 +509,15 @@ type subdocument
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
   {
     name: "parent relation used inside contains a write",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type folder
   relations
     define parent: [folder] as self or parent from parent
@@ -499,7 +526,7 @@ type folder
     expectedError: [
       {
         endColumn: 58,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
           relation: "parent",
@@ -508,11 +535,11 @@ type folder
         severity: 8,
         source: "linter",
         startColumn: 52,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
       {
         endColumn: 56,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
           relation: "parent",
@@ -521,13 +548,15 @@ type folder
         severity: 8,
         source: "linter",
         startColumn: 50,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "parent relation used inside viewer contains a write",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type folder
   relations
     define root: [folder] as self
@@ -537,7 +566,7 @@ type folder
     expectedError: [
       {
         endColumn: 56,
-        endLineNumber: 6,
+        endLineNumber: 8,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
           relation: "parent",
@@ -546,13 +575,15 @@ type folder
         severity: 8,
         source: "linter",
         startColumn: 50,
-        startLineNumber: 6,
+        startLineNumber: 8,
       },
     ],
   },
   {
     name: "from is another tuple to userset",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type folder
   relations
     define root: [folder] as self
@@ -562,7 +593,7 @@ type folder
     expectedError: [
       {
         endColumn: 56,
-        endLineNumber: 6,
+        endLineNumber: 8,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
           relation: "parent",
@@ -571,13 +602,15 @@ type folder
         severity: 8,
         source: "linter",
         startColumn: 50,
-        startLineNumber: 6,
+        startLineNumber: 8,
       },
     ],
   },
   {
     name: "model 1.1 one of the intersection relation is not valid",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define member: [user] as self
@@ -586,7 +619,7 @@ type group
     expectedError: [
       {
         endColumn: 40,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
           relation: "allowed",
@@ -595,13 +628,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 33,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "model 1.1 one of the union relation is not valid",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define member: [user] as self
@@ -610,7 +645,7 @@ type group
     expectedError: [
       {
         endColumn: 39,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
           relation: "allowed",
@@ -619,13 +654,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 32,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "model 1.1 base in exclusion not valid",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define member: [user] as self
@@ -634,7 +671,7 @@ type group
     expectedError: [
       {
         endColumn: 29,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
           relation: "allowed",
@@ -643,13 +680,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 22,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "model 1.1 diff in exclusion not valid",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define member: [user] as self
@@ -658,7 +697,7 @@ type group
     expectedError: [
       {
         endColumn: 44,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
           relation: "allowed",
@@ -667,13 +706,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 37,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "model 1.1 diff in exclusion not valid and spaces are reflected correctly in error messages",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define member: [user] as self
@@ -682,7 +723,7 @@ type group
     expectedError: [
       {
         endColumn: 50,
-        endLineNumber: 5,
+        endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
           relation: "allowed",
@@ -691,13 +732,15 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 43,
-        startLineNumber: 5,
+        startLineNumber: 7,
       },
     ],
   },
   {
     name: "empty directly assignable relations with spaces should yield error",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define member: [ ] as self
@@ -706,7 +749,7 @@ type org
     expectedError: [
       {
         endColumn: 18,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "`member` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "member",
@@ -715,13 +758,15 @@ type org
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
   {
     name: "empty directly assignable relations without spaces should yield error",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define member: [] as self
@@ -730,7 +775,7 @@ type org
     expectedError: [
       {
         endColumn: 18,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "`member` is an impossible relation (no entrypoint).",
         relatedInformation: {
           relation: "member",
@@ -739,14 +784,40 @@ type org
         severity: 8,
         source: "linter",
         startColumn: 12,
-        startLineNumber: 4,
+        startLineNumber: 6,
+      },
+    ],
+  },
+  {
+    name: "unsupported schema version should yield error",
+    friendly: `model
+  schema 0.9
+type user
+type org
+  relations
+    define member: [user] as self
+`,
+    expectedError: [
+      {
+        endColumn: 13,
+        endLineNumber: 2,
+        message: "Invalid schema 0.9",
+        relatedInformation: {
+          type: "invalid-schema",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 10,
+        startLineNumber: 2,
       },
     ],
   },
   // The following are valid cases and should not result in error
   {
     name: "simple group reference to itself",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type group
   relations
     define group: [group] as self
@@ -755,7 +826,9 @@ type group
   },
   {
     name: "group has entry point to itself",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define viewer: [user] as self
@@ -768,7 +841,9 @@ type group
   },
   {
     name: "intersection with directly related",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
   relations
     define member: [user] as self
@@ -782,7 +857,9 @@ type group
   },
   {
     name: "but not with directly linked",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type docs
   relations
     define blocked: [user] as self
@@ -792,7 +869,9 @@ type docs
   },
   {
     name: "intersection with directly related and has spaces and blank lines",
-    friendly: `type user
+    friendly: `model
+  schema 1.1
+type user
 type org
 
   relations

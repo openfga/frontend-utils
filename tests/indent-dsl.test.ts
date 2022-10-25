@@ -48,7 +48,6 @@ describe("indent-dsl", () => {
       expect(apiSyntax).toEqual(testCase.json);
     });
   });
-
   testModels.forEach((testCase) => {
     it(`should indent ${testCase.name} with empty lines not removed`, () => {
       const rawFriendly = testCase.friendly

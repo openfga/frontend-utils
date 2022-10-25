@@ -278,6 +278,17 @@ export const reportDuplicate = ({ markers, lines, lineIndex, value }: ReporterOp
   });
 };
 
+export const reportInvalidSyntaxVersion = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: `Invalid schema ${value}`,
+    relatedInformation: { type: "invalid-schema" },
+  });
+};
+
 export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "markers" | "lines">) {
   return {
     useSelf: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
@@ -312,6 +323,9 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
 
     invalidType: ({ lineIndex, value, typeName }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidType({ lineIndex, value, typeName, markers, lines }),
+
+    invalidSchemaVersion: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidSyntaxVersion({ lineIndex, value, markers, lines }),
 
     invalidRelation: ({ lineIndex, value, validRelations }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidRelation({

@@ -30,6 +30,10 @@ const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number
   return lines.slice(skipIndex).findIndex((line: string) => line.trim().startsWith(`type ${typeName}`)) + skipIndex;
 };
 
+const getSchemaLineNumber = (schema: string, lines: string[]) => {
+  return lines.findIndex((line: string) => line.trim().replace(/ {2,}/g, " ").startsWith(`schema ${schema}`));
+};
+
 // return the line number for the specified relation
 const getRelationLineNumber = (relation: string, lines: string[], skipIndex?: number) => {
   if (!skipIndex) {
@@ -588,8 +592,11 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
       case SchemaVersion.OneDotOne:
         mode11Validation(lines, reporter, markers, parserResults, transformedTypes);
         break;
-      default:
-        assertNever(schemaVersion);
+      default: {
+        const lineIndex = getSchemaLineNumber(schemaVersion, lines);
+        reporter.invalidSchemaVersion({ lineIndex, value: schemaVersion });
+        break;
+      }
     }
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {

@@ -9,6 +9,8 @@ export enum Keywords {
   FROM = "from",
   BUT_NOT = "but not",
   COMMENT = "comment",
+  MODEL = "model",
+  SCHEMA = "schema",
 }
 
 export enum ReservedKeywords {
