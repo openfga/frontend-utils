@@ -564,7 +564,8 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
       relationRegex,
     );
 
-    switch (parserResults.schemaVersion) {
+    const schemaVersion = parserResults.schemaVersion || SchemaVersion.OneDotZero;
+    switch (schemaVersion) {
       case SchemaVersion.OneDotZero:
         basicValidateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
         break;
@@ -572,7 +573,7 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
         mode11Validation(lines, reporter, markers, parserResults, transformedTypes);
         break;
       default:
-        assertNever;
+        assertNever(schemaVersion);
     }
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {
