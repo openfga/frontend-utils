@@ -7,6 +7,7 @@ import {
   RelationDefParserResult,
   RelationTargetParserResult,
   RewriteType,
+  SchemaVersion,
   TransformedType,
 } from "./parse-dsl";
 import { report } from "./reporters";
@@ -20,11 +21,6 @@ export interface ValidationRegex {
 export interface ValidationOptions {
   typeValidation?: string;
   relationValidation?: string;
-}
-
-enum SchemaVersion {
-  OneDotZero = "1.0",
-  OneDotOne = "1.1",
 }
 
 const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number) => {

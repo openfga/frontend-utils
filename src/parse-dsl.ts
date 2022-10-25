@@ -39,8 +39,13 @@ export interface TypeDefParserResult {
   relations: RelationDefParserResult<RelationDefOperator>[];
 }
 
+export enum SchemaVersion {
+  OneDotZero = "1.0",
+  OneDotOne = "1.1",
+}
+
 export interface ParserResult {
-  schemaVersion: string;
+  schemaVersion: SchemaVersion;
   types: TypeDefParserResult[];
 }
 
