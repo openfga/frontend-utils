@@ -189,12 +189,12 @@ export const basicValidateRelation = (
   });
 };
 
-export const checkDSL = (codeInEditor: string, options?: ValidationOptions) => {
+export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) => {
   const lines = codeInEditor.split("\n");
   const markers: any = [];
   const reporter = report({ lines, markers });
-  const typeValidation = options && options.typeValidation ? options.typeValidation : defaultTypeRule;
-  const relationValidation = options && options.relationValidation ? options.relationValidation : defaultRelationRule;
+  const typeValidation = options.typeValidation || defaultTypeRule;
+  const relationValidation = options.relationValidation || defaultRelationRule;
   const defaultRegex = new RegExp("[a-zA-Z]*");
 
   let typeRegex: ValidationRegex = {
