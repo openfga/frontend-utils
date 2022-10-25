@@ -44,10 +44,19 @@ export interface ParserResult {
   types: TypeDefParserResult[];
 }
 
-export const parseDSL = (code: string): ParserResult => {
+export const innerParseDSL = (code: string): ParserResult[] => {
   const parser = new Parser(Grammar.fromCompiled(grammar));
-  parser.feed(code.trim() + "\n");
-  return parser.results[0] || [];
+  const cleanedCode =
+    code
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .join("\n") + "\n";
+  parser.feed(cleanedCode);
+  return parser.results;
+};
+
+export const parseDSL = (code: string): ParserResult => {
+  return innerParseDSL(code)[0] || [];
 };
 
 // The TransformedType allows us to quickly access the various relations unique by
