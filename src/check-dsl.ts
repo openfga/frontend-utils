@@ -10,7 +10,7 @@ import {
 } from "./parse-dsl";
 import { report } from "./reporters";
 
-interface validationRegex {
+interface ValidationRegex {
   rule: string;
   regex: RegExp;
 }
@@ -53,8 +53,8 @@ function populateRelations(
   lines: string[],
   reporter: any,
   parserResults: ParserResult,
-  typeRegex: validationRegex,
-  relationRegex: validationRegex,
+  typeRegex: ValidationRegex,
+  relationRegex: ValidationRegex,
 ): [Record<string, boolean>, Record<string, TransformedType>] {
   const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
   const transformedTypes: Record<string, TransformedType> = {};
@@ -196,11 +196,11 @@ export const checkDSL = (
   try {
     const parserResults = parseDSL(codeInEditor);
 
-    const typeRegex: validationRegex = {
+    const typeRegex: ValidationRegex = {
       regex: new RegExp(typeValidation),
       rule: typeValidation,
     };
-    const relationRegex: validationRegex = {
+    const relationRegex: ValidationRegex = {
       regex: new RegExp(relationValidation),
       rule: relationValidation,
     };
