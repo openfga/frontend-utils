@@ -10,9 +10,14 @@ import {
 } from "./parse-dsl";
 import { report } from "./reporters";
 
-interface ValidationRegex {
+export interface ValidationRegex {
   rule: string;
   regex: RegExp;
+}
+
+export interface ValidationOptions {
+  typeValidation?: string;
+  relationValidation?: string;
 }
 
 const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number) => {
@@ -86,7 +91,7 @@ function populateRelations(
         reporter.reservedRelation({ lineIndex, value: relationName });
       } else if (!relationRegex.regex.test(relationName)) {
         const lineIndex = getRelationLineNumber(relationName, lines);
-        reporter.invalidName({ lineIndex, value: relationName, clause: relationRegex.rule });
+        reporter.invalidName({ lineIndex, value: relationName, clause: relationRegex.rule, typeName });
       } else if (encounteredRelationsInType[relationName]) {
         // Check if we have any duplicate relations
         // figure out what is the lineIdx in question
@@ -184,26 +189,48 @@ export const basicValidateRelation = (
   });
 };
 
-export const checkDSL = (
-  codeInEditor: string,
-  typeValidation: string = defaultTypeRule,
-  relationValidation: string = defaultRelationRule,
-) => {
+export const checkDSL = (codeInEditor: string, options?: ValidationOptions) => {
   const lines = codeInEditor.split("\n");
   const markers: any = [];
   const reporter = report({ lines, markers });
+  const typeValidation = options && options.typeValidation ? options.typeValidation : defaultTypeRule;
+  const relationValidation = options && options.relationValidation ? options.relationValidation : defaultRelationRule;
+  const defaultRegex = new RegExp("[a-zA-Z]*");
 
+  let typeRegex: ValidationRegex = {
+    regex: defaultRegex,
+    rule: typeValidation,
+  };
   try {
-    const parserResults = parseDSL(codeInEditor);
-
-    const typeRegex: ValidationRegex = {
+    typeRegex = {
       regex: new RegExp(typeValidation),
       rule: typeValidation,
     };
-    const relationRegex: ValidationRegex = {
+  } catch (e: any) {
+    const marker = defaultError(lines);
+    marker.message = `Incorrect type regex specification for ${typeValidation}`;
+    markers.push(marker);
+    return markers;
+  }
+
+  let relationRegex: ValidationRegex = {
+    regex: defaultRegex,
+    rule: relationValidation,
+  };
+  try {
+    relationRegex = {
       regex: new RegExp(relationValidation),
       rule: relationValidation,
     };
+  } catch (e: any) {
+    const marker = defaultError(lines);
+    marker.message = `Incorrect relation regex specification for ${relationValidation}`;
+    markers.push(marker);
+    return markers;
+  }
+
+  try {
+    const parserResults = parseDSL(codeInEditor);
 
     const [globalRelations, transformedTypes] = populateRelations(
       lines,

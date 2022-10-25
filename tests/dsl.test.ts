@@ -1,5 +1,6 @@
 import { checkDSL } from "../src";
 import { parseDSL } from "../src/parse-dsl";
+import { ValidationOptions } from "../src/check-dsl";
 
 describe("DSL", () => {
   describe("parseDSL()", () => {
@@ -292,6 +293,52 @@ type permission
 
     def`);
         expect(markers).toMatchSnapshot();
+      });
+
+      it("should gracefully handle type regex error", () => {
+        const incorrectRegex: ValidationOptions = {
+          typeValidation: "[a-Z",
+        };
+        const markers = checkDSL(
+          `type user
+`,
+          incorrectRegex,
+        );
+        const expectError: any = [
+          {
+            endColumn: 9007199254740991,
+            endLineNumber: 2,
+            message: "Incorrect type regex specification for [a-Z",
+            severity: 8,
+            source: "linter",
+            startColumn: 0,
+            startLineNumber: 0,
+          },
+        ];
+        expect(markers).toEqual(expectError);
+      });
+
+      it("should gracefully handle relation regex error", () => {
+        const incorrectRegex: ValidationOptions = {
+          relationValidation: "[a-Z",
+        };
+        const markers = checkDSL(
+          `type user
+`,
+          incorrectRegex,
+        );
+        const expectError: any = [
+          {
+            endColumn: 9007199254740991,
+            endLineNumber: 2,
+            message: "Incorrect relation regex specification for [a-Z",
+            severity: 8,
+            source: "linter",
+            startColumn: 0,
+            startLineNumber: 0,
+          },
+        ];
+        expect(markers).toEqual(expectError);
       });
     });
   });

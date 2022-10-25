@@ -104,9 +104,12 @@ export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts
   });
 };
 
-export const reportInvalidName = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
+export const reportInvalidName = ({ markers, lines, lineIndex, typeName, value, clause }: ReporterOpts) => {
+  const errorMessage =
+    (typeName ? `Relation '${value}' of type '${typeName}' ` : `Type '${value}' `) +
+    `does not match naming rule: '${clause}'.`;
   reportError({
-    message: `Name '${value}' does not match naming rule: '${clause}'.`,
+    message: errorMessage,
     markers,
     lines,
     value,
@@ -219,8 +222,8 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
     useSelf: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportUseSelf({ value, lineIndex, markers, lines }),
 
-    invalidName: ({ lineIndex, value, clause }: Omit<ReporterOpts, "markers" | "lines">) =>
-      reportInvalidName({ value, lineIndex, markers, lines, clause }),
+    invalidName: ({ lineIndex, value, clause, typeName }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidName({ value, lineIndex, markers, lines, clause, typeName }),
 
     reservedType: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportReservedTypeName({ value, lineIndex, markers, lines }),
