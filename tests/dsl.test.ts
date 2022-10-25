@@ -1,5 +1,5 @@
 import { checkDSL } from "../src";
-import { parseDSL } from "../src/parse-dsl";
+import { innerParseDSL, parseDSL } from "../src/parse-dsl";
 
 describe("DSL", () => {
   describe("parseDSL()", () => {
@@ -46,6 +46,321 @@ type app
     define owner as self`);
 
       expect(result).toMatchSnapshot();
+    });
+  });
+
+  describe("innerParseDSL()", () => {
+    it("should only return single result for simple valid model", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define other as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with spaces", () => {
+      const result = innerParseDSL(`type team   
+  relations   
+    define member as self 
+    define    other   as   self  
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with non direct result", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define other as member
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with non direct result and spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define other as  member  
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with intersection", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define myfriend as self
+    define other as self or member or myfriend
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with intersection and spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define other as self   or   member   or myfriend    
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with union", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define myfriend as self
+    define other as self and member and myfriend
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with union and spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define myfriend as self
+    define other as self   and   member   and myfriend   
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with but not", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define other as self but not member
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with but not and spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define other as self   but not   member   
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with tuple to userset", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define viewer as self
+    define parent as self
+    define can_view as viewer from parent
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with tuple to userset and spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define viewer as self
+    define parent as self
+    define can_view as  viewer   from   parent   
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with but not + tuple to userset", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define parent as self
+    define viewer as self
+    define other as viewer from parent but not member
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with but not + tuple to userset and spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+    define parent as self
+    define viewer as self
+    define other as   viewer  from    parent  but not  member  
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with multiple types", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define viewer as self
+type group
+  relations
+    define parent as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with multiple types and empty lines", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define viewer as self
+
+
+type group
+  relations
+    define parent as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple valid model with multiple types and empty lines + spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define viewer as self
+      
+  
+type group
+  relations
+    define parent as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple 1.1 valid model", () => {
+      const result = innerParseDSL(`type user
+type team
+  relations
+    define member: [user] as self
+    define other: [user] as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for simple 1.1 valid model with spaces", () => {
+      const result = innerParseDSL(`type user
+type team
+  relations
+    define member: [user]   as self 
+    define other:   [user] as   self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it.skip("should only return single result for simple 1.1 valid model with comment", () => {
+      const result = innerParseDSL(`type user
+type team
+  relations
+    define member: [user] as self
+    # Comment for other
+    define other: [user] as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it.skip("should only return single result for simple 1.1 valid model with comment and spaces at the end", () => {
+      const result = innerParseDSL(`type user
+type team
+  relations
+    define member: [user] as self
+    # Comment for other   
+    define other: [user] as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for complex valid model", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+
+type repo
+  relations
+    define admin as self or repo_admin from owner
+    define maintainer as self or admin
+    define owner as self
+    define reader as self or triager or repo_reader from owner
+    define triager as self or writer
+    define writer as self or maintainer or repo_writer from owner
+    
+type org
+  relations
+    define billing_manager as self or owner
+    define member as self or owner
+    define owner as self
+    define repo_admin as self
+    define repo_reader as self
+    define repo_writer as self
+    
+type app
+  relations
+    define app_manager as self or owner from owner
+    define owner as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should only return single result for complex model with spaces", () => {
+      const result = innerParseDSL(`type team
+  relations
+    define member as self
+
+type repo
+  relations
+
+    define admin as self or repo_admin from owner  
+    define maintainer as self or admin 
+    define owner as self
+    define reader as self or triager  or   repo_reader from owner
+    define triager as self or writer
+    define writer as self or maintainer or repo_writer  from   owner
+    
+type org
+  relations
+    define billing_manager as self or owner
+    define member as self or owner
+    define owner as self
+    define repo_admin as self
+    define repo_reader as self
+    define repo_writer as self
+    
+type app
+  relations
+    define app_manager as self or owner from owner
+    define owner as self
+`);
+      expect(result.length).toEqual(1);
+    });
+
+    it("should parse DSL in reasonable time", () => {
+      const time1 = new Date();
+      // Add in addition `define R as X from Y but not Z` to increase the time
+      const result = innerParseDSL(`type T1
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T2
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T3
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T4
+  relations
+    define A as A1 from A2 but not A3
+    define B as B1 from B2 but not B3
+    define C as C1 from C2 but not C3
+    define D as D1 from D2 but not D3
+type T5
+  relations
+    define A as A1 from A2 but not A3
+`);
+      const time2 = new Date();
+      expect(result.length).toEqual(1);
+      expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
     });
   });
 
