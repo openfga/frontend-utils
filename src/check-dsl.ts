@@ -10,6 +10,7 @@ import {
   TransformedType,
 } from "./parse-dsl";
 import { report } from "./reporters";
+import { assertNever } from "./utils/assert-never";
 
 export interface ValidationRegex {
   rule: string;
@@ -20,7 +21,11 @@ export interface ValidationOptions {
   typeValidation?: string;
   relationValidation?: string;
 }
-const VERSION_10 = "1.0";
+
+enum SchemaVersion {
+  OneDotZero = "1.0",
+  OneDotOne = "1.1",
+}
 
 const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number) => {
   if (!skipIndex) {
@@ -282,7 +287,7 @@ function childDefDefined(
               }
             }
           } else {
-            // the from is not a valid
+            // the from is not allowed.  Only direct assignable types are allowed.
             const typeIndex = getTypeLineNumber(type, lines);
             const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
             reporter.tupleUsersetRequiresDirect({
@@ -558,10 +563,16 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
       typeRegex,
       relationRegex,
     );
-    if (!parserResults.schemaVersion || parserResults.schemaVersion === VERSION_10) {
-      basicValidateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
-    } else {
-      mode11Validation(lines, reporter, markers, parserResults, transformedTypes);
+
+    switch (parserResults.schemaVersion) {
+      case SchemaVersion.OneDotZero:
+        basicValidateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
+        break;
+      case SchemaVersion.OneDotOne:
+        mode11Validation(lines, reporter, markers, parserResults, transformedTypes);
+        break;
+      default:
+        assertNever;
     }
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {
