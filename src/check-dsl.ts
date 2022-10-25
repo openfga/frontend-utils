@@ -62,7 +62,20 @@ function destructTupleToUserset(allowableType: string): string[] {
   return allowableType.split("#", 2);
 }
 
-// helper function to parse thru a child relation to see if there are unique entry points
+// helper function to parse thru a child relation to see if there are unique entry points.
+// Entry point describes ways that tuples can be assigned to the relation
+// For example,
+// type user
+// type org
+//   relations
+//     define member: [user]
+// we can assign a user with (type user) to org's member
+// However, in the following example
+// type doc
+//   relations
+//     define reader as writer
+//     define writer as reader
+// It is impossible to have any tuples that assign to doc's reader and writer
 function childHasEntryPoint(
   transformedTypes: Record<string, TransformedType>,
   visitedRecords: Record<string, Record<string, boolean>>,
