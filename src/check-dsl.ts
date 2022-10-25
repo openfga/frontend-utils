@@ -57,9 +57,8 @@ const defaultError = (lines: string[]) => {
 // helper function to figure out whether the specified allowable types
 // are tuple to user set.  If so, return the type and relationship.
 // Otherwise, return null as relationship
-function destructTupleToUserset(allowableType: string): [string, string | null] {
-  const splittedString = allowableType.split("#", 2);
-  return [splittedString[0], splittedString[1]];
+function destructTupleToUserset(allowableType: string): string[] {
+  return allowableType.split("#", 2);
 }
 
 // helper function to parse thru a child relation to see if there are unique entry points
@@ -176,8 +175,7 @@ function allowableTypes(
   const allowedTypes: string[] = [];
   const currentRelation = transformedTypes[type].relations[relation];
 
-  const isValid =
-    currentRelation && currentRelation.definition && currentRelation.definition.type === RelationDefOperator.Single;
+  const isValid = currentRelation?.definition?.type === RelationDefOperator.Single;
   // for now, we assume that the type/relation must be single and rewrite is direct
   if (isValid) {
     for (const childDef of currentRelation.definition.targets || []) {
@@ -334,7 +332,7 @@ function mode11Validation(
   parserResults: ParserResult,
   relationsPerType: Record<string, TransformedType>,
 ) {
-  if (markers.length > 0) {
+  if (markers.length) {
     // no point in looking at directly assignable types if the model itself already
     // has other problems
     return;

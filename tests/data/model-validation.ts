@@ -688,7 +688,7 @@ type org
         source: "linter",
         startColumn: 12,
         startLineNumber: 4,
-      }
+      },
     ],
   },
   {
@@ -712,7 +712,7 @@ type org
         source: "linter",
         startColumn: 12,
         startLineNumber: 4,
-      }
+      },
     ],
   },
   // The following are valid cases and should not result in error
