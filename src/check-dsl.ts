@@ -1,3 +1,4 @@
+import { defaultRelationRule, defaultTypeRule } from "./default-regex";
 import { Keywords, ReservedKeywords } from "./keywords";
 import {
   parseDSL,
@@ -8,6 +9,16 @@ import {
   TransformedType,
 } from "./parse-dsl";
 import { report } from "./reporters";
+
+export interface ValidationRegex {
+  rule: string;
+  regex: RegExp;
+}
+
+export interface ValidationOptions {
+  typeValidation?: string;
+  relationValidation?: string;
+}
 
 const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number) => {
   if (!skipIndex) {
@@ -47,6 +58,8 @@ function populateRelations(
   lines: string[],
   reporter: any,
   parserResults: ParserResult,
+  typeRegex: ValidationRegex,
+  relationRegex: ValidationRegex,
 ): [Record<string, boolean>, Record<string, TransformedType>] {
   const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
   const transformedTypes: Record<string, TransformedType> = {};
@@ -60,6 +73,11 @@ function populateRelations(
       reporter.reservedType({ lineIndex, value: typeName });
     }
 
+    if (!typeRegex.regex.test(typeName)) {
+      const lineIndex = getTypeLineNumber(typeName, lines);
+      reporter.invalidName({ lineIndex, value: typeName, clause: typeRegex.rule });
+    }
+
     // Include keyword
     const encounteredRelationsInType: Record<string, boolean> = { [Keywords.SELF]: true };
     const relations: Record<string, RelationDefParserResult<RelationDefOperator>> = {};
@@ -71,6 +89,9 @@ function populateRelations(
       if (relationName === Keywords.SELF || relationName === ReservedKeywords.THIS) {
         const lineIndex = getRelationLineNumber(relationName, lines);
         reporter.reservedRelation({ lineIndex, value: relationName });
+      } else if (!relationRegex.regex.test(relationName)) {
+        const lineIndex = getRelationLineNumber(relationName, lines);
+        reporter.invalidName({ lineIndex, value: relationName, clause: relationRegex.rule, typeName });
       } else if (encounteredRelationsInType[relationName]) {
         // Check if we have any duplicate relations
         // figure out what is the lineIdx in question
@@ -168,15 +189,56 @@ export const basicValidateRelation = (
   });
 };
 
-export const checkDSL = (codeInEditor: string) => {
+export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) => {
   const lines = codeInEditor.split("\n");
   const markers: any = [];
   const reporter = report({ lines, markers });
+  const typeValidation = options.typeValidation || defaultTypeRule;
+  const relationValidation = options.relationValidation || defaultRelationRule;
+  const defaultRegex = new RegExp("[a-zA-Z]*");
+
+  let typeRegex: ValidationRegex = {
+    regex: defaultRegex,
+    rule: typeValidation,
+  };
+  try {
+    typeRegex = {
+      regex: new RegExp(typeValidation),
+      rule: typeValidation,
+    };
+  } catch (e: any) {
+    const marker = defaultError(lines);
+    marker.message = `Incorrect type regex specification for ${typeValidation}`;
+    markers.push(marker);
+    return markers;
+  }
+
+  let relationRegex: ValidationRegex = {
+    regex: defaultRegex,
+    rule: relationValidation,
+  };
+  try {
+    relationRegex = {
+      regex: new RegExp(relationValidation),
+      rule: relationValidation,
+    };
+  } catch (e: any) {
+    const marker = defaultError(lines);
+    marker.message = `Incorrect relation regex specification for ${relationValidation}`;
+    markers.push(marker);
+    return markers;
+  }
 
   try {
     const parserResults = parseDSL(codeInEditor);
 
-    const [globalRelations, transformedTypes] = populateRelations(lines, reporter, parserResults);
+    const [globalRelations, transformedTypes] = populateRelations(
+      lines,
+      reporter,
+      parserResults,
+      typeRegex,
+      relationRegex,
+    );
     basicValidateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {
