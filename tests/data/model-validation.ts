@@ -448,30 +448,16 @@ type group
 `,
     expectedError: [
       {
-        endColumn: 18,
+        endColumn: 26,
         endLineNumber: 9,
-        message: "`parent` is an impossible relation (no entrypoint).",
+        message: "Assignable relation 'parent' must have types",
         relatedInformation: {
-          relation: "parent",
-          type: "relation-no-entry-point",
+          type: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
-        startColumn: 12,
+        startColumn: 22,
         startLineNumber: 9,
-      },
-      {
-        endColumn: 18,
-        endLineNumber: 10,
-        message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
-          relation: "viewer",
-          type: "relation-no-entry-point",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 10,
       },
     ],
   },
@@ -748,16 +734,15 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 18,
+        endColumn: 23,
         endLineNumber: 6,
-        message: "`member` is an impossible relation (no entrypoint).",
+        message: "Assignable relation 'member' must have types",
         relatedInformation: {
-          relation: "member",
-          type: "relation-no-entry-point",
+          type: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
-        startColumn: 12,
+        startColumn: 20,
         startLineNumber: 6,
       },
     ],
@@ -774,16 +759,15 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 18,
+        endColumn: 22,
         endLineNumber: 6,
-        message: "`member` is an impossible relation (no entrypoint).",
+        message: "Assignable relation 'member' must have types",
         relatedInformation: {
-          relation: "member",
-          type: "relation-no-entry-point",
+          type: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
-        startColumn: 12,
+        startColumn: 20,
         startLineNumber: 6,
       },
     ],
@@ -809,6 +793,150 @@ type org
         source: "linter",
         startColumn: 10,
         startLineNumber: 2,
+      },
+    ],
+  },
+  {
+    name: "mode 1.0 should not have allowedType",
+    friendly: `type user
+type org
+  relations
+    define member: [user] as self
+`,
+    expectedError: [
+      {
+        endColumn: 26,
+        endLineNumber: 4,
+        message: "Allowed types for relation 'member' not valid for schema 1.0",
+        relatedInformation: {
+          type: "allowed-type-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 20,
+        startLineNumber: 4,
+      },
+    ],
+  },
+  {
+    name: "model 1.1 has no directly allowed types",
+    friendly: `model
+  schema 1.1
+type user
+type folder
+  relations
+    define parent as self
+    define viewer as self or viewer from parent
+`,
+    expectedError: [
+      {
+        endColumn: 26,
+        endLineNumber: 6,
+        message: "Assignable relation 'parent' must have types",
+        relatedInformation: {
+          type: "assignable-relation-must-have-type",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 22,
+        startLineNumber: 6,
+      },
+      {
+        endColumn: 26,
+        endLineNumber: 7,
+        message: "Assignable relation 'viewer' must have types",
+        relatedInformation: {
+          type: "assignable-relation-must-have-type",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 22,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "model 1.1 has no directly allowed types in viewer",
+    friendly: `model
+  schema 1.1
+type user
+type folder
+  relations
+    define parent: [folder] as self
+    define viewer as self or viewer from parent
+`,
+    expectedError: [
+      {
+        endColumn: 26,
+        endLineNumber: 7,
+        message: "Assignable relation 'viewer' must have types",
+        relatedInformation: {
+          type: "assignable-relation-must-have-type",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 22,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "model 1.0 should not have directly allowed types in viewer",
+    friendly: `type user
+type folder
+  relations
+    define parent: [folder] as self
+    define viewer: [user] as self or viewer from parent
+`,
+    expectedError: [
+      {
+        endColumn: 28,
+        endLineNumber: 4,
+        message: "Allowed types for relation 'parent' not valid for schema 1.0",
+        relatedInformation: {
+          type: "allowed-type-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 20,
+        startLineNumber: 4,
+      },
+      {
+        endColumn: 26,
+        endLineNumber: 5,
+        message: "Allowed types for relation 'viewer' not valid for schema 1.0",
+        relatedInformation: {
+          type: "allowed-type-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 20,
+        startLineNumber: 5,
+      },
+    ],
+  },
+  {
+    name: "mixing 1.0 and 1.1 should not be allowed as non assignable self is not allowed",
+    friendly: `model
+  schema 1.1
+type user
+type folder
+  relations
+    define reader: [user] as self
+    define viewer as self or reader
+`,
+    expectedError: [
+      {
+        endColumn: 26,
+        endLineNumber: 7,
+        message: "Assignable relation 'viewer' must have types",
+        relatedInformation: {
+          type: "assignable-relation-must-have-type",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 22,
+        startLineNumber: 7,
       },
     ],
   },

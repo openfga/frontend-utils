@@ -221,6 +221,11 @@ function childDefDefined(
     case RewriteType.Direct: {
       // for this case, as long as the type / type+relation defined, we should be fine
       const fromPossibleTypes = currentRelation.allowedTypes;
+      if (!fromPossibleTypes.length) {
+        const typeIndex = getTypeLineNumber(type, lines);
+        const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+        reporter.assignableRelationMustHaveTypes({ lineIndex, value: relation });
+      }
       for (const item of fromPossibleTypes) {
         const [decodedType, decodedRelation] = destructTupleToUserset(item);
         if (decodedRelation) {
@@ -467,6 +472,13 @@ export const basicValidateRelation = (
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
+
+      if (relationDef.allowedTypes.length) {
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
+        reporter.allowedTypeModel10({ lineIndex, value: relationName });
+      }
+
       const validateTargetRelation = (typeName: string, relationName: string, target: any) => {
         if (!target) {
           // no need to continue to parse if there is no target
