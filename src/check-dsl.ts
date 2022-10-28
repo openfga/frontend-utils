@@ -422,15 +422,18 @@ function populateRelations(
       relations[relationName] = relationDef;
 
       if (relationName === Keywords.SELF || relationName === ReservedKeywords.THIS) {
-        const lineIndex = getRelationLineNumber(relationName, lines);
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
         reporter.reservedRelation({ lineIndex, value: relationName });
       } else if (!relationRegex.regex.test(relationName)) {
-        const lineIndex = getRelationLineNumber(relationName, lines);
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
         reporter.invalidName({ lineIndex, value: relationName, clause: relationRegex.rule, typeName });
       } else if (encounteredRelationsInType[relationName]) {
         // Check if we have any duplicate relations
         // figure out what is the lineIdx in question
-        const initialLineIdx = getRelationLineNumber(relationName, lines);
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const initialLineIdx = getRelationLineNumber(relationName, lines, typeIndex);
         const duplicateLineIdx = getRelationLineNumber(relationName, lines, initialLineIdx + 1);
         reporter.duplicateDefinition({ lineIndex: duplicateLineIdx, value: relationName });
       }
@@ -467,7 +470,8 @@ export const basicValidateRelation = (
         }
         if (relationName === target.target && target.rewrite != RewriteType.TupleToUserset) {
           // the error case will be relation require self reference (i.e., define owner as owner)
-          const lineIndex = getRelationLineNumber(relationName, lines);
+          const typeIndex = getTypeLineNumber(typeName, lines);
+          const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
           reporter.useSelf({
             lineIndex,
             value: relationName,
@@ -475,7 +479,8 @@ export const basicValidateRelation = (
         }
         if (relationName === target.from && relationDef.definition.targets?.length === 1) {
           // define owner as writer from owner
-          const lineIndex = getRelationLineNumber(relationName, lines);
+          const typeIndex = getTypeLineNumber(typeName, lines);
+          const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
           reporter.invalidFrom({
             lineIndex,
             value: target.from,
@@ -484,7 +489,8 @@ export const basicValidateRelation = (
         }
         if (target.target && !globalRelations[target.target]) {
           // the target relation is not defined (i.e., define owner as foo) where foo is not defined
-          const lineIndex = getRelationLineNumber(relationName, lines);
+          const typeIndex = getTypeLineNumber(typeName, lines);
+          const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
           const value = target.target;
           reporter.invalidRelation({
             lineIndex,
@@ -494,7 +500,8 @@ export const basicValidateRelation = (
         }
         if (target.from && !relationsPerType[typeName].relations[target.from]) {
           // The "from" is not defined for the current type `define owner as member from writer`
-          const lineIndex = getRelationLineNumber(relationName, lines);
+          const typeIndex = getTypeLineNumber(typeName, lines);
+          const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
           const value = target.from;
           reporter.invalidRelationWithinClause({
             typeName,

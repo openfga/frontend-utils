@@ -136,6 +136,34 @@ type org
     ],
   },
   {
+    name: "ensure errors are highlighted in the right place for same relation name across different types",
+    friendly: `type user
+type geography
+  relations
+    define parent as self
+    define can_view_locations as self or can_view_locations from parent
+
+type outlet
+  relations
+    define geography as self
+    define can_view_locations as self or can_view_locations from parent
+`,
+    expectedError: [
+      {
+        endColumn: 72,
+        endLineNumber: 10,
+        message: "The relation `parent` does not exist in type `outlet`",
+        relatedInformation: {
+          type: "",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 66,
+        startLineNumber: 10,
+      },
+    ],
+  },
+  {
     name: "no entry point for multiple type",
     friendly: `type user
 type team
