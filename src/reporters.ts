@@ -135,6 +135,43 @@ export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: 
   });
 };
 
+export const reportAllowedTypeModel10 = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  const rawLine = lines[lineIndex];
+  const actualValue = rawLine.slice(rawLine.indexOf("["), rawLine.lastIndexOf("]") + 1);
+  reportError({
+    message: `Allowed types for relation '${value}' not valid for schema 1.0`,
+    markers,
+    lineIndex,
+    lines,
+    value: actualValue,
+    relatedInformation: { type: "allowed-type-schema-10" },
+    customResolver: (wordIdx, rawLine, value) => {
+      const clauseStartsAt = rawLine.indexOf(":") + ":".length + 1;
+      wordIdx = clauseStartsAt + rawLine.slice(clauseStartsAt).indexOf(value.substring(1));
+      return wordIdx;
+    },
+  });
+};
+
+export const reportAssignableRelationMustHaveTypes = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  const rawLine = lines[lineIndex];
+  const actualValue = rawLine.includes("[")
+    ? rawLine.slice(rawLine.indexOf("["), rawLine.lastIndexOf("]") + 1)
+    : "self";
+  reportError({
+    message: `Assignable relation '${value}' must have types`,
+    markers,
+    lineIndex,
+    lines,
+    value: actualValue,
+    relatedInformation: { type: "assignable-relation-must-have-type" },
+    customResolver: (wordIdx, rawLine, value) => {
+      wordIdx = rawLine.indexOf(value.substring(1));
+      return wordIdx;
+    },
+  });
+};
+
 export const reportInvalidButNot = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
     message: `Cannot self-reference (\`${value}\`) within \`${Keywords.BUT_NOT}\` clause.`,
@@ -278,6 +315,17 @@ export const reportDuplicate = ({ markers, lines, lineIndex, value }: ReporterOp
   });
 };
 
+export const reportInvalidSyntaxVersion = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: `Invalid schema ${value}`,
+    relatedInformation: { type: "invalid-schema" },
+  });
+};
+
 export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "markers" | "lines">) {
   return {
     useSelf: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
@@ -312,6 +360,15 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
 
     invalidType: ({ lineIndex, value, typeName }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidType({ lineIndex, value, typeName, markers, lines }),
+
+    invalidSchemaVersion: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportInvalidSyntaxVersion({ lineIndex, value, markers, lines }),
+
+    allowedTypeModel10: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportAllowedTypeModel10({ lineIndex, markers, lines, value }),
+
+    assignableRelationMustHaveTypes: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportAssignableRelationMustHaveTypes({ lineIndex, markers, lines, value }),
 
     invalidRelation: ({ lineIndex, value, validRelations }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidRelation({

@@ -307,7 +307,9 @@ type permission
         },
       ],
     },
-    friendly: `type document
+    friendly: `model
+  schema 1.1
+type document
   relations
     define viewer: [team#member] as self
 `,
@@ -332,7 +334,9 @@ type permission
         },
       ],
     },
-    friendly: `type document
+    friendly: `model
+  schema 1.1
+type document
   relations
     define viewer: [user,group] as self
 `,

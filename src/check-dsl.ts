@@ -30,6 +30,10 @@ const getTypeLineNumber = (typeName: string, lines: string[], skipIndex?: number
   return lines.slice(skipIndex).findIndex((line: string) => line.trim().startsWith(`type ${typeName}`)) + skipIndex;
 };
 
+const getSchemaLineNumber = (schema: string, lines: string[]) => {
+  return lines.findIndex((line: string) => line.trim().replace(/ {2,}/g, " ").startsWith(`schema ${schema}`));
+};
+
 // return the line number for the specified relation
 const getRelationLineNumber = (relation: string, lines: string[], skipIndex?: number) => {
   if (!skipIndex) {
@@ -217,6 +221,11 @@ function childDefDefined(
     case RewriteType.Direct: {
       // for this case, as long as the type / type+relation defined, we should be fine
       const fromPossibleTypes = currentRelation.allowedTypes;
+      if (!fromPossibleTypes.length) {
+        const typeIndex = getTypeLineNumber(type, lines);
+        const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+        reporter.assignableRelationMustHaveTypes({ lineIndex, value: relation });
+      }
       for (const item of fromPossibleTypes) {
         const [decodedType, decodedRelation] = destructTupleToUserset(item);
         if (decodedRelation) {
@@ -463,6 +472,13 @@ export const basicValidateRelation = (
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
+
+      if (relationDef.allowedTypes.length) {
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
+        reporter.allowedTypeModel10({ lineIndex, value: relationName });
+      }
+
       const validateTargetRelation = (typeName: string, relationName: string, target: any) => {
         if (!target) {
           // no need to continue to parse if there is no target
@@ -588,8 +604,11 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
       case SchemaVersion.OneDotOne:
         mode11Validation(lines, reporter, markers, parserResults, transformedTypes);
         break;
-      default:
-        assertNever(schemaVersion);
+      default: {
+        const lineIndex = getSchemaLineNumber(schemaVersion, lines);
+        reporter.invalidSchemaVersion({ lineIndex, value: schemaVersion });
+        break;
+      }
     }
   } catch (e: any) {
     if (typeof e.offset !== "undefined") {

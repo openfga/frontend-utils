@@ -1,5 +1,6 @@
 import { TypeDefinition, WriteAuthorizationModelRequest, Userset, Metadata } from "@openfga/sdk";
 import { Keywords } from "./keywords";
+import { SchemaVersion } from "./parse-dsl";
 
 const readFrom = (obj: Userset, define: string[]) => {
   const childKeys = Object.keys(obj);
@@ -110,10 +111,21 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
   }
 };
 
+const addSchema = (schema: string, newSyntax: string[]) => {
+  if (schema != SchemaVersion.OneDotZero) {
+    newSyntax.push(`${Keywords.MODEL}`);
+    newSyntax.push(`  ${Keywords.SCHEMA} ${schema}`);
+  }
+};
+
 export const apiSyntaxToFriendlySyntax = (
   config: WriteAuthorizationModelRequest | TypeDefinition,
   newSyntax: string[] = [],
 ): string => {
+  const schemaVersion = (config as WriteAuthorizationModelRequest)?.schema_version;
+  if (schemaVersion) {
+    addSchema(schemaVersion, newSyntax);
+  }
   const typeDefs = (config as WriteAuthorizationModelRequest)?.type_definitions;
   if (typeDefs) {
     typeDefs.forEach((typeDef) => {
