@@ -264,7 +264,7 @@ export const reportInvalidType = ({ markers, lines, lineIndex, value, typeName }
     lineIndex,
     value,
     message: `\`${typeName}\` is not a valid type.`,
-    relatedInformation: { type: "invalid-relation-type", typeName: typeName } as any,
+    relatedInformation: { type: "invalid-type", typeName: typeName } as any,
   });
 };
 

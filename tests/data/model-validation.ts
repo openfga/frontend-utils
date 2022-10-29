@@ -321,6 +321,31 @@ type group
     ],
   },
   {
+    name: "invalid type is used",
+    friendly: `model
+  schema 1.1
+type user
+type group
+  relations
+    define parent: [unknown] as self
+`,
+    expectedError: [
+      {
+        endColumn: 28,
+        endLineNumber: 6,
+        message: "`unknown` is not a valid type.",
+        relatedInformation: {
+          type: "invalid-type",
+          typeName: "unknown",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 21,
+        startLineNumber: 6,
+      },
+    ],
+  },
+  {
     name: "from target relation is not a valid relation for the from child",
     friendly: `model
   schema 1.1
