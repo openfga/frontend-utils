@@ -29,7 +29,7 @@ OpenFGA is designed to make it easy for application builders to model their perm
 
 It allows in-memory data storage for quick development, as well as pluggable database modules - with initial support for PostgreSQL.
 
-It offers an [HTTP API](https://openfga.dev/docs/api) and has SDKs for programming languages including [Node.js/JavaScript](https://github.com/openfga/js-sdk), [GoLang](https://github.com/openfga/go-sdk) and [.NET](https://github.com/openfga/dotnet-sdk).
+It offers an [HTTP API](https://openfga.dev/api/service) and a [gRPC API](https://buf.build/openfga/api/file/main:openfga/v1/openfga_service.proto). It has SDKs for [Node.js/JavaScript](https://www.npmjs.com/package/@openfga/sdk), [GoLang](https://github.com/openfga/go-sdk), [Python](https://github.com/openfga/python-sdk) and [.NET](https://www.nuget.org/packages/OpenFga.Sdk). Look in our [Community section](https://github.com/openfga/community#community-projects) for third-party SDKs and tools.
 
 More SDKs and integrations such as Rego are planned for the future.
 
