@@ -97,6 +97,29 @@ type group
     ],
   },
   {
+    name: "cannot use this in mode 1.0",
+    friendly: `type document
+  relations
+    define editor as self
+    define viewer as editor or this
+`,
+    expectedError: [
+      {
+        endColumn: 36,
+        endLineNumber: 4,
+        message: "The relation `this` does not exist.",
+        relatedInformation: {
+          relation: "this",
+          type: "missing-definition",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 32,
+        startLineNumber: 4,
+      },
+    ],
+  },
+  {
     name: "invalid type name",
     friendly: `model
   schema 1.1
