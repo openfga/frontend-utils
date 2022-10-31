@@ -1,4 +1,7 @@
+import { Keywords } from "./keywords";
 export const indentDSL = (rawDsl: string, removeEmptyLines = false) => {
+  const indentModel = "";
+  const indentSchema = "  ";
   const indentType = "";
   const indentRelation = "  ";
   const indentDefine = "    ";
@@ -11,6 +14,12 @@ export const indentDSL = (rawDsl: string, removeEmptyLines = false) => {
       const keyword = selectedLine.split(" ")[0];
       let indentation = "";
       switch (keyword) {
+        case Keywords.MODEL:
+          indentation = indentModel;
+          break;
+        case Keywords.SCHEMA:
+          indentation = indentSchema;
+          break;
         case "type":
           indentation = indentType;
           break;
