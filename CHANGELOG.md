@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.0.7
+
+### [0.0.7](https://github.com/openfga/syntax-transformer/compare/v0.0.6...v0.0.7) (2022-11-02)
+
+#### Changes
+- feat: add indentDSL to improve checkDSL parsing reliability (#68)
+- feat: validation rule for type and relation name (#78)
+- feat: initial support schema 1.1 (#67, #73, #75)
+
+#### Fixes
+- fix(parse-dsl): fix issue with infinite loops triggered when parsing some models #76
+
+#### Chore
+- chore(deps): bump dependencies
+
 ## v0.0.6
 
 ### [0.0.6](https://github.com/openfga/syntax-transformer/compare/v0.0.5...v0.0.6) (2022-10-11)
