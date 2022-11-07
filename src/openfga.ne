@@ -28,23 +28,22 @@ type            ->  _multiline_comment _type _naming (_newline):+{%
 relations       ->  _relations {%
     data => data[0]
 %}
-define          ->  _newline define_initial (_spacing | _relation_types) _as _spacing (define_base | define_or | define_and | define_but_not) (_newline):*  {%
+define          ->  _newline define_initial (_colon):? _spacing (_as _spacing):? (define_base | define_or | define_and | define_but_not) (_newline):*  {%
     (data, _location, reject) => {
         const relation = data[1];
         // Not supported yet
         const comment = "";
         const def = data[5][0];
+        const hasAs = data[4] !== null;
         const definition = def.type ? def :
             {
                 type: 'single',
                 targets: [def]
             }
-        let allowedTypes = data[2] ? data[2][0] : [];
-        if (allowedTypes.length && typeof allowedTypes[0] !== "string") {
-          allowedTypes = [];
-        }
+        const hasColon = data[2] != null;
+        const allowedTypes = def.allowedTypes;
 
-        return { comment, allowedTypes, relation, definition };
+        return { comment, allowedTypes, relation, definition, hasColon, hasAs };
     }
 %}
 
@@ -52,10 +51,14 @@ define_initial      -> _define _naming {%
 	data => data[1]
 %}
 
-define_base  ->  (_naming | from_phrase) {%
+define_base  ->  (_relation_types | _naming | from_phrase) {%
     data => {
+        if (data[0][0].allowedTypes) {
+            return {rewrite: "direct", target: null, from: null, allowedTypes: data[0][0].allowedTypes}
+        }
 		const entry = data[0][0];
-		let target, rewrite, from
+		let target, rewrite, from;
+        const allowedTypes: string[] = [];
 		if (typeof entry === "string") {
 			if (entry === "self") {
 				rewrite = "direct";
@@ -68,20 +71,20 @@ define_base  ->  (_naming | from_phrase) {%
 		    target = entry.target;
 			rewrite = "tuple_to_userset";
 		}
-		return { rewrite, target, from  }
+		return { rewrite, target, from, allowedTypes  }
 	}
 %}
 
 define_or       -> define_base (_spacing _or _spacing define_base):+ {%
     // @ts-ignore
-    data => ({ targets: [data[0], ...data[1].map((datum) => datum[3])], type: "union" })
+    data => ({ targets: [data[0], ...data[1].map((datum) => datum[3])], type: "union", allowedTypes: data[0].allowedTypes.concat(...data[1].map((datum) => datum[3].allowedTypes)) })
 %}
 define_and      -> define_base (_spacing _and _spacing define_base):+ {%
     // @ts-ignore
-    data => ({ targets: [data[0], ...data[1].map((datum) => datum[3])], type: "intersection" })
+    data => ({ targets: [data[0], ...data[1].map((datum) => datum[3])], type: "intersection", allowedTypes: data[0].allowedTypes.concat(...data[1].map((datum) => datum[3].allowedTypes))  })
 %}
 define_but_not  -> define_base _spacing _but_not _spacing define_base {%
-    data => ({ base: data[0], diff: data[4], type: "exclusion" })
+    data => ({ base: data[0], diff: data[4], type: "exclusion", allowedTypes: data[0].allowedTypes })
 %}
 from_phrase -> _naming _spacing _from _spacing _naming {%
     data => ({ target: data[0], from: data[4] })
@@ -97,8 +100,10 @@ _word           -> ([a-z] | [A-Z] | [0-9] |  "_" |  "-" | "," | "&" | "+" | "/" 
     data => data.flat(3).join('').trim()
 %}
 
-_relation_types -> _optional_space ":" _optional_space "[" _array_of_types "]" _spacing {%
-    data => data[4]
+_colon -> _optional_space ":"
+
+_relation_types ->  "[" _array_of_types "]" {%
+    data => ({allowedTypes: data[1]})
 %}
 
 _array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):* {%

@@ -7,7 +7,7 @@ export const validation_cases: { name: string; friendly: string; expectedError: 
 type user
 type self
   relations
-    define member: [user] as self
+    define member: [user]
 `,
     expectedError: [
       {
@@ -31,7 +31,7 @@ type self
 type user
 type this
   relations
-    define member: [user] as self
+    define member: [user]
 `,
     expectedError: [
       {
@@ -55,7 +55,7 @@ type this
 type user
 type group
   relations
-    define self: [user] as self
+    define self: [user]
 `,
     expectedError: [
       {
@@ -79,7 +79,7 @@ type group
 type user
 type group
   relations
-    define this: [user] as self
+    define this: [user]
 `,
     expectedError: [
       {
@@ -126,7 +126,7 @@ type group
 type user
 type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   relations
-    define member: [user] as self
+    define member: [user]
 `,
     expectedError: [
       {
@@ -151,7 +151,7 @@ type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 type user
 type org
   relations
-    define aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: [user] as self
+    define aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: [user]
 `,
     expectedError: [
       {
@@ -204,12 +204,12 @@ type outlet
 type user
 type team
   relations
-    define parent: [group] as self
-    define viewer as viewer from parent
+    define parent: [group]
+    define viewer: viewer from parent
 type group
   relations
-    define parent: [team] as self
-    define viewer as viewer from parent
+    define parent: [team]
+    define viewer: viewer from parent
 `,
     expectedError: [
       {
@@ -248,7 +248,7 @@ type group
 type user
 type group
   relations
-    define group as group from group
+    define group: group from group
 `,
     expectedError: [
       {
@@ -273,8 +273,8 @@ type group
 type user
 type group
   relations
-    define parent: [group] as self
-    define viewer as viewer from parent
+    define parent: [group]
+    define viewer: viewer from parent
 `,
     expectedError: [
       {
@@ -298,7 +298,7 @@ type group
   schema 1.1
 type group
   relations
-    define viewer: [group#viewer] as self
+    define viewer: [group#viewer]
  `,
     expectedError: [
       {
@@ -323,12 +323,12 @@ type group
 type user
 type group
   relations
-    define parent: [group] as self
-    define viewer as reader from parent
+    define parent: [group]
+    define viewer: reader from parent
 `,
     expectedError: [
       {
-        endColumn: 40,
+        endColumn: 38,
         endLineNumber: 7,
         message: "`reader` is not a valid relation for `group`.",
         relatedInformation: {
@@ -338,7 +338,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 22,
+        startColumn: 20,
         startLineNumber: 7,
       },
     ],
@@ -350,7 +350,7 @@ type group
 type user
 type group
   relations
-    define parent: [unknown] as self
+    define parent: [unknown]
 `,
     expectedError: [
       {
@@ -376,12 +376,12 @@ type user
 type org
 type group
   relations
-    define parent: [group] as self
-    define viewer as viewer from org
+    define parent: [group]
+    define viewer: viewer from org
 `,
     expectedError: [
       {
-        endColumn: 37,
+        endColumn: 35,
         endLineNumber: 8,
         message: "`org` is not a valid relation for `group`.",
         relatedInformation: {
@@ -391,7 +391,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 22,
+        startColumn: 20,
         startLineNumber: 8,
       },
     ],
@@ -404,12 +404,12 @@ type user
 type org
 type group
   relations
-    define parent: [group] as self
-    define viewer as org from parent
+    define parent: [group]
+    define viewer: org from parent
 `,
     expectedError: [
       {
-        endColumn: 37,
+        endColumn: 35,
         endLineNumber: 8,
         message: "`org` is not a valid relation for `group`.",
         relatedInformation: {
@@ -419,7 +419,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 22,
+        startColumn: 20,
         startLineNumber: 8,
       },
     ],
@@ -432,7 +432,7 @@ type user
 type org
 type group
   relations
-    define parent: [group, group#org] as self
+    define parent: [group, group#org]
 `,
     expectedError: [
       {
@@ -458,11 +458,11 @@ type group
 type user
 type org
   relations
-    define viewer: [user] as self
+    define viewer: [user]
 type group
   relations
-    define parent: [group] as self
-    define viewer as viewer from parent
+    define parent: [group]
+    define viewer: viewer from parent
 `,
     expectedError: [
       {
@@ -488,13 +488,37 @@ type group
 type user
 type org
   relations
-    define member: [user] as self
+    define member: [user]
 type group
   relations
     define parent as self
     define viewer as viewer from parent
 `,
     expectedError: [
+      {
+        endColumn: 21,
+        endLineNumber: 9,
+        message: "'as' is invalid for schema 1.1",
+        relatedInformation: {
+          type: "as-used-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 19,
+        startLineNumber: 9,
+      },
+      {
+        endColumn: 25,
+        endLineNumber: 9,
+        message: "Missing ':' in definition for schema 1.1",
+        relatedInformation: {
+          type: "missing-colon-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 9,
+      },
       {
         endColumn: 26,
         endLineNumber: 9,
@@ -507,6 +531,30 @@ type group
         startColumn: 22,
         startLineNumber: 9,
       },
+      {
+        endColumn: 21,
+        endLineNumber: 10,
+        message: "'as' is invalid for schema 1.1",
+        relatedInformation: {
+          type: "as-used-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 19,
+        startLineNumber: 10,
+      },
+      {
+        endColumn: 39,
+        endLineNumber: 10,
+        message: "Missing ':' in definition for schema 1.1",
+        relatedInformation: {
+          type: "missing-colon-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 10,
+      },
     ],
   },
   {
@@ -515,8 +563,8 @@ type group
   schema 1.1
 type document
   relations
-    define reader as writer
-    define writer as reader
+    define reader: writer
+    define writer: reader
 `,
     expectedError: [
       {
@@ -554,12 +602,12 @@ type document
 type user
 type folder
   relations
-    define parent: [folder] as self or parent from parent
-    define viewer: [user] as self or viewer from parent
+    define parent: [folder] or parent from parent
+    define viewer: [user] or viewer from parent
 `,
     expectedError: [
       {
-        endColumn: 58,
+        endColumn: 50,
         endLineNumber: 6,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
@@ -568,11 +616,11 @@ type folder
         },
         severity: 8,
         source: "linter",
-        startColumn: 52,
+        startColumn: 44,
         startLineNumber: 6,
       },
       {
-        endColumn: 56,
+        endColumn: 48,
         endLineNumber: 7,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
@@ -581,7 +629,7 @@ type folder
         },
         severity: 8,
         source: "linter",
-        startColumn: 50,
+        startColumn: 42,
         startLineNumber: 7,
       },
     ],
@@ -593,13 +641,13 @@ type folder
 type user
 type folder
   relations
-    define root: [folder] as self
-    define parent: [folder] as self or root
-    define viewer: [user] as self or viewer from parent
+    define root: [folder]
+    define parent: [folder] or root
+    define viewer: [user] or viewer from parent
 `,
     expectedError: [
       {
-        endColumn: 56,
+        endColumn: 48,
         endLineNumber: 8,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
@@ -608,7 +656,7 @@ type folder
         },
         severity: 8,
         source: "linter",
-        startColumn: 50,
+        startColumn: 42,
         startLineNumber: 8,
       },
     ],
@@ -620,13 +668,13 @@ type folder
 type user
 type folder
   relations
-    define root: [folder] as self
-    define parent: [folder, folder#parent] as self
-    define viewer: [user] as self or viewer from parent
+    define root: [folder]
+    define parent: [folder, folder#parent]
+    define viewer: [user] or viewer from parent
 `,
     expectedError: [
       {
-        endColumn: 56,
+        endColumn: 48,
         endLineNumber: 8,
         message: "`parent` relation used inside from allows only direct relation.",
         relatedInformation: {
@@ -635,7 +683,7 @@ type folder
         },
         severity: 8,
         source: "linter",
-        startColumn: 50,
+        startColumn: 42,
         startLineNumber: 8,
       },
     ],
@@ -647,12 +695,12 @@ type folder
 type user
 type group
   relations
-    define member: [user] as self
-    define reader as member and allowed
+    define member: [user]
+    define reader: member and allowed
 `,
     expectedError: [
       {
-        endColumn: 40,
+        endColumn: 38,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
@@ -661,7 +709,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 33,
+        startColumn: 31,
         startLineNumber: 7,
       },
     ],
@@ -673,12 +721,12 @@ type group
 type user
 type group
   relations
-    define member: [user] as self
-    define reader as member or allowed
+    define member: [user]
+    define reader: member or allowed
 `,
     expectedError: [
       {
-        endColumn: 39,
+        endColumn: 37,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
@@ -687,7 +735,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 32,
+        startColumn: 30,
         startLineNumber: 7,
       },
     ],
@@ -699,12 +747,12 @@ type group
 type user
 type group
   relations
-    define member: [user] as self
-    define reader as allowed but not member
+    define member: [user]
+    define reader: allowed but not member
 `,
     expectedError: [
       {
-        endColumn: 29,
+        endColumn: 27,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
@@ -713,7 +761,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 22,
+        startColumn: 20,
         startLineNumber: 7,
       },
     ],
@@ -725,12 +773,12 @@ type group
 type user
 type group
   relations
-    define member: [user] as self
-    define reader as member but not allowed
+    define member: [user]
+    define reader: member but not allowed
 `,
     expectedError: [
       {
-        endColumn: 44,
+        endColumn: 42,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
@@ -739,7 +787,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 37,
+        startColumn: 35,
         startLineNumber: 7,
       },
     ],
@@ -751,12 +799,12 @@ type group
 type user
 type group
   relations
-    define member: [user] as self
-    define reader   as member   but not   allowed
+    define member: [user]
+    define reader   : member   but not   allowed
 `,
     expectedError: [
       {
-        endColumn: 50,
+        endColumn: 49,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
         relatedInformation: {
@@ -765,7 +813,7 @@ type group
         },
         severity: 8,
         source: "linter",
-        startColumn: 43,
+        startColumn: 42,
         startLineNumber: 7,
       },
     ],
@@ -777,8 +825,8 @@ type group
 type user
 type org
   relations
-    define member: [ ] as self
-    define reader: [user] as self
+    define member: [ ]
+    define reader: [user]
 `,
     expectedError: [
       {
@@ -802,8 +850,8 @@ type org
 type user
 type org
   relations
-    define member: [] as self
-    define reader: [user] as self
+    define member: []
+    define reader: [user]
 `,
     expectedError: [
       {
@@ -827,7 +875,7 @@ type org
 type user
 type org
   relations
-    define member: [user] as self
+    define member: [user]
 `,
     expectedError: [
       {
@@ -849,9 +897,33 @@ type org
     friendly: `type user
 type org
   relations
-    define member: [user] as self
+    define member: [user]
 `,
     expectedError: [
+      {
+        endColumn: 25,
+        endLineNumber: 4,
+        message: "Missing 'as' in definition for schema 1.0",
+        relatedInformation: {
+          type: "missing-as-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 4,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 4,
+        message: "Colon is invalid for schema 1.0",
+        relatedInformation: {
+          type: "colon-used-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 18,
+        startLineNumber: 4,
+      },
       {
         endColumn: 26,
         endLineNumber: 4,
@@ -867,53 +939,40 @@ type org
     ],
   },
   {
-    name: "model 1.1 has no directly allowed types",
-    friendly: `model
-  schema 1.1
-type user
-type folder
-  relations
-    define parent as self
-    define viewer as self or viewer from parent
-`,
-    expectedError: [
-      {
-        endColumn: 26,
-        endLineNumber: 6,
-        message: "Assignable relation 'parent' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 22,
-        startLineNumber: 6,
-      },
-      {
-        endColumn: 26,
-        endLineNumber: 7,
-        message: "Assignable relation 'viewer' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 22,
-        startLineNumber: 7,
-      },
-    ],
-  },
-  {
     name: "model 1.1 has no directly allowed types in viewer",
     friendly: `model
   schema 1.1
 type user
 type folder
   relations
-    define parent: [folder] as self
+    define parent: [folder]
     define viewer as self or viewer from parent
 `,
     expectedError: [
+      {
+        endColumn: 21,
+        endLineNumber: 7,
+        message: "'as' is invalid for schema 1.1",
+        relatedInformation: {
+          type: "as-used-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 19,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 47,
+        endLineNumber: 7,
+        message: "Missing ':' in definition for schema 1.1",
+        relatedInformation: {
+          type: "missing-colon-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 7,
+      },
       {
         endColumn: 26,
         endLineNumber: 7,
@@ -933,10 +992,34 @@ type folder
     friendly: `type user
 type folder
   relations
-    define parent: [folder] as self
-    define viewer: [user] as self or viewer from parent
+    define parent: [folder]
+    define viewer: [user] or viewer from parent
 `,
     expectedError: [
+      {
+        endColumn: 27,
+        endLineNumber: 4,
+        message: "Missing 'as' in definition for schema 1.0",
+        relatedInformation: {
+          type: "missing-as-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 4,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 4,
+        message: "Colon is invalid for schema 1.0",
+        relatedInformation: {
+          type: "colon-used-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 18,
+        startLineNumber: 4,
+      },
       {
         endColumn: 28,
         endLineNumber: 4,
@@ -948,6 +1031,30 @@ type folder
         source: "linter",
         startColumn: 20,
         startLineNumber: 4,
+      },
+      {
+        endColumn: 47,
+        endLineNumber: 5,
+        message: "Missing 'as' in definition for schema 1.0",
+        relatedInformation: {
+          type: "missing-as-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 5,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 5,
+        message: "Colon is invalid for schema 1.0",
+        relatedInformation: {
+          type: "colon-used-schema-10",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 18,
+        startLineNumber: 5,
       },
       {
         endColumn: 26,
@@ -970,10 +1077,34 @@ type folder
 type user
 type folder
   relations
-    define reader: [user] as self
+    define reader: [user]
     define viewer as self or reader
 `,
     expectedError: [
+      {
+        endColumn: 21,
+        endLineNumber: 7,
+        message: "'as' is invalid for schema 1.1",
+        relatedInformation: {
+          type: "as-used-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 19,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 35,
+        endLineNumber: 7,
+        message: "Missing ':' in definition for schema 1.1",
+        relatedInformation: {
+          type: "missing-colon-schema-11",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 7,
+      },
       {
         endColumn: 26,
         endLineNumber: 7,
@@ -996,7 +1127,7 @@ type folder
 type user
 type group
   relations
-    define group: [group] as self
+    define group: [group]
 `,
     expectedError: [],
   },
@@ -1007,11 +1138,11 @@ type group
 type user
 type org
   relations
-    define viewer: [user] as self
+    define viewer: [user]
 type group
   relations
-    define parent: [group, org] as self
-    define viewer as viewer from parent
+    define parent: [group, org]
+    define viewer: viewer from parent
 `,
     expectedError: [],
   },
@@ -1022,12 +1153,60 @@ type group
 type user
 type org
   relations
-    define member: [user] as self
+    define member: [user]
 type group
   relations
-    define parent: [group] as self
-    define writer: [user, org#member] as self
-    define viewer: [user, org#member] as self or writer
+    define parent: [group]
+    define writer: [user, org#member]
+    define viewer: [user, org#member] or writer
+`,
+    expectedError: [],
+  },
+  {
+    name: "should allow directly assigned as last item",
+    friendly: `model
+  schema 1.1
+type user
+type org
+  relations
+    define member: [user]
+type group
+  relations
+    define parent: [group]
+    define writer: [user, org#member]
+    define viewer: writer or [user, org#member]
+`,
+    expectedError: [],
+  },
+  {
+    name: "union with directly related",
+    friendly: `model
+  schema 1.1
+type user
+type org
+  relations
+    define member: [user]
+type group
+  relations
+    define parent: [group]
+    define writer: [user, org#member]
+    define viewer: [user, org#member] and writer
+`,
+    expectedError: [],
+  },
+  {
+    name: "union allow directly assigned as last item",
+    friendly: `model
+  schema 1.1
+type user
+type org
+  relations
+    define member: [user]
+type group
+  relations
+    define parent: [group]
+    define writer: [user, org#member]
+    define viewer: writer and [user, org#member]
 `,
     expectedError: [],
   },
@@ -1038,8 +1217,8 @@ type group
 type user
 type docs
   relations
-    define blocked: [user] as self
-    define can_view: [user] as self but not blocked
+    define blocked: [user]
+    define can_view: [user] but not blocked
 `,
     expectedError: [],
   },
@@ -1051,13 +1230,39 @@ type user
 type org
 
   relations
-    define member: [user] as     self   
+    define member: [user]    
 
 type group
   relations
-    define parent: [group] as self
-    define writer: [user, org#member] as self
-    define viewer:    [   user,    org#member   ]     as    self    or    writer
+    define parent: [group]
+    define writer: [user, org#member]
+    define viewer:    [   user,    org#member   ]       or    writer
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.0 does not assert impossible relation",
+    friendly: `type user
+type folder
+  relations
+    define parent as self
+    define viewer as self or viewer from parent
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 tuple to userset",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [user]
+
+type document
+  relations
+    define parent: [folder]
+    define viewer: [user] or viewer from parent
+type user
 `,
     expectedError: [],
   },

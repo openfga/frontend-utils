@@ -38,7 +38,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`as\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 19,
+    "startColumn": 20,
     "startLineNumber": 3,
   },
 ]
@@ -52,7 +52,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`as\` 2`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 19,
+    "startColumn": 20,
     "startLineNumber": 3,
   },
 ]
@@ -428,6 +428,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -435,6 +436,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "member",
         },
       ],
@@ -447,13 +450,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "repo_admin",
@@ -461,19 +467,24 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "admin",
         },
         {
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "admin",
@@ -481,6 +492,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "maintainer",
         },
         {
@@ -489,6 +502,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -496,24 +510,30 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "owner",
         },
         {
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "triager",
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "repo_reader",
@@ -521,19 +541,24 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "reader",
         },
         {
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "writer",
@@ -541,24 +566,30 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "triager",
         },
         {
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "maintainer",
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "repo_writer",
@@ -566,6 +597,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "writer",
         },
       ],
@@ -578,13 +611,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "owner",
@@ -592,19 +628,24 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "billing_manager",
         },
         {
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "owner",
@@ -612,6 +653,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "member",
         },
         {
@@ -620,6 +663,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -627,6 +671,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "owner",
         },
         {
@@ -635,6 +681,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -642,6 +689,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "repo_admin",
         },
         {
@@ -650,6 +699,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -657,6 +707,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "repo_reader",
         },
         {
@@ -665,6 +717,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -672,6 +725,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "repo_writer",
         },
       ],
@@ -684,13 +739,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "owner",
@@ -698,6 +756,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "app_manager",
         },
         {
@@ -706,6 +766,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -713,6 +774,8 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "owner",
         },
       ],
@@ -735,6 +798,7 @@ exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -742,6 +806,8 @@ exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
             ],
             "type": "single",
           },
+          "hasAs": true,
+          "hasColon": false,
           "relation": "writer",
         },
       ],

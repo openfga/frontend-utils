@@ -11,7 +11,6 @@ import {
   TransformedType,
 } from "./parse-dsl";
 import { report } from "./reporters";
-import { assertNever } from "./utils/assert-never";
 
 export interface ValidationRegex {
   rule: string;
@@ -367,6 +366,22 @@ function mode11Validation(
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
+      if (relationDef.hasAs) {
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
+        reporter.asInVersion11({
+          lineIndex,
+          value: "as",
+        });
+      }
+      if (!relationDef.hasColon) {
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
+        reporter.missingColonInVersion11({
+          lineIndex,
+          value: lines[lineIndex],
+        });
+      }
 
       relationDefined(lines, reporter, relationsPerType, typeName, relationName);
     });
@@ -472,6 +487,18 @@ export const basicValidateRelation = (
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
+
+      if (!relationDef.hasAs) {
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
+        reporter.missingAsInVersion10({ lineIndex, value: lines[lineIndex] });
+      }
+
+      if (relationDef.hasColon) {
+        const typeIndex = getTypeLineNumber(typeName, lines);
+        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
+        reporter.colonInVersion10({ lineIndex, value: ":" });
+      }
 
       if (relationDef.allowedTypes.length) {
         const typeIndex = getTypeLineNumber(typeName, lines);

@@ -224,43 +224,51 @@ type group
     });
 
     it("should only return single result for simple 1.1 valid model", () => {
-      const result = innerParseDSL(`type user
+      const result = innerParseDSL(`model
+  schema 1.1
+type user
 type team
   relations
-    define member: [user] as self
-    define other: [user] as self
+    define member: [user]
+    define other: [user]
 `);
       expect(result.length).toEqual(1);
     });
 
     it("should only return single result for simple 1.1 valid model with spaces", () => {
-      const result = innerParseDSL(`type user
+      const result = innerParseDSL(`model
+  schema 1.1
+type user
 type team
   relations
-    define member: [user]   as self 
-    define other:   [user] as   self
+    define member: [user]
+    define other:   [user]
 `);
       expect(result.length).toEqual(1);
     });
 
     it.skip("should only return single result for simple 1.1 valid model with comment", () => {
-      const result = innerParseDSL(`type user
+      const result = innerParseDSL(`model
+   schema 1.1
+type user
 type team
   relations
-    define member: [user] as self
+    define member: [user]
     # Comment for other
-    define other: [user] as self
+    define other: [user]
 `);
       expect(result.length).toEqual(1);
     });
 
     it.skip("should only return single result for simple 1.1 valid model with comment and spaces at the end", () => {
-      const result = innerParseDSL(`type user
+      const result = innerParseDSL(`model
+  schema 1.1
+type user
 type team
   relations
-    define member: [user] as self
+    define member: [user]
     # Comment for other   
-    define other: [user] as self
+    define other: [user]
 `);
       expect(result.length).toEqual(1);
     });
@@ -328,6 +336,41 @@ type app
       expect(result.length).toEqual(1);
     });
 
+    it("should only return single result for complex 1.1 model with spaces", () => {
+      const result = innerParseDSL(`model
+  schema 1.1
+type user
+type team
+  relations
+    define member: [user]  
+
+type repo
+  relations
+
+    define admin: [user] or repo_admin from owner  
+    define maintainer: [user] or admin 
+    define owner: [user]
+    define reader:   [user]   or triager  or   repo_reader from owner
+    define triager: [user] or writer
+    define writer: [user] or maintainer or repo_writer  from   owner
+    
+type org
+  relations
+    define billing_manager: [user] or owner
+    define member: [user] or owner
+    define owner:   [user]
+    define repo_admin: [user]
+    define repo_reader: [user]
+    define repo_writer: [user]
+    
+type app
+  relations
+    define app_manager: [user] or owner from owner
+    define owner: [user]
+`);
+      expect(result.length).toEqual(1);
+    });
+
     it("should parse DSL in reasonable time", () => {
       const time1 = new Date();
       // Add in addition `define R as X from Y but not Z` to increase the time
@@ -358,6 +401,44 @@ type T4
 type T5
   relations
     define A as A1 from A2 but not A3
+`);
+      const time2 = new Date();
+      expect(result.length).toEqual(1);
+      expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
+    });
+
+    it("should parse 1.1 DSL in reasonable time", () => {
+      const time1 = new Date();
+      // Add in addition `define R as X from Y but not Z` to increase the time
+      const result = innerParseDSL(`model
+  schema 1.1
+type T1
+  relations
+    define A: A1 from A2 but not A3
+    define B: B1 from B2 but not B3
+    define C: C1 from C2 but not C3
+    define D: D1 from D2 but not D3
+type T2
+  relations
+    define A: A1 from A2 but not A3
+    define B: B1 from B2 but not B3
+    define C: C1 from C2 but not C3
+    define D: D1 from D2 but not D3
+type T3
+  relations
+    define A: A1 from A2 but not A3
+    define B: B1 from B2 but not B3
+    define C: C1 from C2 but not C3
+    define D: D1 from D2 but not D3
+type T4
+  relations
+    define A: A1 from A2 but not A3
+    define B: B1 from B2 but not B3
+    define C: C1 from C2 but not C3
+    define D: D1 from D2 but not D3
+type T5
+  relations
+    define A: A1 from A2 but not A3
 `);
       const time2 = new Date();
       expect(result.length).toEqual(1);

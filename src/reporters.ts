@@ -153,6 +153,53 @@ export const reportAllowedTypeModel10 = ({ markers, lines, lineIndex, value }: R
   });
 };
 
+export const reportMissingAsInVersion10 = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: "Missing 'as' in definition for schema 1.0",
+    relatedInformation: { type: "missing-as-schema-10" },
+  });
+};
+
+export const reportColonInVersion10 = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: "Colon is invalid for schema 1.0",
+    relatedInformation: { type: "colon-used-schema-10" },
+    customResolver: (wordIdx, rawLine, value) => {
+      return rawLine.indexOf(value) + 1;
+    },
+  });
+};
+
+export const reportMissingColonInVersion11 = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: "Missing ':' in definition for schema 1.1",
+    relatedInformation: { type: "missing-colon-schema-11" },
+  });
+};
+
+export const reportAsInVersion11 = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    markers,
+    lines,
+    lineIndex,
+    value,
+    message: "'as' is invalid for schema 1.1",
+    relatedInformation: { type: "as-used-schema-11" },
+  });
+};
+
 export const reportAssignableRelationMustHaveTypes = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   const rawLine = lines[lineIndex];
   const actualValue = rawLine.includes("[")
@@ -366,6 +413,18 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
 
     allowedTypeModel10: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportAllowedTypeModel10({ lineIndex, markers, lines, value }),
+
+    missingAsInVersion10: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportMissingAsInVersion10({ lineIndex, markers, lines, value }),
+
+    colonInVersion10: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportColonInVersion10({ lineIndex, markers, lines, value }),
+
+    missingColonInVersion11: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportMissingColonInVersion11({ lineIndex, markers, lines, value }),
+
+    asInVersion11: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportAsInVersion11({ lineIndex, markers, lines, value }),
 
     assignableRelationMustHaveTypes: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportAssignableRelationMustHaveTypes({ lineIndex, markers, lines, value }),

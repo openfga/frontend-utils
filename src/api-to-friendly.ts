@@ -2,12 +2,16 @@ import { TypeDefinition, WriteAuthorizationModelRequest, Userset, Metadata } fro
 import { Keywords } from "./keywords";
 import { SchemaVersion } from "./parse-dsl";
 
-const readFrom = (obj: Userset, define: string[]) => {
+const readFrom = (obj: Userset, define: string[], schemaVersion: string | undefined, allowedType: string) => {
   const childKeys = Object.keys(obj);
 
   childKeys.forEach((childKey: string) => {
     if (childKey === "this") {
-      define.push(Keywords.SELF);
+      if (!schemaVersion || schemaVersion === "1.0") {
+        define.push(Keywords.SELF);
+      } else {
+        define.push(allowedType);
+      }
     }
 
     if (childKey === "tupleToUserset") {
@@ -27,6 +31,7 @@ const apiToFriendlyRelation = (
   idx: number,
   metadata: Userset | Metadata | undefined,
   newSyntax: string[],
+  schemaVersion: string | undefined,
 ) => {
   const relationKeys = Object.keys(relationDefinition);
   const relationMetadata = (metadata as Metadata)?.relations?.[relation];
@@ -39,18 +44,20 @@ const apiToFriendlyRelation = (
       return relationReference.type;
     }) || [];
 
-  const allowedTypes = allowedTypesArray.length ? `: [${allowedTypesArray.join(",")}]` : "";
+  const allowedTypes = allowedTypesArray.length ? `[${allowedTypesArray.join(",")}]` : "";
 
-  const define = [`    ${Keywords.DEFINE} ${relation}${allowedTypes}${relationKeys?.length ? ` ${Keywords.AS} ` : ""}`];
+  const define = [
+    `    ${Keywords.DEFINE} ${relation}${!schemaVersion || schemaVersion === "1.0" ? ` ${Keywords.AS} ` : ": "}`,
+  ];
 
   // Read simple definitions
-  readFrom(relationDefinition, define);
+  readFrom(relationDefinition, define, schemaVersion, allowedTypes);
 
   relationKeys.forEach((relationKey) => {
     if (relationKey === "union") {
       const children = relationDefinition[relationKey]!.child!;
       children.forEach((child: Userset, idx: number) => {
-        readFrom(child, define);
+        readFrom(child, define, schemaVersion, allowedTypes);
 
         if (idx < children.length - 1) {
           define.push(` ${Keywords.OR} `);
@@ -61,7 +68,7 @@ const apiToFriendlyRelation = (
     if (relationKey === "intersection") {
       const children = relationDefinition[relationKey]!.child!;
       children.forEach((child, idx: number) => {
-        readFrom(child, define);
+        readFrom(child, define, schemaVersion, allowedTypes);
 
         if (idx < children.length - 1) {
           define.push(` ${Keywords.AND} `);
@@ -72,9 +79,9 @@ const apiToFriendlyRelation = (
     if (relationKey === "difference") {
       const { base, subtract } = relationDefinition[relationKey]!;
 
-      readFrom(base!, define);
+      readFrom(base!, define, schemaVersion, allowedTypes);
       define.push(` ${Keywords.BUT_NOT} `);
-      readFrom(subtract!, define);
+      readFrom(subtract!, define, schemaVersion, allowedTypes);
     }
   });
 
@@ -85,7 +92,11 @@ const apiToFriendlyRelation = (
   newSyntax.push(define.join(""));
 };
 
-const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"], newSyntax: string[]) => {
+const apiToFriendlyType = (
+  typeDef: TypeDefinition | TypeDefinition["relations"],
+  newSyntax: string[],
+  schemaVersion: string | undefined,
+) => {
   if (typeDef?.type) {
     // A full type definition was passed
     newSyntax.push(`${Keywords.NAMESPACE} ${typeDef.type}`);
@@ -96,7 +107,7 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
 
       relations.forEach((relation: any, idx: number) => {
         const relationDefinition = (typeDef.relations as any)[relation];
-        apiToFriendlyRelation(relation, relationDefinition, relations, idx, typeDef.metadata, newSyntax);
+        apiToFriendlyRelation(relation, relationDefinition, relations, idx, typeDef.metadata, newSyntax, schemaVersion);
       });
     }
   } else {
@@ -107,7 +118,7 @@ const apiToFriendlyType = (typeDef: TypeDefinition | TypeDefinition["relations"]
     }
     const relation = relations[0];
     const userSet = (typeDef as any)[relation];
-    apiToFriendlyRelation(relation, userSet, relations, 0, undefined, newSyntax);
+    apiToFriendlyRelation(relation, userSet, relations, 0, undefined, newSyntax, schemaVersion);
   }
 };
 
@@ -121,18 +132,19 @@ const addSchema = (schema: string, newSyntax: string[]) => {
 export const apiSyntaxToFriendlySyntax = (
   config: WriteAuthorizationModelRequest | TypeDefinition,
   newSyntax: string[] = [],
+  schemaVersion: string | undefined = undefined,
 ): string => {
-  const schemaVersion = (config as WriteAuthorizationModelRequest)?.schema_version;
-  if (schemaVersion) {
-    addSchema(schemaVersion, newSyntax);
+  const parsedSchemaVersion = (config as WriteAuthorizationModelRequest)?.schema_version;
+  if (parsedSchemaVersion) {
+    addSchema(parsedSchemaVersion, newSyntax);
   }
   const typeDefs = (config as WriteAuthorizationModelRequest)?.type_definitions;
   if (typeDefs) {
     typeDefs.forEach((typeDef) => {
-      apiSyntaxToFriendlySyntax(typeDef, newSyntax);
+      apiSyntaxToFriendlySyntax(typeDef, newSyntax, schemaVersion ? schemaVersion : parsedSchemaVersion);
     });
   } else if (config) {
-    apiToFriendlyType(config as TypeDefinition, newSyntax);
+    apiToFriendlyType(config as TypeDefinition, newSyntax, schemaVersion ? schemaVersion : parsedSchemaVersion);
   }
 
   return newSyntax.join("\n") + "\n";

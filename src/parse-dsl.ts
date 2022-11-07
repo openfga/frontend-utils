@@ -25,6 +25,8 @@ export interface RelationDefParserResult<T extends RelationDefOperator> {
   comment: string;
   relation: string;
   allowedTypes: string[];
+  hasAs: boolean;
+  hasColon: boolean;
   definition: {
     type: T;
     targets: T extends RelationDefOperator.Exclusion ? undefined : RelationTargetParserResult[];
