@@ -20,13 +20,13 @@ export const indentDSL = (rawDsl: string, removeEmptyLines = false) => {
         case Keywords.SCHEMA:
           indentation = indentSchema;
           break;
-        case "type":
+        case Keywords.NAMESPACE:
           indentation = indentType;
           break;
-        case "relations":
+        case Keywords.RELATIONS:
           indentation = indentRelation;
           break;
-        case "define":
+        case Keywords.DEFINE:
           indentation = indentDefine;
           break;
         default:
