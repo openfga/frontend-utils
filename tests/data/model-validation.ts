@@ -496,64 +496,13 @@ type group
 `,
     expectedError: [
       {
-        endColumn: 21,
-        endLineNumber: 9,
-        message: "'as' is invalid for schema 1.1",
-        relatedInformation: {
-          type: "as-used-schema-11",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 19,
-        startLineNumber: 9,
-      },
-      {
         endColumn: 25,
         endLineNumber: 9,
-        message: "Missing ':' in definition for schema 1.1",
-        relatedInformation: {
-          type: "missing-colon-schema-11",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 0,
-        startLineNumber: 9,
-      },
-      {
-        endColumn: 26,
-        endLineNumber: 9,
-        message: "Assignable relation 'parent' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 22,
-        startLineNumber: 9,
-      },
-      {
-        endColumn: 21,
-        endLineNumber: 10,
-        message: "'as' is invalid for schema 1.1",
-        relatedInformation: {
-          type: "as-used-schema-11",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 19,
-        startLineNumber: 10,
-      },
-      {
-        endColumn: 39,
-        endLineNumber: 10,
-        message: "Missing ':' in definition for schema 1.1",
-        relatedInformation: {
-          type: "missing-colon-schema-11",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 0,
-        startLineNumber: 10,
+        startLineNumber: 9,
       },
     ],
   },
@@ -879,12 +828,9 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 13,
+        endColumn: 12,
         endLineNumber: 2,
-        message: "Invalid schema 0.9",
-        relatedInformation: {
-          type: "invalid-schema",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 10,
@@ -893,7 +839,7 @@ type org
     ],
   },
   {
-    name: "mode 1.0 should not have allowedType",
+    name: "model 1.0 should not have allowedType",
     friendly: `type user
 type org
   relations
@@ -903,37 +849,10 @@ type org
       {
         endColumn: 25,
         endLineNumber: 4,
-        message: "Missing 'as' in definition for schema 1.0",
-        relatedInformation: {
-          type: "missing-as-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 0,
-        startLineNumber: 4,
-      },
-      {
-        endColumn: 19,
-        endLineNumber: 4,
-        message: "Colon is invalid for schema 1.0",
-        relatedInformation: {
-          type: "colon-used-schema-10",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 18,
-        startLineNumber: 4,
-      },
-      {
-        endColumn: 26,
-        endLineNumber: 4,
-        message: "Allowed types for relation 'member' not valid for schema 1.0",
-        relatedInformation: {
-          type: "allowed-type-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 20,
         startLineNumber: 4,
       },
     ],
@@ -950,39 +869,12 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 21,
+        endColumn: 47,
         endLineNumber: 7,
-        message: "'as' is invalid for schema 1.1",
-        relatedInformation: {
-          type: "as-used-schema-11",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 19,
-        startLineNumber: 7,
-      },
-      {
-        endColumn: 47,
-        endLineNumber: 7,
-        message: "Missing ':' in definition for schema 1.1",
-        relatedInformation: {
-          type: "missing-colon-schema-11",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 0,
-        startLineNumber: 7,
-      },
-      {
-        endColumn: 26,
-        endLineNumber: 7,
-        message: "Assignable relation 'viewer' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 22,
         startLineNumber: 7,
       },
     ],
@@ -999,74 +891,11 @@ type folder
       {
         endColumn: 27,
         endLineNumber: 4,
-        message: "Missing 'as' in definition for schema 1.0",
-        relatedInformation: {
-          type: "missing-as-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 0,
-        startLineNumber: 4,
-      },
-      {
-        endColumn: 19,
-        endLineNumber: 4,
-        message: "Colon is invalid for schema 1.0",
-        relatedInformation: {
-          type: "colon-used-schema-10",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 18,
         startLineNumber: 4,
-      },
-      {
-        endColumn: 28,
-        endLineNumber: 4,
-        message: "Allowed types for relation 'parent' not valid for schema 1.0",
-        relatedInformation: {
-          type: "allowed-type-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 20,
-        startLineNumber: 4,
-      },
-      {
-        endColumn: 47,
-        endLineNumber: 5,
-        message: "Missing 'as' in definition for schema 1.0",
-        relatedInformation: {
-          type: "missing-as-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 0,
-        startLineNumber: 5,
-      },
-      {
-        endColumn: 19,
-        endLineNumber: 5,
-        message: "Colon is invalid for schema 1.0",
-        relatedInformation: {
-          type: "colon-used-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 18,
-        startLineNumber: 5,
-      },
-      {
-        endColumn: 26,
-        endLineNumber: 5,
-        message: "Allowed types for relation 'viewer' not valid for schema 1.0",
-        relatedInformation: {
-          type: "allowed-type-schema-10",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 20,
-        startLineNumber: 5,
       },
     ],
   },
@@ -1082,44 +911,56 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 21,
+        endColumn: 35,
         endLineNumber: 7,
-        message: "'as' is invalid for schema 1.1",
-        relatedInformation: {
-          type: "as-used-schema-11",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 19,
         startLineNumber: 7,
       },
+    ],
+  },
+  {
+    name: "syntax error is highlighted in the right spot",
+    friendly: `type user
+type group
+  relations
+    define group: [group] as self
+`,
+    expectedError: [
       {
-        endColumn: 35,
-        endLineNumber: 7,
-        message: "Missing ':' in definition for schema 1.1",
-        relatedInformation: {
-          type: "missing-colon-schema-11",
-        },
+        endColumn: 33,
+        endLineNumber: 4,
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
-        startColumn: 0,
-        startLineNumber: 7,
-      },
-      {
-        endColumn: 26,
-        endLineNumber: 7,
-        message: "Assignable relation 'viewer' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 22,
-        startLineNumber: 7,
+        startColumn: 17,
+        startLineNumber: 4,
       },
     ],
   },
   // The following are valid cases and should not result in error
+  {
+    name: "simple model 1.0",
+    friendly: `type user
+type group
+  relations
+    define member as self
+`,
+    expectedError: [],
+  },
+  {
+    name: "simple model where the model is explicit",
+    friendly: `model
+  schema 1.0
+type user
+type group
+  relations
+    define member as self
+`,
+    expectedError: [],
+  },
   {
     name: "simple group reference to itself",
     friendly: `model

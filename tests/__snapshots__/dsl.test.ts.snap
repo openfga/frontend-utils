@@ -24,7 +24,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`and\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 28,
+    "startColumn": 29,
     "startLineNumber": 4,
   },
 ]
@@ -66,7 +66,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`but not\` 1`] =
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 32,
+    "startColumn": 33,
     "startLineNumber": 4,
   },
 ]
@@ -80,7 +80,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`define\` 1`] = 
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 6,
+    "startColumn": 7,
     "startLineNumber": 3,
   },
 ]
@@ -94,7 +94,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`or\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 27,
+    "startColumn": 28,
     "startLineNumber": 4,
   },
 ]
@@ -108,7 +108,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`self\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 24,
+    "startColumn": 25,
     "startLineNumber": 3,
   },
 ]
@@ -436,8 +436,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "member",
         },
       ],
@@ -467,8 +465,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "admin",
         },
         {
@@ -492,8 +488,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "maintainer",
         },
         {
@@ -510,8 +504,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "owner",
         },
         {
@@ -541,8 +533,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "reader",
         },
         {
@@ -566,8 +556,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "triager",
         },
         {
@@ -597,8 +585,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "writer",
         },
       ],
@@ -628,8 +614,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "billing_manager",
         },
         {
@@ -653,8 +637,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "member",
         },
         {
@@ -671,8 +653,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "owner",
         },
         {
@@ -689,8 +669,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "repo_admin",
         },
         {
@@ -707,8 +685,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "repo_reader",
         },
         {
@@ -725,8 +701,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "repo_writer",
         },
       ],
@@ -756,8 +730,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "union",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "app_manager",
         },
         {
@@ -774,8 +746,6 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "owner",
         },
       ],
@@ -806,8 +776,6 @@ exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
             ],
             "type": "single",
           },
-          "hasAs": true,
-          "hasColon": false,
           "relation": "writer",
         },
       ],

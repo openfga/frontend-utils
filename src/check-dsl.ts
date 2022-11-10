@@ -366,23 +366,6 @@ function mode11Validation(
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
-      if (relationDef.hasAs) {
-        const typeIndex = getTypeLineNumber(typeName, lines);
-        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
-        reporter.asInVersion11({
-          lineIndex,
-          value: "as",
-        });
-      }
-      if (!relationDef.hasColon) {
-        const typeIndex = getTypeLineNumber(typeName, lines);
-        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
-        reporter.missingColonInVersion11({
-          lineIndex,
-          value: lines[lineIndex],
-        });
-      }
-
       relationDefined(lines, reporter, relationsPerType, typeName, relationName);
     });
   });
@@ -487,18 +470,6 @@ export const basicValidateRelation = (
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
-
-      if (!relationDef.hasAs) {
-        const typeIndex = getTypeLineNumber(typeName, lines);
-        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
-        reporter.missingAsInVersion10({ lineIndex, value: lines[lineIndex] });
-      }
-
-      if (relationDef.hasColon) {
-        const typeIndex = getTypeLineNumber(typeName, lines);
-        const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
-        reporter.colonInVersion10({ lineIndex, value: ":" });
-      }
 
       if (relationDef.allowedTypes.length) {
         const typeIndex = getTypeLineNumber(typeName, lines);
@@ -647,7 +618,7 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
         const marker = {
           // monaco.MarkerSeverity.Error,
           severity: 8,
-          startColumn: column - 1 < 0 ? 0 : column - 1,
+          startColumn: column < 0 ? 0 : column,
           endColumn: lines[line - 1].length,
           startLineNumber: column === 0 ? line - 1 : line,
           endLineNumber: column === 0 ? line - 1 : line,
