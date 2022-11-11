@@ -89,7 +89,8 @@ define_10          ->  _newline define_initial _spacing _as _spacing (define_bas
                 type: 'single',
                 targets: [def]
             }
-        const allowedTypes = def.allowedTypes;
+        // Note that this is in typescript.  Thus, if the grammer is to be used in js only environment, remove the type
+        const allowedTypes: string[] = [];
 
         return { comment, allowedTypes, relation, definition};
     }
@@ -113,28 +114,29 @@ define_11          ->  _newline define_initial _colon _spacing (define_base_11 |
 %}
 
 define_initial      -> _define _naming {%
-	data => data[1]
+    data => data[1]
 %}
 
 define_base  ->  ( _naming | from_phrase) {%
     data => {
-		const entry = data[0][0];
-		let target, rewrite, from;
+        const entry = data[0][0];
+        let target, rewrite, from;
+        // Note that this is in typescript.  Thus, if the grammer is to be used in js only environment, remove the type
         const allowedTypes: string[] = [];
-		if (typeof entry === "string") {
-			if (entry === "self") {
-				rewrite = "direct";
-			} else {
-				rewrite = "computed_userset";
-				target = entry;
-			}
-		} else {
-			from = entry.from;
-		    target = entry.target;
-			rewrite = "tuple_to_userset";
-		}
-		return { rewrite, target, from, allowedTypes  }
-	}
+        if (typeof entry === "string") {
+            if (entry === "self") {
+                rewrite = "direct";
+            } else {
+                rewrite = "computed_userset";
+                target = entry;
+            }
+        } else {
+            from = entry.from;
+            target = entry.target;
+            rewrite = "tuple_to_userset";
+        }
+        return { rewrite, target, from, allowedTypes  }
+    }
 %}
 
 define_base_11  ->  (_relation_types | _naming | from_phrase) {%
@@ -142,23 +144,24 @@ define_base_11  ->  (_relation_types | _naming | from_phrase) {%
         if (data[0][0].allowedTypes) {
             return {rewrite: "direct", target: null, from: null, allowedTypes: data[0][0].allowedTypes}
         }
-		const entry = data[0][0];
-		let target, rewrite, from;
+        const entry = data[0][0];
+        let target, rewrite, from;
+        // Note that this is in typescript.  Thus, if the grammer is to be used in js only environment, remove the type
         const allowedTypes: string[] = [];
-		if (typeof entry === "string") {
-			if (entry === "self") {
-				rewrite = "direct";
-			} else {
-				rewrite = "computed_userset";
-				target = entry;
-			}
-		} else {
-			from = entry.from;
-		    target = entry.target;
-			rewrite = "tuple_to_userset";
-		}
-		return { rewrite, target, from, allowedTypes  }
-	}
+        if (typeof entry === "string") {
+            if (entry === "self") {
+                rewrite = "direct";
+            } else {
+                rewrite = "computed_userset";
+                target = entry;
+            }
+        } else {
+            from = entry.from;
+            target = entry.target;
+            rewrite = "tuple_to_userset";
+        }
+        return { rewrite, target, from, allowedTypes  }
+    }
 %}
 
 define_or       -> define_base (_spacing _or _spacing define_base):+ {%

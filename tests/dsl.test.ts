@@ -372,7 +372,6 @@ type app
     });
 
     it("should parse DSL in reasonable time", () => {
-      const time1 = new Date();
       // Add in addition `define R as X from Y but not Z` to increase the time
       const result = innerParseDSL(`type T1
   relations
@@ -402,13 +401,10 @@ type T5
   relations
     define A as A1 from A2 but not A3
 `);
-      const time2 = new Date();
       expect(result.length).toEqual(1);
-      expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
-    });
+    }, 1000);
 
     it("should parse 1.1 DSL in reasonable time", () => {
-      const time1 = new Date();
       // Add in addition `define R as X from Y but not Z` to increase the time
       const result = innerParseDSL(`model
   schema 1.1
@@ -440,10 +436,8 @@ type T5
   relations
     define A: A1 from A2 but not A3
 `);
-      const time2 = new Date();
       expect(result.length).toEqual(1);
-      expect(time2.getTime() - time1.getTime()).toBeLessThan(1000);
-    });
+    }, 1000);
   });
 
   describe("checkDSL()", () => {
