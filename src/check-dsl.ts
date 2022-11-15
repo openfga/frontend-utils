@@ -11,7 +11,6 @@ import {
   TransformedType,
 } from "./parse-dsl";
 import { report } from "./reporters";
-import { assertNever } from "./utils/assert-never";
 
 export interface ValidationRegex {
   rule: string;
@@ -367,7 +366,6 @@ function mode11Validation(
     // parse through each of the relations to do validation
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
-
       relationDefined(lines, reporter, relationsPerType, typeName, relationName);
     });
   });
@@ -620,7 +618,7 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
         const marker = {
           // monaco.MarkerSeverity.Error,
           severity: 8,
-          startColumn: column - 1 < 0 ? 0 : column - 1,
+          startColumn: column < 0 ? 0 : column,
           endColumn: lines[line - 1].length,
           startLineNumber: column === 0 ? line - 1 : line,
           endLineNumber: column === 0 ? line - 1 : line,

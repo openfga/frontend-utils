@@ -24,7 +24,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`and\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 28,
+    "startColumn": 29,
     "startLineNumber": 4,
   },
 ]
@@ -38,7 +38,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`as\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 19,
+    "startColumn": 20,
     "startLineNumber": 3,
   },
 ]
@@ -52,7 +52,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`as\` 2`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 19,
+    "startColumn": 20,
     "startLineNumber": 3,
   },
 ]
@@ -66,7 +66,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`but not\` 1`] =
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 32,
+    "startColumn": 33,
     "startLineNumber": 4,
   },
 ]
@@ -80,7 +80,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`define\` 1`] = 
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 6,
+    "startColumn": 7,
     "startLineNumber": 3,
   },
 ]
@@ -94,7 +94,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`or\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 27,
+    "startColumn": 28,
     "startLineNumber": 4,
   },
 ]
@@ -108,7 +108,7 @@ exports[`DSL checkDSL() invalid keywords should handle invalid \`self\` 1`] = `
     "message": "Invalid syntax",
     "severity": 8,
     "source": "linter",
-    "startColumn": 24,
+    "startColumn": 25,
     "startLineNumber": 3,
   },
 ]
@@ -428,6 +428,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -447,13 +448,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "repo_admin",
@@ -467,13 +471,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "admin",
@@ -489,6 +496,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -502,18 +510,22 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "triager",
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "repo_reader",
@@ -527,13 +539,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "writer",
@@ -547,18 +562,22 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "maintainer",
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "repo_writer",
@@ -578,13 +597,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "owner",
@@ -598,13 +620,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "computed_userset",
                 "target": "owner",
@@ -620,6 +645,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -635,6 +661,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -650,6 +677,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -665,6 +693,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -684,13 +713,16 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "allowedTypes": [],
           "comment": "",
           "definition": {
+            "allowedTypes": [],
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
               },
               {
+                "allowedTypes": [],
                 "from": "owner",
                 "rewrite": "tuple_to_userset",
                 "target": "owner",
@@ -706,6 +738,7 @@ exports[`DSL parseDSL() should correctly parse a complex sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,
@@ -735,6 +768,7 @@ exports[`DSL parseDSL() should correctly parse a simple sample 1`] = `
           "definition": {
             "targets": [
               {
+                "allowedTypes": [],
                 "from": undefined,
                 "rewrite": "direct",
                 "target": undefined,

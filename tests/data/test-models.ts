@@ -224,6 +224,252 @@ type organization
 `,
   },
   {
+    name: "union for 1.1",
+    json: {
+      schema_version: "1.1",
+      type_definitions: [
+        {
+          type: "user",
+          relations: {},
+        },
+        {
+          type: "document",
+          relations: {
+            owner: {
+              this: {},
+            },
+            writer: {
+              union: {
+                child: [
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "owner",
+                    },
+                  },
+                  {
+                    this: {},
+                  },
+                ],
+              },
+            },
+            reader: {
+              union: {
+                child: [
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "owner",
+                    },
+                  },
+                  {
+                    this: {},
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "writer",
+                    },
+                  },
+                ],
+              },
+            },
+            can_write: {
+              computedUserset: {
+                object: "",
+                relation: "writer",
+              },
+            },
+            can_delete: {
+              intersection: {
+                child: [
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "writer",
+                    },
+                  },
+                  {
+                    tupleToUserset: {
+                      tupleset: {
+                        object: "",
+                        relation: "owner",
+                      },
+                      computedUserset: {
+                        object: "",
+                        relation: "member",
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+          metadata: {
+            relations: {
+              owner: { directly_related_user_types: [{ type: "user" }] },
+              writer: { directly_related_user_types: [{ type: "user" }] },
+              reader: { directly_related_user_types: [{ type: "user" }] },
+              can_write: { directly_related_user_types: [] },
+              can_delete: { directly_related_user_types: [] },
+            },
+          },
+        },
+        {
+          type: "organization",
+          relations: {
+            member: {
+              this: {},
+            },
+          },
+          metadata: {
+            relations: {
+              member: { directly_related_user_types: [{ type: "user" }] },
+            },
+          },
+        },
+      ],
+    },
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define owner: [user]
+    define writer: owner or [user]
+    define reader: owner or [user] or writer
+    define can_write: writer
+    define can_delete: writer and member from owner
+type organization
+  relations
+    define member: [user]
+`,
+  },
+  {
+    name: "intersection for 1.1",
+    json: {
+      schema_version: "1.1",
+      type_definitions: [
+        {
+          type: "user",
+          relations: {},
+        },
+        {
+          type: "document",
+          relations: {
+            allowed: {
+              this: {},
+            },
+            member: {
+              this: {},
+            },
+            writer: {
+              intersection: {
+                child: [
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "member",
+                    },
+                  },
+                  {
+                    this: {},
+                  },
+                ],
+              },
+            },
+            reader: {
+              intersection: {
+                child: [
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "member",
+                    },
+                  },
+                  {
+                    this: {},
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "allowed",
+                    },
+                  },
+                ],
+              },
+            },
+          },
+          metadata: {
+            relations: {
+              allowed: { directly_related_user_types: [{ type: "user" }] },
+              member: { directly_related_user_types: [{ type: "user" }] },
+              writer: { directly_related_user_types: [{ type: "user" }] },
+              reader: { directly_related_user_types: [{ type: "user" }] },
+            },
+          },
+        },
+      ],
+    },
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define allowed: [user]
+    define member: [user]
+    define writer: member and [user]
+    define reader: member and [user] and allowed
+`,
+  },
+  {
+    name: "difference for model 1.1",
+    json: {
+      schema_version: "1.1",
+      type_definitions: [
+        {
+          type: "document",
+          relations: {
+            blocked: {
+              this: {},
+            },
+            editor: {
+              difference: {
+                base: {
+                  this: {},
+                },
+                subtract: {
+                  computedUserset: {
+                    object: "",
+                    relation: "blocked",
+                  },
+                },
+              },
+            },
+          },
+          metadata: {
+            relations: {
+              blocked: { directly_related_user_types: [{ type: "user" }] },
+              editor: { directly_related_user_types: [{ type: "user" }] },
+            },
+          },
+        },
+        {
+          type: "user",
+          relations: {},
+        },
+      ],
+    },
+    friendly: `model
+  schema 1.1
+type document
+  relations
+    define blocked: [user]
+    define editor: [user] but not blocked
+type user
+`,
+  },
+  {
     name: "relations-starting-with-as",
     json: {
       schema_version: "1.0",
@@ -311,7 +557,7 @@ type permission
   schema 1.1
 type document
   relations
-    define viewer: [team#member] as self
+    define viewer: [team#member]
 `,
   },
   {
@@ -338,7 +584,7 @@ type document
   schema 1.1
 type document
   relations
-    define viewer: [user,group] as self
+    define viewer: [user,group]
 `,
   },
 ];
