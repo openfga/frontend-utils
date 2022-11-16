@@ -41,6 +41,9 @@ const apiToFriendlyRelation = (
       if (relationReference.relation) {
         return `${relationReference.type}#${relationReference.relation}`;
       }
+      if (relationReference.wildcard) {
+        return `${relationReference.type}:*`;
+      }
       return relationReference.type;
     }) || [];
 

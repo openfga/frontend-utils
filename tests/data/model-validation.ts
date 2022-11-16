@@ -779,15 +779,12 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 23,
+        endColumn: 22,
         endLineNumber: 6,
-        message: "Assignable relation 'member' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
-        startColumn: 20,
+        startColumn: 22,
         startLineNumber: 6,
       },
     ],
@@ -804,15 +801,12 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 22,
+        endColumn: 21,
         endLineNumber: 6,
-        message: "Assignable relation 'member' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
-        },
+        message: "Invalid syntax",
         severity: 8,
         source: "linter",
-        startColumn: 20,
+        startColumn: 21,
         startLineNumber: 6,
       },
     ],
@@ -937,6 +931,27 @@ type group
         source: "linter",
         startColumn: 17,
         startLineNumber: 4,
+      },
+    ],
+  },
+  {
+    name: "incorrect wildcard restriction should be raised",
+    friendly: `model
+  schema 1.1
+type user
+type group
+  relations
+    define member: [user, user:*:*]
+`,
+    expectedError: [
+      {
+        endColumn: 35,
+        endLineNumber: 6,
+        message: "Invalid syntax",
+        severity: 8,
+        source: "linter",
+        startColumn: 33,
+        startLineNumber: 6,
       },
     ],
   },
@@ -1104,6 +1119,44 @@ type document
     define parent: [folder]
     define viewer: [user] or viewer from parent
 type user
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 wildcard restricted type",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [user, user:*]
+
+type user
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 wildcard restricted type in the middle",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [user, user:*, group]
+
+type user
+type group
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 with spacing in allowed type",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [  user  , user:*  , group  ]
+
+type user
+type group
 `,
     expectedError: [],
   },

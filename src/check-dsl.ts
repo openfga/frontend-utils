@@ -62,7 +62,8 @@ const defaultError = (lines: string[]) => {
 // are tuple to user set.  If so, return the type and relationship.
 // Otherwise, return null as relationship
 function destructTupleToUserset(allowableType: string): string[] {
-  return allowableType.split("#", 2);
+  // For validation purpose, we don't care whether it is wildcard restricted or not
+  return allowableType.replace(":*", "").split("#", 2);
 }
 
 // helper function to parse thru a child relation to see if there are unique entry points.

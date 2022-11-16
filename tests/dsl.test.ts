@@ -336,6 +336,19 @@ type app
       expect(result.length).toEqual(1);
     });
 
+    it("should only return single result for wildcard restricted type", () => {
+      const result = innerParseDSL(`model
+  schema 1.1
+type user
+type employee
+type team
+  relations
+    define member: [  user  ,  user:*,   employee   ]   
+
+`);
+      expect(result.length).toEqual(1);
+    });
+
     it("should only return single result for complex 1.1 model with spaces", () => {
       const result = innerParseDSL(`model
   schema 1.1
