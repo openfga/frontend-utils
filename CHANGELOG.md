@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.0.8
+### [0.0.8](https://github.com/openfga/syntax-transformer/compare/v0.0.7...v0.0.8) (2022-11-16)
+
+#### Changes
+- feat: model 1.1 removing 'as self' (openfga/syntax-transformer#94)
+- feat: model 1.1 allowing wildcard restriction in allowable types (openfga/syntax-transformer#95)
+
+#### Chore
+- chore: update indent-dsl to use keyword constant (openfga/syntax-transformer#91)
+
 ## v0.0.7
 
 ### [0.0.7](https://github.com/openfga/syntax-transformer/compare/v0.0.6...v0.0.7) (2022-11-02)
