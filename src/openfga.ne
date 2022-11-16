@@ -208,8 +208,8 @@ _word           -> ([a-z] | [A-Z] | [0-9] |  "_" |  "-" | "," | "&" | "+" | "/" 
 
 _colon -> _optional_space ":"
 
-_relation_types ->  "[" _optional_space _array_of_types "]" {%
-    data => ({allowedTypes: data[2]})
+_relation_types ->  "[" _optional_space (_array_of_types):? "]" {%
+    data => (data[2])? {allowedTypes: data[2][0]} : {allowedTypes: []}
 %}
 
 _array_of_types -> (_allowed_naming _optional_space _comma _optional_space):* _allowed_naming _optional_space {%

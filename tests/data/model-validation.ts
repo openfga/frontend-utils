@@ -779,12 +779,15 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 22,
+        endColumn: 23,
         endLineNumber: 6,
-        message: "Invalid syntax",
+        message: "Assignable relation 'member' must have types",
+        relatedInformation: {
+          type: "assignable-relation-must-have-type",
+        },
         severity: 8,
         source: "linter",
-        startColumn: 22,
+        startColumn: 20,
         startLineNumber: 6,
       },
     ],
@@ -801,13 +804,43 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 21,
+        endColumn: 22,
         endLineNumber: 6,
-        message: "Invalid syntax",
+        message: "Assignable relation 'member' must have types",
+        relatedInformation: {
+          type: "assignable-relation-must-have-type",
+        },
         severity: 8,
         source: "linter",
-        startColumn: 21,
+        startColumn: 20,
         startLineNumber: 6,
+      },
+    ],
+  },
+  {
+    name: "type restriction cannot contains both wildcard and relation",
+    friendly: `model
+  schema 1.1
+type user
+type department
+  relations
+    define member: [user]
+type org
+  relations
+    define reader: [department, department#member:*]
+  `,
+    expectedError: [
+      {
+        endColumn: 52,
+        endLineNumber: 9,
+        message: "Type restriction 'department#member:*' cannot contain both wildcard and relation",
+        relatedInformation: {
+          type: "type-wildcard-relation",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 33,
+        startLineNumber: 9,
       },
     ],
   },

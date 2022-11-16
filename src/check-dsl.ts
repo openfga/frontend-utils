@@ -62,8 +62,9 @@ const defaultError = (lines: string[]) => {
 // are tuple to user set.  If so, return the type and relationship.
 // Otherwise, return null as relationship
 function destructTupleToUserset(allowableType: string): string[] {
-  // For validation purpose, we don't care whether it is wildcard restricted or not
-  return allowableType.replace(":*", "").split("#", 2);
+  const isWildcard = allowableType.includes(":*");
+  const splittedWords = allowableType.replace(":*", "").split("#");
+  return [splittedWords[0], splittedWords[1], isWildcard ? "isWildcard" : ""];
 }
 
 // helper function to parse thru a child relation to see if there are unique entry points.
@@ -227,8 +228,16 @@ function childDefDefined(
         reporter.assignableRelationMustHaveTypes({ lineIndex, value: relation });
       }
       for (const item of fromPossibleTypes) {
-        const [decodedType, decodedRelation] = destructTupleToUserset(item);
-        if (decodedRelation) {
+        const [decodedType, decodedRelation, isWildcard] = destructTupleToUserset(item);
+        if (isWildcard !== "" && decodedRelation) {
+          // we cannot have both wild carded and relation at the same time
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.assignableTypeWildcardRelation({
+            lineIndex,
+            value: item,
+          });
+        } else if (decodedRelation) {
           if (!transformedTypes[decodedType] || !transformedTypes[decodedType].relations[decodedRelation]) {
             // type/relation is not defined
             const typeIndex = getTypeLineNumber(type, lines);
@@ -283,8 +292,16 @@ function childDefDefined(
           const [fromTypes, isValid] = allowableTypes(transformedTypes, type, childDef.from);
           if (isValid) {
             for (const item of fromTypes) {
-              const [decodedType, decodedRelation] = destructTupleToUserset(item);
-              if (decodedRelation) {
+              const [decodedType, decodedRelation, isWildcard] = destructTupleToUserset(item);
+              if (isWildcard !== "" && decodedRelation) {
+                // we cannot have both wild carded and relation at the same time
+                const typeIndex = getTypeLineNumber(type, lines);
+                const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+                reporter.assignableTypeWildcardRelation({
+                  lineIndex,
+                  value: item,
+                });
+              } else if (decodedRelation) {
                 const typeIndex = getTypeLineNumber(type, lines);
                 const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
                 reporter.tupleUsersetRequiresDirect({
