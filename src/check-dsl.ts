@@ -58,13 +58,19 @@ const defaultError = (lines: string[]) => {
   };
 };
 
+interface destructedAssignableType {
+  decodedType: string;
+  decodedRelation?: string;
+  isWildcard: boolean;
+}
+
 // helper function to figure out whether the specified allowable types
 // are tuple to user set.  If so, return the type and relationship.
 // Otherwise, return null as relationship
-function destructTupleToUserset(allowableType: string): string[] {
+function destructTupleToUserset(allowableType: string): destructedAssignableType {
   const isWildcard = allowableType.includes(":*");
   const splittedWords = allowableType.replace(":*", "").split("#");
-  return [splittedWords[0], splittedWords[1], isWildcard ? "isWildcard" : ""];
+  return { decodedType: splittedWords[0], decodedRelation: splittedWords[1], isWildcard };
 }
 
 // helper function to parse thru a child relation to see if there are unique entry points.
@@ -94,7 +100,7 @@ function childHasEntryPoint(
   if (childDef.rewrite === RewriteType.Direct) {
     // we can safely assume that direct rewrite (i.e., it is a self/this), there are direct entry point
     for (const item of allowedTypes) {
-      const [decodedType, decodedRelation] = destructTupleToUserset(item);
+      const { decodedType, decodedRelation } = destructTupleToUserset(item);
       if (!decodedRelation) {
         // this is not a tuple set and is a straight type, we can return true right away
         return true;
@@ -116,7 +122,7 @@ function childHasEntryPoint(
     // to see if there are unique entry point
     const fromPossibleTypes = transformedTypes[type].relations[childDef.from].allowedTypes;
     for (const fromType of fromPossibleTypes) {
-      const [decodedType] = destructTupleToUserset(fromType);
+      const { decodedType } = destructTupleToUserset(fromType);
 
       // For now, we just look at the type without seeing whether the user set
       // of the type is reachable too in the case of tuple to user set.
@@ -228,8 +234,8 @@ function childDefDefined(
         reporter.assignableRelationMustHaveTypes({ lineIndex, value: relation });
       }
       for (const item of fromPossibleTypes) {
-        const [decodedType, decodedRelation, isWildcard] = destructTupleToUserset(item);
-        if (isWildcard !== "" && decodedRelation) {
+        const { decodedType, decodedRelation, isWildcard } = destructTupleToUserset(item);
+        if (isWildcard && decodedRelation) {
           // we cannot have both wild carded and relation at the same time
           const typeIndex = getTypeLineNumber(type, lines);
           const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
@@ -292,8 +298,8 @@ function childDefDefined(
           const [fromTypes, isValid] = allowableTypes(transformedTypes, type, childDef.from);
           if (isValid) {
             for (const item of fromTypes) {
-              const [decodedType, decodedRelation, isWildcard] = destructTupleToUserset(item);
-              if (isWildcard !== "" && decodedRelation) {
+              const { decodedType, decodedRelation, isWildcard } = destructTupleToUserset(item);
+              if (isWildcard && decodedRelation) {
                 // we cannot have both wild carded and relation at the same time
                 const typeIndex = getTypeLineNumber(type, lines);
                 const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
