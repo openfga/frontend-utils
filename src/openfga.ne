@@ -208,12 +208,18 @@ _word           -> ([a-z] | [A-Z] | [0-9] |  "_" |  "-" | "," | "&" | "+" | "/" 
 
 _colon -> _optional_space ":"
 
-_relation_types ->  "[" _array_of_types "]" {%
-    data => ({allowedTypes: data[1]})
+_relation_types ->  "[" _optional_space (_array_of_types):? "]" {%
+    data => (data[2])? {allowedTypes: data[2][0]} : {allowedTypes: []}
 %}
 
-_array_of_types -> ("$"):? ([a-zA-Z0-9_#\-,\s]):* {%
-    data => data.flat(3).join('').split(",").map(i => i.trim()).filter(word => word.length)
+_array_of_types -> (_allowed_naming _optional_space _comma _optional_space):* _allowed_naming _optional_space {%
+    data => {
+        if (data[0].length) {
+            // @ts-ignore
+            return [...data[0].map((datum) => datum[0]), data[1]];
+        }
+        return [data[1]];
+    }
 %}
 
 _from           -> "from"
@@ -230,12 +236,16 @@ _no_relations   -> "none" (_newline):*
 _naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" ):+) {%
     data => data.flat(3).join('').trim()
 %}
+_allowed_naming         -> (("$"):? ( [a-z] | [A-Z] | [0-9] |  "_" |  "-" | "#" ):+ (":*"):?) {%
+    data => data.flat(3).join('').trim()
+%}
 _optional_space -> " ":*
 _spacing        -> " ":+
 _newline        -> _optional_space "\n"
 _model          -> "model"
 _schema         -> "  schema"
 _period         -> "."
+_comma          -> ","
 _version        -> (([0-9]):+) _period (([0-9]):+)
 _version_10     -> "1.0"
 _version_11     -> "1.1"

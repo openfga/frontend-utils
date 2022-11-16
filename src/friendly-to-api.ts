@@ -81,12 +81,17 @@ export const friendlySyntaxToApiSyntax = (
 
       allowedTypes?.forEach((allowedType: string) => {
         metadataAvailable = true;
+        const isWildcardRestricted = allowedType.includes(":*");
+        allowedType = allowedType.replace(":*", "");
         const [userType, usersetRelation] = allowedType.split("#");
         const toAdd: any = {
           type: userType,
         };
         if (usersetRelation) {
           toAdd["relation"] = usersetRelation;
+        }
+        if (isWildcardRestricted) {
+          toAdd["wildcard"] = {};
         }
         relationsMetadataMap[relationName]["directly_related_user_types"].push(toAdd);
       });

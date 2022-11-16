@@ -587,4 +587,33 @@ type document
     define viewer: [user,group]
 `,
   },
+  {
+    name: "wildcard restriction conversion",
+    json: {
+      schema_version: "1.1",
+      type_definitions: [
+        {
+          type: "document",
+          relations: {
+            viewer: {
+              this: {},
+            },
+          },
+          metadata: {
+            relations: {
+              viewer: {
+                directly_related_user_types: [{ type: "user" }, { type: "user", wildcard: {} }, { type: "group" }],
+              },
+            },
+          },
+        },
+      ],
+    },
+    friendly: `model
+  schema 1.1
+type document
+  relations
+    define viewer: [user,user:*,group]
+`,
+  },
 ];

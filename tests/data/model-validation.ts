@@ -818,6 +818,33 @@ type org
     ],
   },
   {
+    name: "type restriction cannot contains both wildcard and relation",
+    friendly: `model
+  schema 1.1
+type user
+type department
+  relations
+    define member: [user]
+type org
+  relations
+    define reader: [department, department#member:*]
+  `,
+    expectedError: [
+      {
+        endColumn: 52,
+        endLineNumber: 9,
+        message: "Type restriction 'department#member:*' cannot contain both wildcard and relation",
+        relatedInformation: {
+          type: "type-wildcard-relation",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 33,
+        startLineNumber: 9,
+      },
+    ],
+  },
+  {
     name: "unsupported schema version should yield error",
     friendly: `model
   schema 0.9
@@ -937,6 +964,27 @@ type group
         source: "linter",
         startColumn: 17,
         startLineNumber: 4,
+      },
+    ],
+  },
+  {
+    name: "incorrect wildcard restriction should be raised",
+    friendly: `model
+  schema 1.1
+type user
+type group
+  relations
+    define member: [user, user:*:*]
+`,
+    expectedError: [
+      {
+        endColumn: 35,
+        endLineNumber: 6,
+        message: "Invalid syntax",
+        severity: 8,
+        source: "linter",
+        startColumn: 33,
+        startLineNumber: 6,
       },
     ],
   },
@@ -1104,6 +1152,44 @@ type document
     define parent: [folder]
     define viewer: [user] or viewer from parent
 type user
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 wildcard restricted type",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [user, user:*]
+
+type user
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 wildcard restricted type in the middle",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [user, user:*, group]
+
+type user
+type group
+`,
+    expectedError: [],
+  },
+  {
+    name: "model 1.1 with spacing in allowed type",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define viewer: [  user  , user:*  , group  ]
+
+type user
+type group
 `,
     expectedError: [],
   },

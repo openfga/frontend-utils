@@ -172,6 +172,17 @@ export const reportAssignableRelationMustHaveTypes = ({ markers, lines, lineInde
   });
 };
 
+export const reportAssignableTypeWildcardRelation = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    message: `Type restriction '${value}' cannot contain both wildcard and relation`,
+    markers,
+    lineIndex,
+    lines,
+    value,
+    relatedInformation: { type: "type-wildcard-relation" },
+  });
+};
+
 export const reportInvalidButNot = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
     message: `Cannot self-reference (\`${value}\`) within \`${Keywords.BUT_NOT}\` clause.`,
@@ -369,6 +380,9 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
 
     assignableRelationMustHaveTypes: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportAssignableRelationMustHaveTypes({ lineIndex, markers, lines, value }),
+
+    assignableTypeWildcardRelation: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportAssignableTypeWildcardRelation({ lineIndex, markers, lines, value }),
 
     invalidRelation: ({ lineIndex, value, validRelations }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportInvalidRelation({
