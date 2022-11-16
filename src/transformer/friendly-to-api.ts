@@ -1,7 +1,7 @@
 import { AuthorizationModel, Userset } from "@openfga/sdk";
 
-import { parseDSL, ParserResult, RelationDefOperator, RelationTargetParserResult, RewriteType } from "./parse-dsl";
-import { assertNever } from "./utils/assert-never";
+import { parseDSL, ParserResult, RelationDefOperator, RelationTargetParserResult, RewriteType } from "../parser";
+import { assertNever } from "../inner-utils/assert-never";
 
 const resolveRelation = (relation: RelationTargetParserResult): Userset => {
   switch (relation.rewrite) {

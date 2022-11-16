@@ -1,6 +1,6 @@
 import { TypeDefinition, WriteAuthorizationModelRequest, Userset, Metadata } from "@openfga/sdk";
-import { Keywords } from "./keywords";
-import { SchemaVersion } from "./parse-dsl";
+import { Keyword } from "../keyword";
+import { SchemaVersion } from "../parser";
 
 const readFrom = (obj: Userset, define: string[], schemaVersion: string | undefined, allowedType: string) => {
   const childKeys = Object.keys(obj);
@@ -8,14 +8,14 @@ const readFrom = (obj: Userset, define: string[], schemaVersion: string | undefi
   childKeys.forEach((childKey: string) => {
     if (childKey === "this") {
       if (!schemaVersion || schemaVersion === "1.0") {
-        define.push(Keywords.SELF);
+        define.push(Keyword.SELF);
       } else {
         define.push(allowedType);
       }
     }
 
     if (childKey === "tupleToUserset") {
-      define.push(`${obj[childKey]!.computedUserset!.relation} ${Keywords.FROM} ${obj[childKey]!.tupleset!.relation}`);
+      define.push(`${obj[childKey]!.computedUserset!.relation} ${Keyword.FROM} ${obj[childKey]!.tupleset!.relation}`);
     }
 
     if (childKey === "computedUserset") {
@@ -50,7 +50,7 @@ const apiToFriendlyRelation = (
   const allowedTypes = allowedTypesArray.length ? `[${allowedTypesArray.join(",")}]` : "";
 
   const define = [
-    `    ${Keywords.DEFINE} ${relation}${!schemaVersion || schemaVersion === "1.0" ? ` ${Keywords.AS} ` : ": "}`,
+    `    ${Keyword.DEFINE} ${relation}${!schemaVersion || schemaVersion === "1.0" ? ` ${Keyword.AS} ` : ": "}`,
   ];
 
   // Read simple definitions
@@ -63,7 +63,7 @@ const apiToFriendlyRelation = (
         readFrom(child, define, schemaVersion, allowedTypes);
 
         if (idx < children.length - 1) {
-          define.push(` ${Keywords.OR} `);
+          define.push(` ${Keyword.OR} `);
         }
       });
     }
@@ -74,7 +74,7 @@ const apiToFriendlyRelation = (
         readFrom(child, define, schemaVersion, allowedTypes);
 
         if (idx < children.length - 1) {
-          define.push(` ${Keywords.AND} `);
+          define.push(` ${Keyword.AND} `);
         }
       });
     }
@@ -83,7 +83,7 @@ const apiToFriendlyRelation = (
       const { base, subtract } = relationDefinition[relationKey]!;
 
       readFrom(base!, define, schemaVersion, allowedTypes);
-      define.push(` ${Keywords.BUT_NOT} `);
+      define.push(` ${Keyword.BUT_NOT} `);
       readFrom(subtract!, define, schemaVersion, allowedTypes);
     }
   });
@@ -102,9 +102,9 @@ const apiToFriendlyType = (
 ) => {
   if (typeDef?.type) {
     // A full type definition was passed
-    newSyntax.push(`${Keywords.NAMESPACE} ${typeDef.type}`);
+    newSyntax.push(`${Keyword.TYPE} ${typeDef.type}`);
     if (typeDef?.relations && Object.keys(typeDef?.relations).length) {
-      newSyntax.push(`  ${Keywords.RELATIONS}`);
+      newSyntax.push(`  ${Keyword.RELATIONS}`);
 
       const relations = Object.keys(typeDef.relations);
 
@@ -127,8 +127,8 @@ const apiToFriendlyType = (
 
 const addSchema = (schema: string, newSyntax: string[]) => {
   if (schema != SchemaVersion.OneDotZero) {
-    newSyntax.push(`${Keywords.MODEL}`);
-    newSyntax.push(`  ${Keywords.SCHEMA} ${schema}`);
+    newSyntax.push(`${Keyword.MODEL}`);
+    newSyntax.push(`  ${Keyword.SCHEMA} ${schema}`);
   }
 };
 

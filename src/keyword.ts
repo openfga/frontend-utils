@@ -1,5 +1,5 @@
-export enum Keywords {
-  NAMESPACE = "type",
+export enum Keyword {
+  TYPE = "type",
   RELATIONS = "relations",
   SELF = "self",
   DEFINE = "define",
@@ -11,6 +11,7 @@ export enum Keywords {
   COMMENT = "comment",
   MODEL = "model",
   SCHEMA = "schema",
+  TYPE_RESTRICTIONS = "type-restrictions",
 }
 
 export enum ReservedKeywords {

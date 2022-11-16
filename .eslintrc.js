@@ -8,7 +8,9 @@ module.exports = {
     "eslint:recommended",
     "prettier",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,6 +22,7 @@ module.exports = {
   ],
   "ignorePatterns": ["src/grammar.ts"],
   "rules": {
+    "no-case-declarations": "off",
     "linebreak-style": [
       "error",
       "unix"

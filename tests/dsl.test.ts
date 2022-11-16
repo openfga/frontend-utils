@@ -1,6 +1,6 @@
 import { checkDSL } from "../src";
-import { innerParseDSL, parseDSL } from "../src/parse-dsl";
-import { ValidationOptions } from "../src/check-dsl";
+import { innerParseDSL, parseDSL } from "../src/parser/parse-dsl";
+import { ValidationOptions } from "../src/validator";
 
 describe("DSL", () => {
   describe("parseDSL()", () => {
