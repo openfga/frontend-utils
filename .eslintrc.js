@@ -20,7 +20,7 @@ module.exports = {
   "plugins": [
     "@typescript-eslint"
   ],
-  "ignorePatterns": ["src/grammar.ts"],
+  "ignorePatterns": ["src/parser/grammar.ts"],
   "rules": {
     "no-case-declarations": "off",
     "linebreak-style": [

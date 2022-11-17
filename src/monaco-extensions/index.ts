@@ -1,12 +1,12 @@
-import { LANGUAGE_NAME } from "./language-name";
+import { LANGUAGE_NAME } from "../constants";
 import { registerDSL } from "./register-dsl";
-import { theme } from "./theme";
+import { monacoThemes } from "./theme";
 import * as languageDefinition from "./language-definition";
 
 const MonacoExtensions = {
   LANGUAGE_NAME,
   registerDSL,
-  theme,
+  monacoThemes,
   languageDefinition,
 };
 

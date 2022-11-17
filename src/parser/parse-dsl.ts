@@ -1,6 +1,7 @@
 import { Grammar, Parser } from "nearley";
 
 import grammar from "./grammar";
+import { SchemaVersion } from "../constants/schema-version";
 
 export enum RewriteType {
   Direct = "direct",
@@ -39,11 +40,6 @@ export interface TypeDefParserResult {
   comment: string;
   type: string;
   relations: RelationDefParserResult<RelationDefOperator>[];
-}
-
-export enum SchemaVersion {
-  OneDotZero = "1.0",
-  OneDotOne = "1.1",
 }
 
 export interface ParserResult {

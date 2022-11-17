@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
 
-import { Keyword } from "../../keyword";
 import type * as MonacoEditor from "monaco-editor";
 import type { editor, languages, Position } from "monaco-editor";
-import { SchemaVersion } from "../../parser";
+
+import { SINGLE_INDENTATION } from "../../formatter/indent-dsl";
+import { Keyword } from "../../constants/keyword";
 import { assertNever } from "../../inner-utils/assert-never";
+import { SchemaVersion } from "../../constants/schema-version";
 
 const provideCompletionItemsOneDotZero =
   (monaco: typeof MonacoEditor) =>
@@ -137,43 +139,24 @@ const provideCompletionItemsOneDotZero =
           label: "sample-gdrive",
           kind: monaco.languages.CompletionItemKind.Keyword,
           insertText: `# Google Drive Sample
-# There are users
 type user
-# there are group
 type group
   relations
-    # a group can have members
     define member as self
-# there are folders
 type folder
   relations
-    # folders can have owners
     define owner as self
-    # folders can have parent folders
     define parent as self
-    # folders can have viewers; viewers are:
-    # - those with whom the folder has been directly shared (self)
-    # - those who are ownwers of the folder (owner)
-    # - those who are viewers of the parent of the folder (viewer from parent)
     define viewer as self or owner or viewer from parent
-    # folders have the create file permissions; only owners can have this permission and it cannot be directly granted (no self)
     define can_create_file as owner
-# there are documents
 type doc
   relations
-    # documents have owners
     define owner as self
-    # documents have parent folders
     define parent as self
-    # documents have viewers
     define viewer as self
-    # documents have the change owner permission; only owners can have this permission and it cannot be directly granted (no self)
     define can_change_owner as owner
-    # documents have the share permission; only owners or the owners of the parent folder (owner from parent) have this permissions and it cannot be directly granted (no self)
     define can_share as owner or owner from parent
-    # documents have the write permission; only owners or the owners of the parent folder (owner from parent) have this permissions and it cannot be directly granted (no self)
     define can_write as owner or owner from parent
-    # documents have the read permission; only direct viewers, direct owners or viewers of the parent folder have this permissions and it cannot be directly granted (no self)
     define can_read as viewer or owner or viewer from parent`,
           range,
         },
@@ -181,20 +164,13 @@ type doc
           label: "sample-expenses",
           kind: monaco.languages.CompletionItemKind.Keyword,
           insertText: `# Expenses Sample
-# there are employees
 type employee
   relations
-    # employees have managers; an employee's manager is anyone who is their direct manager
     define manager as self
-    # employees can be managed by their direct managers as well as whoever can manage their direct managers
     define can_manage as manager or can_manage from manager
-# there are reports
 type report
   relations
-    # reports have submitters; a report's submitter is anyone who has submitted the report
     define submitter as self
-    # reports have approvers; a report's approver is anyone who can manage the submitter of the report
-    # note that an employee cannot be directly be assigned to be an approver (self is not allowed)
     define approver as can_manage from submitter`,
           range,
         },
@@ -202,38 +178,24 @@ type report
           label: "sample-github",
           kind: monaco.languages.CompletionItemKind.Keyword,
           insertText: `# GitHub Sample
-# There are users
 type user
-# there are organizations
 type organization
   relations
-    # Organizations can have users who own them
     define owner as self
-    # Organizations can have members (any owner of the organization is automatically a member)
     define member as self or owner
-    # Organizations has a set of permissions, such as repository admin, writer and reader
     define repo_admin as self
     define repo_reader as self
     define repo_writer as self
-# there are teams
 type team
   relations
-    # teams have members
     define member as self
-# there are repositories
 type repo
   relations
-    # repositories have organizations who own them
     define owner as self
-    # repository have admins, they can be assigned or inherited (anyone who has the repository admin role on the owner organization is an owner on the repo)
     define admin as self or repo_admin from owner
-    # maintainers on a repo are anyone who is directly assigned or anyone who is an owner on the repo
     define maintainer as self or admin
-    # repo writers are users who are directly assigned, anyone who is a maintainer or anyone who has the repository writer role on the owner organization
     define writer as self or maintainer or repo_writer from own
-    # triagers on a repo are anyone who is directly assigned or anyone who is a writer on the repo
     define triager as self or writerer
-    # repo readers are users who are directly assigned, anyone who is a triafer or anyone who has the repository reader role on the owner organization
     define reader as self or triager or repo_reader from owner`,
           range,
         },
@@ -244,8 +206,190 @@ type repo
 const provideCompletionItemsOneDotOne =
   (monaco: typeof MonacoEditor) =>
   (model: editor.ITextModel, position: Position): languages.CompletionList => {
-    // TODO
-    throw new Error("Unimplemented");
+    const word = model.getWordUntilPosition(position);
+    const range = {
+      startLineNumber: position.lineNumber,
+      endLineNumber: position.lineNumber,
+      startColumn: word.startColumn,
+      endColumn: word.endColumn,
+    };
+
+    if (position.column === 2) {
+      return {
+        suggestions: [
+          {
+            label: Keyword.TYPE,
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: `${Keyword.TYPE} \${1:typeName}
+${SINGLE_INDENTATION}${Keyword.RELATIONS}
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE} \${2:relationName}: [\${3:typeName}]`,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: "type_group",
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: `${Keyword.TYPE} \${1:group}
+${SINGLE_INDENTATION}${Keyword.RELATIONS}
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE} \${2:member}: [\${3:user, group#member}]`,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: Keyword.TYPE,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.TYPE,
+            range,
+          },
+          {
+            label: Keyword.MODEL,
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: `${Keyword.MODEL}
+${SINGLE_INDENTATION}${Keyword.SCHEMA} \${1:1.1}`,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: Keyword.MODEL,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.TYPE,
+            range,
+          },
+        ],
+      };
+    }
+
+    if (position.column === 4) {
+      return {
+        suggestions: [
+          {
+            label: Keyword.RELATIONS,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.RELATIONS,
+            range,
+          },
+        ],
+      };
+    }
+
+    if (position.column > 6) {
+      return {
+        suggestions: [
+          {
+            label: Keyword.OR,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.OR,
+            range,
+          },
+          {
+            label: Keyword.AND,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.AND,
+            range,
+          },
+          {
+            label: Keyword.BUT_NOT,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.BUT_NOT,
+            range,
+          },
+          {
+            label: Keyword.FROM,
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: `\${1:relation1} ${Keyword.FROM} \${1:relation2}`,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: Keyword.FROM,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: Keyword.FROM,
+            range,
+          },
+        ],
+      };
+    }
+
+    if (position.column === 6) {
+      return {
+        suggestions: [
+          {
+            label: "define-assignable",
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: "define ${1:relationName}: [${2:typeName}]",
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: "define-from-other-relation",
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: "define ${1:relationName}: ${2:otherRelationName}",
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: "define-from-other-relation-assignable",
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: "define ${1:relationName}: [${2:typeName}] or ${3:otherRelationName}",
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: "define-from-object",
+            kind: monaco.languages.CompletionItemKind.Function,
+            // eslint-disable-next-line no-template-curly-in-string
+            insertText: "define ${1:relationName}: ${2:relationInRelatedObject} from ${3:relationInThisType}}",
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+          },
+          {
+            label: "define",
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: "define",
+            range,
+          },
+        ],
+      };
+    }
+
+    return {
+      suggestions: [
+        {
+          label: "sample-gdrive",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: `# Google Drive Sample
+${Keyword.TYPE} user
+${Keyword.TYPE} folder
+${SINGLE_INDENTATION}${Keyword.RELATIONS}
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}parent: [folder]
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}owner: [user]
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}editor: [user]
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}viewer: [user]
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_create_file: owner
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_delete: owner
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_edit: editor ${Keyword.OR} owner
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_view: viewer ${Keyword.OR} editor ${Keyword.OR} owner
+${Keyword.TYPE} folder
+${SINGLE_INDENTATION}${Keyword.RELATIONS}
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}parent: [folder]
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}owner: [user] or owner from parent
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}editor: [user] or editor from parent
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}viewer: [user] or viewer from parent
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_create_file: owner
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_delete: owner
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_edit: editor ${Keyword.OR} owner
+${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_view: viewer ${Keyword.OR} editor ${Keyword.OR} owner`,
+          range,
+        },
+      ],
+    };
   };
 
 export const provideCompletionItems =

@@ -1,4 +1,4 @@
-import { Keyword, ReservedKeywords } from "../keyword";
+import { Keyword, ReservedKeywords } from "../constants/keyword";
 import { TransformedType } from "../parser";
 import { ValidationError } from "./validation-error";
 import type { editor } from "monaco-editor";

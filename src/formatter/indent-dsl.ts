@@ -1,6 +1,6 @@
-import { Keyword } from "../keyword";
+import { Keyword } from "../constants/keyword";
 
-const SINGLE_INDENTATION = "  ";
+export const SINGLE_INDENTATION = "  ";
 
 function getIndentationComposite(count = 0): string {
   let indentation = "";

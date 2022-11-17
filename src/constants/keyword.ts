@@ -8,10 +8,8 @@ export enum Keyword {
   AND = "and",
   FROM = "from",
   BUT_NOT = "but not",
-  COMMENT = "comment",
   MODEL = "model",
   SCHEMA = "schema",
-  TYPE_RESTRICTIONS = "type-restrictions",
 }
 
 export enum ReservedKeywords {

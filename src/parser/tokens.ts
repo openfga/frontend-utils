@@ -1,4 +1,4 @@
-import { LANGUAGE_NAME } from "../monaco-extensions/language-name";
+import { LANGUAGE_NAME } from "../constants/language-name";
 // eslint-disable-next-line import/no-unresolved
 import * as Prism from "prismjs";
 

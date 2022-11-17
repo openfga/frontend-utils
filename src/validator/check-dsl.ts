@@ -1,5 +1,5 @@
 import { defaultRelationRule, defaultTypeRule } from "./default-regex";
-import { Keyword, ReservedKeywords } from "../keyword";
+import { Keyword, ReservedKeywords } from "../constants/keyword";
 import {
   parseDSL,
   ParserResult,
@@ -7,10 +7,10 @@ import {
   RelationDefParserResult,
   RelationTargetParserResult,
   RewriteType,
-  SchemaVersion,
   TransformedType,
 } from "../parser";
 import { report } from "./reporters";
+import { SchemaVersion } from "../constants/schema-version";
 
 export interface ValidationRegex {
   rule: string;

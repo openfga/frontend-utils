@@ -5,6 +5,5 @@ export {
   RelationDefParserResult,
   RelationTargetParserResult,
   RewriteType,
-  SchemaVersion,
   TransformedType,
 } from "./parse-dsl";

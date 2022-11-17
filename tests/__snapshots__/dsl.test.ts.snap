@@ -127,10 +127,10 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
   {
     "endColumn": 28,
     "endLineNumber": 3,
-    "message": "For auto-referencing use 'self'.",
-    "relatedInformation": {
-      "type": "self-error",
+    "extraInformation": {
+      "error": "self-error",
     },
+    "message": "For auto-referencing use 'self'.",
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
@@ -139,11 +139,11 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
   {
     "endColumn": 33,
     "endLineNumber": 5,
-    "message": "The relation \`relation2\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "relation2",
-      "type": "missing-definition",
     },
+    "message": "The relation \`relation2\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 24,
@@ -152,10 +152,10 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
   {
     "endColumn": 33,
     "endLineNumber": 5,
-    "message": "The relation \`relation2\` does not exist in type \`group\`",
-    "relatedInformation": {
-      "type": "",
+    "extraInformation": {
+      "error": "invalid-syntax",
     },
+    "message": "The relation \`relation2\` does not exist in type \`group\`",
     "severity": 8,
     "source": "linter",
     "startColumn": 24,
@@ -164,10 +164,10 @@ exports[`DSL checkDSL() semantics should be able to handle more than one error 1
   {
     "endColumn": 28,
     "endLineNumber": 6,
-    "message": "For auto-referencing use 'self'.",
-    "relatedInformation": {
-      "type": "self-error",
+    "extraInformation": {
+      "error": "self-error",
     },
+    "message": "For auto-referencing use 'self'.",
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
@@ -195,10 +195,10 @@ exports[`DSL checkDSL() semantics should handle duplicated definition 1`] = `
   {
     "endColumn": 26,
     "endLineNumber": 4,
-    "message": "Duplicate definition \`writer\`.",
-    "relatedInformation": {
-      "type": "duplicated-error",
+    "extraInformation": {
+      "error": "duplicated-error",
     },
+    "message": "Duplicate definition \`writer\`.",
     "severity": 8,
     "source": "linter",
     "startColumn": 5,
@@ -212,11 +212,11 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid and\` 1`] = `
   {
     "endColumn": 37,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "reader",
-      "type": "missing-definition",
     },
+    "message": "The relation \`reader\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 31,
@@ -230,11 +230,11 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid but not\` 1`] 
   {
     "endColumn": 41,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "reader",
-      "type": "missing-definition",
     },
+    "message": "The relation \`reader\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 35,
@@ -248,11 +248,11 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid from\` 1`] = `
   {
     "endColumn": 36,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "reader",
-      "type": "missing-definition",
     },
+    "message": "The relation \`reader\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 30,
@@ -261,10 +261,10 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid from\` 1`] = `
   {
     "endColumn": 46,
     "endLineNumber": 3,
-    "message": "The relation \`test\` does not exist in type \`group\`",
-    "relatedInformation": {
-      "type": "",
+    "extraInformation": {
+      "error": "invalid-syntax",
     },
+    "message": "The relation \`test\` does not exist in type \`group\`",
     "severity": 8,
     "source": "linter",
     "startColumn": 42,
@@ -278,11 +278,11 @@ exports[`DSL checkDSL() semantics should handle invalid \`invalid or\` 1`] = `
   {
     "endColumn": 36,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "reader",
-      "type": "missing-definition",
     },
+    "message": "The relation \`reader\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 30,
@@ -296,11 +296,11 @@ exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 
   {
     "endColumn": 28,
     "endLineNumber": 3,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "reader",
-      "type": "missing-definition",
     },
+    "message": "The relation \`reader\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
@@ -314,11 +314,11 @@ exports[`DSL checkDSL() semantics should handle invalid \`relation not define\` 
   {
     "endColumn": 25,
     "endLineNumber": 3,
-    "message": "The relation \`def\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "def",
-      "type": "missing-definition",
     },
+    "message": "The relation \`def\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
@@ -332,10 +332,10 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-error\` 1`] = `
   {
     "endColumn": 28,
     "endLineNumber": 3,
-    "message": "For auto-referencing use 'self'.",
-    "relatedInformation": {
-      "type": "self-error",
+    "extraInformation": {
+      "error": "self-error",
     },
+    "message": "For auto-referencing use 'self'.",
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
@@ -349,10 +349,10 @@ exports[`DSL checkDSL() semantics should handle invalid \`self-ref in but not\` 
   {
     "endColumn": 41,
     "endLineNumber": 3,
-    "message": "For auto-referencing use 'self'.",
-    "relatedInformation": {
-      "type": "self-error",
+    "extraInformation": {
+      "error": "self-error",
     },
+    "message": "For auto-referencing use 'self'.",
     "severity": 8,
     "source": "linter",
     "startColumn": 35,
@@ -366,11 +366,11 @@ exports[`DSL checkDSL() semantics should identify correct error line number if t
   {
     "endColumn": 28,
     "endLineNumber": 5,
-    "message": "The relation \`reader\` does not exist.",
-    "relatedInformation": {
+    "extraInformation": {
+      "error": "missing-definition",
       "relation": "reader",
-      "type": "missing-definition",
     },
+    "message": "The relation \`reader\` does not exist.",
     "severity": 8,
     "source": "linter",
     "startColumn": 22,
@@ -384,10 +384,10 @@ exports[`DSL checkDSL() semantics should not allow impossible self reference 1`]
   {
     "endColumn": 40,
     "endLineNumber": 3,
-    "message": "Cannot self-reference (\`member\`) within \`from\` clause.",
-    "relatedInformation": {
-      "type": "",
+    "extraInformation": {
+      "error": "invalid-syntax",
     },
+    "message": "Cannot self-reference (\`member\`) within \`from\` clause.",
     "severity": 8,
     "source": "linter",
     "startColumn": 34,
@@ -401,10 +401,10 @@ exports[`DSL checkDSL() semantics should not allow self reference in from relati
   {
     "endColumn": 57,
     "endLineNumber": 4,
-    "message": "Cannot self-reference (\`subscriber\`) within \`from\` clause.",
-    "relatedInformation": {
-      "type": "",
+    "extraInformation": {
+      "error": "invalid-syntax",
     },
+    "message": "Cannot self-reference (\`subscriber\`) within \`from\` clause.",
     "severity": 8,
     "source": "linter",
     "startColumn": 47,

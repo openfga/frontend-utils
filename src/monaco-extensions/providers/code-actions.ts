@@ -1,7 +1,7 @@
 import type * as MonacoEditor from "monaco-editor";
 import type { CancellationToken, editor, languages } from "monaco-editor";
 
-import { Keyword } from "../../keyword";
+import { Keyword } from "../../constants/keyword";
 import { Marker } from "../../validator/reporters";
 import { ValidationError } from "../../validator/validation-error";
 

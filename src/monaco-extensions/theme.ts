@@ -1,17 +1,34 @@
-import { Keyword } from "../keyword";
 import type { editor } from "monaco-editor";
 
-export const theme: editor.IStandaloneThemeData = {
-  base: "vs-dark",
-  inherit: true,
-  colors: {
-    "editor.background": "#141517",
-  },
-  rules: [
-    { token: `${Keyword.TYPE_RESTRICTIONS}.openfga`, foreground: "00676E" },
-    { token: "keyword.openfga", foreground: "00676E" },
-    { token: "type.openfga", foreground: "00676E" },
-    { token: "relation.openfga", foreground: "00676E" },
-    { token: "comment.openfga", foreground: "65676E" },
-  ],
-};
+import {
+  getThemeTokenStyle,
+  OpenFgaDslThemeToken,
+  OpenFgaThemeConfiguration,
+  SupportedTheme,
+  supportedThemes,
+} from "../utilities/theme";
+import { LANGUAGE_NAME } from "../constants";
+
+function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): editor.IStandaloneThemeData {
+  return {
+    base: themeConfig.baseTheme || "vs",
+    inherit: true,
+    colors: {
+      "editor.background": themeConfig.background.color,
+    },
+    rules: Object.values(OpenFgaDslThemeToken).map((token) => {
+      const style = getThemeTokenStyle(token, themeConfig);
+      return {
+        token: `${token}.${LANGUAGE_NAME}`,
+        ...style,
+      };
+    }),
+  };
+}
+
+const monacoThemes: Record<string, editor.IStandaloneThemeData> = {};
+Object.values(SupportedTheme).forEach((themeName) => {
+  monacoThemes[themeName] = buildMonacoTheme(supportedThemes[themeName]);
+});
+
+export { monacoThemes, buildMonacoTheme };

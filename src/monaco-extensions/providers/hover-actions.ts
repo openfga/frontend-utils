@@ -1,4 +1,4 @@
-import { Keyword } from "../../keyword";
+import { Keyword } from "../../constants/keyword";
 import type { editor, languages, Position } from "monaco-editor";
 import type * as MonacoEditor from "monaco-editor";
 
@@ -37,19 +37,14 @@ export const defaultDocumentationMap = {
     link: "https://openfga.dev/docs/configuration-language#the-exclusion-operator",
   },
   [Keyword.FROM]: {
-    summary:
-      "Allows direct relationship between users and objects if there is a tuple between the user and the object.",
+    summary: "Allows referencing relations on related objects.",
     link: "https://openfga.dev/docs/configuration-language#referencing-relations-on-related-objects",
   },
-  // TODO:
-  // [Keyword.SCHEMA]: {
-  //   summary: "",
-  //   link: ""
-  // },
-  // [Keyword.TYPE_RESTRICTIONS]: {
-  //   summary: "Allows indicating what types of users can be directly related to objects of this type with this relation.",
-  //   link: ""
-  // }
+  [Keyword.SCHEMA]: {
+    summary:
+      "Defines the schema version to be used, 1.0 or 1.1. Note that we are planning to deprecate the 1.0 schema soon.",
+    link: "https://openfga.dev/docs//modeling/migrating-schema-1-1",
+  },
 };
 
 function getDocumentation(
