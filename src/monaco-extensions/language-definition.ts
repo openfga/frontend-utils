@@ -49,7 +49,6 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
   keywords: [],
   operators: [],
 
-  // identifiers: /^([a-zA-Z]([\w-]*)[a-zA-Z])/,
   identifiers: new RegExp(/(?:\w|-[a-zA-Z])*/),
 
   brackets: [

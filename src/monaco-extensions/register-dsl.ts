@@ -31,6 +31,6 @@ export const registerDSL = (monaco: typeof MonacoEditor, schemaVersion = SchemaV
   });
 
   monaco.languages.registerCodeActionProvider(LANGUAGE_NAME, {
-    provideCodeActions: provideCodeActions(monaco),
+    provideCodeActions: provideCodeActions(monaco, schemaVersion),
   });
 };
