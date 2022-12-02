@@ -50,6 +50,5 @@ export interface OpenFgaThemeConfiguration {
 }
 
 export enum SupportedTheme {
-  OpenFgaLight = "openfga-light",
   OpenFgaDark = "openfga-dark",
 }

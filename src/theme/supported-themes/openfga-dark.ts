@@ -15,6 +15,5 @@ export const openfgaDark: OpenFgaThemeConfiguration = {
     [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: "#CEEC93",
   },
   styles: {
-    [OpenFgaDslThemeTokenType.KEYWORD]: "italic",
   },
 };
