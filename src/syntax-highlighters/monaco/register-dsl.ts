@@ -2,12 +2,20 @@ import type * as MonacoEditor from "monaco-editor";
 
 import { getLanguageConfiguration, language } from "./language-definition";
 import { LANGUAGE_NAME } from "../../constants/language-name";
-import { providerHover } from "./providers/hover-actions";
+import { DocumentationMap, providerHover } from "./providers/hover-actions";
 import { provideCompletionItems } from "./providers/completion";
 import { provideCodeActions } from "./providers/code-actions";
 import { SchemaVersion } from "../../constants/schema-version";
 
-export const registerDSL = (monaco: typeof MonacoEditor, schemaVersion = SchemaVersion.OneDotZero) => {
+export interface RegisterDslOverrides {
+  documentationMap: DocumentationMap;
+}
+
+export const registerDSL = (
+  monaco: typeof MonacoEditor,
+  schemaVersion = SchemaVersion.OneDotZero,
+  overrides: RegisterDslOverrides,
+) => {
   const isLanguageRegistered = !!monaco.languages
     .getLanguages()
     .find((language: MonacoEditor.languages.ILanguageExtensionPoint) => language.id === LANGUAGE_NAME);
@@ -23,7 +31,7 @@ export const registerDSL = (monaco: typeof MonacoEditor, schemaVersion = SchemaV
   monaco.languages.setMonarchTokensProvider(LANGUAGE_NAME, language);
 
   monaco.languages.registerHoverProvider(LANGUAGE_NAME, {
-    provideHover: providerHover(monaco),
+    provideHover: providerHover(monaco, overrides.documentationMap),
   });
 
   monaco.languages.registerCompletionItemProvider(LANGUAGE_NAME, {

@@ -8,10 +8,10 @@ export const languageDefinition = {
   },
   [OpenFgaDslThemeTokenType.KEYWORD]: /\b(type|relations|define|and|or|but not|from|as|model|schema)\b/,
   [OpenFgaDslThemeTokenType.TYPE]: {
-    pattern: /(?<=type\s+)\w+/
+    pattern: /(?<=type\s+)\w+/,
   },
   [OpenFgaDslThemeTokenType.RELATION]: {
-    pattern: /(?<=define\s+)\w+/
+    pattern: /(?<=define\s+)\w+/,
   },
   [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: /\[.*\]/,
 };

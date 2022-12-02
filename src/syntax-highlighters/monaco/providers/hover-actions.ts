@@ -2,7 +2,9 @@ import { Keyword } from "../../../constants/keyword";
 import type { editor, languages, Position } from "monaco-editor";
 import type * as MonacoEditor from "monaco-editor";
 
-export const defaultDocumentationMap = {
+export type DocumentationMap = Partial<Record<Keyword, { summary: string; link?: string }>>;
+
+export const defaultDocumentationMap: DocumentationMap = {
   [Keyword.TYPE]: {
     summary: `A type or grouping of objects that have similar characteristics. For example:
 - workspace
@@ -47,10 +49,7 @@ export const defaultDocumentationMap = {
   },
 };
 
-function getDocumentation(
-  keyword: Keyword,
-  documentationMap: Record<Keyword, { summary: string; link?: string }>,
-): { value: string }[] | undefined {
+function getDocumentation(keyword: Keyword, documentationMap: DocumentationMap): { value: string }[] | undefined {
   const definition = documentationMap[keyword];
   if (!definition) {
     return undefined;

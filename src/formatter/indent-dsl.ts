@@ -34,7 +34,7 @@ function getIndentationForKeyword(keyword: Keyword | string): string {
 export const indentDSL = (rawDsl: string, removeEmptyLines = false) => {
   return rawDsl
     .split("\n")
-    .filter((line: string) => (removeEmptyLines ? line.trim().length > 0 : true))
+    .filter((line: string) => removeEmptyLines || line.trim().length)
     .map((line: string) => {
       const selectedLine = line.trim();
       const keyword = selectedLine.split(" ")[0];
