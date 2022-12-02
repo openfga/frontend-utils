@@ -17,6 +17,9 @@ jobs:
           always-auth: false
           cache: 'npm'
 
+      - name: Update npm
+        run: npm i -g npm
+
       - name: Install dependencies
         run: npm ci
       - name: Run FOSSA scan and upload build data
@@ -30,14 +33,16 @@ jobs:
           api-key: ${{ secrets.FOSSA_API_KEY }}
           run-tests: true
 
-  snyk:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+#  # Snyk does not currently support npm package-lock.json version 3
+#  snyk:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Run Snyk to check for vulnerabilities
+#        uses: snyk/actions/node@master
+#        env:
+#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
@@ -57,6 +62,9 @@ jobs:
           always-auth: false
           cache: 'npm'
 
+      - name: Update npm
+        run: npm i -g npm
+
       - name: Install dependencies
         run: npm ci
 
@@ -74,6 +82,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
+
+      - name: Update npm
+        run: npm i -g npm
 
       - name: Install dependencies
         run: npm ci
@@ -101,7 +112,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build, test, fossa, snyk]
+    needs: [build, test, fossa]
 
     steps:
       - uses: actions/checkout@v3
@@ -114,6 +125,9 @@ jobs:
           scope: '@openfga'
           always-auth: false
           cache: 'npm'
+
+      - name: Update npm
+        run: npm i -g npm
 
       - name: Install dependencies
         run: npm ci
