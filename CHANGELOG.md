@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.0.9
+### [0.0.9](https://github.com/openfga/syntax-transformer/compare/v0.0.8...v0.0.9) (2022-12-02)
+
+#### Changes
+- feat(editor-support): expose auto-completion for monaco (openfga/syntax-transformer#90)
+- feat(editor-support): expose syntax highlighting and tokenization for monaco and prism (openfga/syntax-transformer#90)
+
+#### Chore
+- chore(deps): bump dev dependencies
+
 ## v0.0.8
 ### [0.0.8](https://github.com/openfga/syntax-transformer/compare/v0.0.7...v0.0.8) (2022-11-16)
 
