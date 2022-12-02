@@ -1,8 +1,21 @@
-import { Keywords, ReservedKeywords } from "./keywords";
-import { TransformedType } from "./parse-dsl";
+import { Keyword, ReservedKeywords } from "../constants/keyword";
+import { TransformedType } from "../parser";
+import { ValidationError } from "./validation-error";
+import type { editor } from "monaco-editor";
+
+export interface Marker extends editor.IMarkerData {
+  severity: number;
+  startColumn: number;
+  endColumn: number;
+  startLineNumber: number;
+  endLineNumber: number;
+  message: string;
+  source: string;
+  extraInformation?: { error?: ValidationError; typeName?: string; relation?: string };
+}
 
 interface BaseReporterOpts {
-  markers: any;
+  markers: Marker[];
   lines: string[];
   lineIndex: number;
   value: string;
@@ -19,10 +32,25 @@ interface ReporterOpts extends BaseReporterOpts {
 interface ErrorReporterOpts extends BaseReporterOpts {
   message: string;
   customResolver?: (wordIdx: number, rawLine: string, value: string) => number;
-  relatedInformation?: {
-    type: string;
+  extraInformation?: {
+    error: ValidationError;
+    typeName?: string;
+    relation?: string;
   };
 }
+
+export const getDefaultError = (lines: string[]): Marker => {
+  return {
+    // monaco.MarkerSeverity.Error,
+    severity: 8,
+    startColumn: 0,
+    endColumn: Number.MAX_SAFE_INTEGER,
+    startLineNumber: 0,
+    endLineNumber: lines.length,
+    message: "Invalid syntax",
+    source: "linter",
+  };
+};
 
 const getValidRelationsArray = (validRelations?: ReporterOpts["validRelations"], typeName?: string): string[] => {
   if (!validRelations) {
@@ -43,7 +71,7 @@ const reportError = ({
   message,
   value,
   customResolver = undefined,
-  relatedInformation = { type: "" },
+  extraInformation = { error: ValidationError.InvalidSyntax },
 }: ErrorReporterOpts) => {
   const rawLine = lines[lineIndex];
   const re = new RegExp("\\b" + value + "\\b");
@@ -54,7 +82,7 @@ const reportError = ({
   }
 
   markers.push({
-    relatedInformation,
+    extraInformation,
     // monaco.MarkerSeverity.Error,
     severity: 8,
     startColumn: wordIdx,
@@ -68,33 +96,33 @@ const reportError = ({
 
 export const reportReservedTypeName = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
-    message: `A type cannot be named '${Keywords.SELF}' or '${ReservedKeywords.THIS}'.`,
+    message: `A type cannot be named '${Keyword.SELF}' or '${ReservedKeywords.THIS}'.`,
     markers,
     lines,
     value,
-    relatedInformation: { type: "reserved-type-keywords" },
+    extraInformation: { error: ValidationError.ReservedTypeKeywords },
     lineIndex,
   });
 };
 
 export const reportReservedRelationName = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
-    message: `A relation cannot be named '${Keywords.SELF}' or '${ReservedKeywords.THIS}'.`,
+    message: `A relation cannot be named '${Keyword.SELF}' or '${ReservedKeywords.THIS}'.`,
     markers,
     lines,
     value,
-    relatedInformation: { type: "reserved-relation-keywords" },
+    extraInformation: { error: ValidationError.ReservedRelationKeywords },
     lineIndex,
   });
 };
 
 export const reportUseSelf = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
-    message: `For auto-referencing use '${Keywords.SELF}'.`,
+    message: `For auto-referencing use '${Keyword.SELF}'.`,
     markers,
     lines,
     value,
-    relatedInformation: { type: "self-error" },
+    extraInformation: { error: ValidationError.SelfError },
     lineIndex,
     customResolver: (wordIdx, rawLine, value) => {
       const fromStartsAt = wordIdx;
@@ -114,14 +142,14 @@ export const reportInvalidName = ({ markers, lines, lineIndex, typeName, value, 
     markers,
     lines,
     value,
-    relatedInformation: { type: "invalid-name" },
+    extraInformation: { error: ValidationError.InvalidName },
     lineIndex,
   });
 };
 
 export const reportInvalidFrom = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
-    message: `Cannot self-reference (\`${value}\`) within \`${Keywords.FROM}\` clause.`,
+    message: `Cannot self-reference (\`${value}\`) within \`${Keyword.FROM}\` clause.`,
     markers,
     lines,
     value,
@@ -144,7 +172,7 @@ export const reportAllowedTypeModel10 = ({ markers, lines, lineIndex, value }: R
     lineIndex,
     lines,
     value: actualValue,
-    relatedInformation: { type: "allowed-type-schema-10" },
+    extraInformation: { error: ValidationError.AllowedTypesNotValidOnSchema1_0 },
     customResolver: (wordIdx, rawLine, value) => {
       const clauseStartsAt = rawLine.indexOf(":") + ":".length + 1;
       wordIdx = clauseStartsAt + rawLine.slice(clauseStartsAt).indexOf(value.substring(1));
@@ -164,7 +192,7 @@ export const reportAssignableRelationMustHaveTypes = ({ markers, lines, lineInde
     lineIndex,
     lines,
     value: actualValue,
-    relatedInformation: { type: "assignable-relation-must-have-type" },
+    extraInformation: { error: ValidationError.AssignableRelationsMustHaveType },
     customResolver: (wordIdx, rawLine, value) => {
       wordIdx = rawLine.indexOf(value.substring(1));
       return wordIdx;
@@ -179,13 +207,13 @@ export const reportAssignableTypeWildcardRelation = ({ markers, lines, lineIndex
     lineIndex,
     lines,
     value,
-    relatedInformation: { type: "type-wildcard-relation" },
+    extraInformation: { error: ValidationError.TypeRestrictionCannotHaveWildcardAndRelation },
   });
 };
 
 export const reportInvalidButNot = ({ markers, lines, lineIndex, value, clause }: ReporterOpts) => {
   reportError({
-    message: `Cannot self-reference (\`${value}\`) within \`${Keywords.BUT_NOT}\` clause.`,
+    message: `Cannot self-reference (\`${value}\`) within \`${Keyword.BUT_NOT}\` clause.`,
     markers,
     lineIndex,
     lines,
@@ -245,7 +273,7 @@ export const reportInvalidRelation = ({ markers, lines, lineIndex, value, validR
       lineIndex,
       value,
       message: `The relation \`${value}\` does not exist.`,
-      relatedInformation: { type: "missing-definition", relation: value } as any,
+      extraInformation: { error: ValidationError.MissingDefinition, relation: value },
     });
   }
 };
@@ -264,7 +292,7 @@ export const reportInvalidTypeRelation = ({
     lineIndex,
     value,
     message: `\`${relationName}\` is not a valid relation for \`${typeName}\`.`,
-    relatedInformation: { type: "invalid-relation-type", relation: relationName, typeName: typeName } as any,
+    extraInformation: { error: ValidationError.InvalidRelationType, relation: relationName, typeName: typeName },
   });
 };
 
@@ -275,7 +303,7 @@ export const reportInvalidType = ({ markers, lines, lineIndex, value, typeName }
     lineIndex,
     value,
     message: `\`${typeName}\` is not a valid type.`,
-    relatedInformation: { type: "invalid-type", typeName: typeName } as any,
+    extraInformation: { error: ValidationError.InvalidType, typeName: typeName },
   });
 };
 
@@ -289,7 +317,7 @@ export const noEntryPoint = ({ markers, lines, lineIndex, value, validRelations 
       lineIndex,
       value,
       message: `\`${value}\` is an impossible relation (no entrypoint).`,
-      relatedInformation: { type: "relation-no-entry-point", relation: value } as any,
+      extraInformation: { error: ValidationError.RelationNoEntrypoint, relation: value },
     });
   }
 };
@@ -301,7 +329,7 @@ export const reportTupleUsersetRequireDirect = ({ markers, lines, lineIndex, val
     lineIndex,
     value,
     message: `\`${value}\` relation used inside from allows only direct relation.`,
-    relatedInformation: { type: "tupleuset-not-direct", relation: value } as any,
+    extraInformation: { error: ValidationError.TuplesetNotDirect, relation: value },
     customResolver: (wordIdx, rawLine, value) => {
       const clauseStartsAt = rawLine.indexOf("from") + "from".length + 1;
       wordIdx = clauseStartsAt + rawLine.slice(clauseStartsAt).indexOf(value) + 1;
@@ -314,10 +342,10 @@ export const reportDuplicate = ({ markers, lines, lineIndex, value }: ReporterOp
   const rawLine = lines[lineIndex];
 
   markers.push({
-    relatedInformation: { type: "duplicated-error" },
+    extraInformation: { error: ValidationError.DuplicatedError },
     // monaco.MarkerSeverity.Error,
     severity: 8,
-    startColumn: rawLine.indexOf(Keywords.DEFINE) + 1,
+    startColumn: rawLine.indexOf(Keyword.DEFINE) + 1,
     endColumn: rawLine.length + 1,
     startLineNumber: lineIndex + 1,
     endLineNumber: lineIndex + 1,
@@ -333,7 +361,7 @@ export const reportInvalidSyntaxVersion = ({ markers, lines, lineIndex, value }:
     lineIndex,
     value,
     message: `Invalid schema ${value}`,
-    relatedInformation: { type: "invalid-schema" },
+    extraInformation: { error: ValidationError.InvalidSchema },
   });
 };
 

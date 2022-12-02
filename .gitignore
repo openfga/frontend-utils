@@ -12,4 +12,4 @@ tests/coverage
 .env
 credentials.json
 
-src/grammar.ts
+src/parser/grammar.ts

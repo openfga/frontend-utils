@@ -14,8 +14,8 @@ type self
         endColumn: 10,
         endLineNumber: 4,
         message: "A type cannot be named 'self' or 'this'.",
-        relatedInformation: {
-          type: "reserved-type-keywords",
+        extraInformation: {
+          error: "reserved-type-keywords",
         },
         severity: 8,
         source: "linter",
@@ -38,8 +38,8 @@ type this
         endColumn: 10,
         endLineNumber: 4,
         message: "A type cannot be named 'self' or 'this'.",
-        relatedInformation: {
-          type: "reserved-type-keywords",
+        extraInformation: {
+          error: "reserved-type-keywords",
         },
         severity: 8,
         source: "linter",
@@ -62,8 +62,8 @@ type group
         endColumn: 16,
         endLineNumber: 6,
         message: "A relation cannot be named 'self' or 'this'.",
-        relatedInformation: {
-          type: "reserved-relation-keywords",
+        extraInformation: {
+          error: "reserved-relation-keywords",
         },
         severity: 8,
         source: "linter",
@@ -86,8 +86,8 @@ type group
         endColumn: 16,
         endLineNumber: 6,
         message: "A relation cannot be named 'self' or 'this'.",
-        relatedInformation: {
-          type: "reserved-relation-keywords",
+        extraInformation: {
+          error: "reserved-relation-keywords",
         },
         severity: 8,
         source: "linter",
@@ -108,9 +108,9 @@ type group
         endColumn: 36,
         endLineNumber: 4,
         message: "The relation `this` does not exist.",
-        relatedInformation: {
+        extraInformation: {
           relation: "this",
-          type: "missing-definition",
+          error: "missing-definition",
         },
         severity: 8,
         source: "linter",
@@ -134,8 +134,8 @@ type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         endLineNumber: 4,
         message:
           "Type 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' does not match naming rule: '^[^:#@\\s]{1,254}$'.",
-        relatedInformation: {
-          type: "invalid-name",
+        extraInformation: {
+          error: "invalid-name",
         },
         severity: 8,
         source: "linter",
@@ -159,8 +159,8 @@ type org
         endLineNumber: 6,
         message:
           "Relation 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' of type 'org' does not match naming rule: '^[^:#@\\s]{1,50}$'.",
-        relatedInformation: {
-          type: "invalid-name",
+        extraInformation: {
+          error: "invalid-name",
         },
         severity: 8,
         source: "linter",
@@ -187,8 +187,8 @@ type outlet
         endColumn: 72,
         endLineNumber: 10,
         message: "The relation `parent` does not exist in type `outlet`",
-        relatedInformation: {
-          type: "",
+        extraInformation: {
+          error: "invalid-syntax",
         },
         severity: 8,
         source: "linter",
@@ -216,9 +216,9 @@ type group
         endColumn: 18,
         endLineNumber: 7,
         message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "viewer",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -230,9 +230,9 @@ type group
         endColumn: 18,
         endLineNumber: 11,
         message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "viewer",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -255,9 +255,9 @@ type group
         endColumn: 17,
         endLineNumber: 6,
         message: "`group` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "group",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -281,9 +281,9 @@ type group
         endColumn: 18,
         endLineNumber: 7,
         message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "viewer",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -305,9 +305,9 @@ type group
         endColumn: 18,
         endLineNumber: 5,
         message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "viewer",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -331,9 +331,9 @@ type group
         endColumn: 38,
         endLineNumber: 7,
         message: "`reader` is not a valid relation for `group`.",
-        relatedInformation: {
+        extraInformation: {
           relation: "reader",
-          type: "invalid-relation-type",
+          error: "invalid-relation-type",
           typeName: "group",
         },
         severity: 8,
@@ -357,8 +357,8 @@ type group
         endColumn: 28,
         endLineNumber: 6,
         message: "`unknown` is not a valid type.",
-        relatedInformation: {
-          type: "invalid-type",
+        extraInformation: {
+          error: "invalid-relation-type",
           typeName: "unknown",
         },
         severity: 8,
@@ -384,9 +384,9 @@ type group
         endColumn: 35,
         endLineNumber: 8,
         message: "`org` is not a valid relation for `group`.",
-        relatedInformation: {
+        extraInformation: {
           relation: "org",
-          type: "invalid-relation-type",
+          error: "invalid-relation-type",
           typeName: "group",
         },
         severity: 8,
@@ -412,9 +412,9 @@ type group
         endColumn: 35,
         endLineNumber: 8,
         message: "`org` is not a valid relation for `group`.",
-        relatedInformation: {
+        extraInformation: {
           relation: "org",
-          type: "invalid-relation-type",
+          error: "invalid-relation-type",
           typeName: "group",
         },
         severity: 8,
@@ -439,9 +439,9 @@ type group
         endColumn: 37,
         endLineNumber: 7,
         message: "`org` is not a valid relation for `group`.",
-        relatedInformation: {
+        extraInformation: {
           relation: "org",
-          type: "invalid-relation-type",
+          error: "invalid-relation-type",
           typeName: "group",
         },
         severity: 8,
@@ -469,9 +469,9 @@ type group
         endColumn: 18,
         endLineNumber: 10,
         message: "`viewer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "viewer",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -520,9 +520,9 @@ type document
         endColumn: 18,
         endLineNumber: 5,
         message: "`reader` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "reader",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -533,9 +533,9 @@ type document
         endColumn: 18,
         endLineNumber: 6,
         message: "`writer` is an impossible relation (no entrypoint).",
-        relatedInformation: {
+        extraInformation: {
           relation: "writer",
-          type: "relation-no-entry-point",
+          error: "relation-no-entry-point",
         },
         severity: 8,
         source: "linter",
@@ -559,9 +559,9 @@ type folder
         endColumn: 50,
         endLineNumber: 6,
         message: "`parent` relation used inside from allows only direct relation.",
-        relatedInformation: {
+        extraInformation: {
           relation: "parent",
-          type: "tupleuset-not-direct",
+          error: "tupleuset-not-direct",
         },
         severity: 8,
         source: "linter",
@@ -572,9 +572,9 @@ type folder
         endColumn: 48,
         endLineNumber: 7,
         message: "`parent` relation used inside from allows only direct relation.",
-        relatedInformation: {
+        extraInformation: {
           relation: "parent",
-          type: "tupleuset-not-direct",
+          error: "tupleuset-not-direct",
         },
         severity: 8,
         source: "linter",
@@ -599,9 +599,9 @@ type folder
         endColumn: 48,
         endLineNumber: 8,
         message: "`parent` relation used inside from allows only direct relation.",
-        relatedInformation: {
+        extraInformation: {
           relation: "parent",
-          type: "tupleuset-not-direct",
+          error: "tupleuset-not-direct",
         },
         severity: 8,
         source: "linter",
@@ -626,9 +626,9 @@ type folder
         endColumn: 48,
         endLineNumber: 8,
         message: "`parent` relation used inside from allows only direct relation.",
-        relatedInformation: {
+        extraInformation: {
           relation: "parent",
-          type: "tupleuset-not-direct",
+          error: "tupleuset-not-direct",
         },
         severity: 8,
         source: "linter",
@@ -652,9 +652,9 @@ type group
         endColumn: 38,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
-        relatedInformation: {
+        extraInformation: {
           relation: "allowed",
-          type: "missing-definition",
+          error: "missing-definition",
         },
         severity: 8,
         source: "linter",
@@ -678,9 +678,9 @@ type group
         endColumn: 37,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
-        relatedInformation: {
+        extraInformation: {
           relation: "allowed",
-          type: "missing-definition",
+          error: "missing-definition",
         },
         severity: 8,
         source: "linter",
@@ -704,9 +704,9 @@ type group
         endColumn: 27,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
-        relatedInformation: {
+        extraInformation: {
           relation: "allowed",
-          type: "missing-definition",
+          error: "missing-definition",
         },
         severity: 8,
         source: "linter",
@@ -730,9 +730,9 @@ type group
         endColumn: 42,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
-        relatedInformation: {
+        extraInformation: {
           relation: "allowed",
-          type: "missing-definition",
+          error: "missing-definition",
         },
         severity: 8,
         source: "linter",
@@ -756,9 +756,9 @@ type group
         endColumn: 49,
         endLineNumber: 7,
         message: "The relation `allowed` does not exist.",
-        relatedInformation: {
+        extraInformation: {
           relation: "allowed",
-          type: "missing-definition",
+          error: "missing-definition",
         },
         severity: 8,
         source: "linter",
@@ -782,8 +782,8 @@ type org
         endColumn: 23,
         endLineNumber: 6,
         message: "Assignable relation 'member' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
@@ -807,8 +807,8 @@ type org
         endColumn: 22,
         endLineNumber: 6,
         message: "Assignable relation 'member' must have types",
-        relatedInformation: {
-          type: "assignable-relation-must-have-type",
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
@@ -834,8 +834,8 @@ type org
         endColumn: 52,
         endLineNumber: 9,
         message: "Type restriction 'department#member:*' cannot contain both wildcard and relation",
-        relatedInformation: {
-          type: "type-wildcard-relation",
+        extraInformation: {
+          error: "type-wildcard-relation",
         },
         severity: 8,
         source: "linter",

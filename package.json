@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build:grammar": "npx nearleyc src/openfga.ne > src/grammar.ts",
+    "build:grammar": "npx nearleyc src/parser/openfga.ne > src/parser/grammar.ts",
     "build:ts": "rm -rf dist/ && tsc --outDir dist/",
     "build": "npm run build:grammar; npm run build:ts",
     "prepublishOnly": "npm run build",
@@ -35,11 +35,14 @@
     "@types/lodash": "^4.14.187",
     "@types/nearley": "^2.11.2",
     "@types/node": "^18.11.9",
+    "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "jest": "^29.2.2",
+    "monaco-editor": "0.34.1",
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.3",
     "typescript": "^4.8.4"

@@ -1,5 +1,5 @@
 import { defaultRelationRule, defaultTypeRule } from "./default-regex";
-import { Keywords, ReservedKeywords } from "./keywords";
+import { Keyword, ReservedKeywords } from "../constants/keyword";
 import {
   parseDSL,
   ParserResult,
@@ -7,10 +7,10 @@ import {
   RelationDefParserResult,
   RelationTargetParserResult,
   RewriteType,
-  SchemaVersion,
   TransformedType,
-} from "./parse-dsl";
+} from "../parser";
 import { report } from "./reporters";
+import { SchemaVersion } from "../constants/schema-version";
 
 export interface ValidationRegex {
   rule: string;
@@ -427,14 +427,14 @@ function populateRelations(
   typeRegex: ValidationRegex,
   relationRegex: ValidationRegex,
 ): [Record<string, boolean>, Record<string, TransformedType>] {
-  const globalRelations: Record<string, boolean> = { [Keywords.SELF]: true };
+  const globalRelations: Record<string, boolean> = { [Keyword.SELF]: true };
   const transformedTypes: Record<string, TransformedType> = {};
   // Looking at the types
   parserResults.types.forEach((typeDef) => {
     const typeName = typeDef.type;
 
     // check to see if the typeName is valid
-    if (typeName === Keywords.SELF || typeName === ReservedKeywords.THIS) {
+    if (typeName === Keyword.SELF || typeName === ReservedKeywords.THIS) {
       const lineIndex = getTypeLineNumber(typeName, lines);
       reporter.reservedType({ lineIndex, value: typeName });
     }
@@ -445,14 +445,14 @@ function populateRelations(
     }
 
     // Include keyword
-    const encounteredRelationsInType: Record<string, boolean> = { [Keywords.SELF]: true };
+    const encounteredRelationsInType: Record<string, boolean> = { [Keyword.SELF]: true };
     const relations: Record<string, RelationDefParserResult<RelationDefOperator>> = {};
 
     typeDef.relations.forEach((relationDef) => {
       const { relation: relationName } = relationDef;
       relations[relationName] = relationDef;
 
-      if (relationName === Keywords.SELF || relationName === ReservedKeywords.THIS) {
+      if (relationName === Keyword.SELF || relationName === ReservedKeywords.THIS) {
         const typeIndex = getTypeLineNumber(typeName, lines);
         const lineIndex = getRelationLineNumber(relationName, lines, typeIndex);
         reporter.reservedRelation({ lineIndex, value: relationName });
@@ -522,7 +522,7 @@ export const basicValidateRelation = (
           reporter.invalidFrom({
             lineIndex,
             value: target.from,
-            clause: Keywords.FROM,
+            clause: Keyword.FROM,
           });
         }
         if (target.target && !globalRelations[target.target]) {

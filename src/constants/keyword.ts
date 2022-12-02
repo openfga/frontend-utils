@@ -1,5 +1,5 @@
-export enum Keywords {
-  NAMESPACE = "type",
+export enum Keyword {
+  TYPE = "type",
   RELATIONS = "relations",
   SELF = "self",
   DEFINE = "define",
@@ -8,7 +8,6 @@ export enum Keywords {
   AND = "and",
   FROM = "from",
   BUT_NOT = "but not",
-  COMMENT = "comment",
   MODEL = "model",
   SCHEMA = "schema",
 }
