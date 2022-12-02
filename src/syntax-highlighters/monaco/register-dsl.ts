@@ -1,11 +1,11 @@
 import type * as MonacoEditor from "monaco-editor";
 
 import { getLanguageConfiguration, language } from "./language-definition";
-import { LANGUAGE_NAME } from "../constants/language-name";
+import { LANGUAGE_NAME } from "../../constants/language-name";
 import { providerHover } from "./providers/hover-actions";
 import { provideCompletionItems } from "./providers/completion";
 import { provideCodeActions } from "./providers/code-actions";
-import { SchemaVersion } from "../constants/schema-version";
+import { SchemaVersion } from "../../constants/schema-version";
 
 export const registerDSL = (monaco: typeof MonacoEditor, schemaVersion = SchemaVersion.OneDotZero) => {
   const isLanguageRegistered = !!monaco.languages

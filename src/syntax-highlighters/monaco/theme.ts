@@ -1,18 +1,18 @@
 import type { editor } from "monaco-editor";
 
+import { LANGUAGE_NAME } from "../../constants";
 import {
-  getThemeTokenStyle,
   OpenFgaDslThemeToken,
   OpenFgaThemeConfiguration,
   SupportedTheme,
   supportedThemes,
-} from "../utilities/theme";
-import { LANGUAGE_NAME } from "../constants";
+} from "../../theme";
+import { getThemeTokenStyle } from "../../theme/utils";
 
 function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): editor.IStandaloneThemeData {
   return {
     base: themeConfig.baseTheme || "vs",
-    inherit: true,
+    inherit: false,
     colors: {
       "editor.background": themeConfig.background.color,
     },

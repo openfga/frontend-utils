@@ -1,1 +1,1 @@
-export const LANGUAGE_NAME = "openfga";
+export const LANGUAGE_NAME = "dsl.openfga";

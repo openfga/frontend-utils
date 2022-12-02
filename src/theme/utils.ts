@@ -1,13 +1,4 @@
-import { OpenFgaDslThemeToken, OpenFgaDslThemeTokenType, OpenFgaThemeConfiguration, SupportedTheme } from "./types";
-import { openfgaLight } from "./openfga-light";
-import { openfgaDark } from "./openfga-dark";
-
-export * from "./types";
-
-export const supportedThemes: Record<SupportedTheme, OpenFgaThemeConfiguration> = {
-  [SupportedTheme.OpenFgaLight]: openfgaLight,
-  [SupportedTheme.OpenFgaDark]: openfgaDark,
-};
+import { OpenFgaDslThemeToken, OpenFgaDslThemeTokenType, OpenFgaThemeConfiguration } from "./types";
 
 const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.COMMENT]: OpenFgaDslThemeTokenType.COMMENT,

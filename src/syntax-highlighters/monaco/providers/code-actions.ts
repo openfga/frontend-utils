@@ -1,11 +1,11 @@
 import type * as MonacoEditor from "monaco-editor";
 import type { CancellationToken, editor, languages } from "monaco-editor";
 
-import { Keyword } from "../../constants/keyword";
-import { Marker } from "../../validator/reporters";
-import { ValidationError } from "../../validator/validation-error";
-import { SchemaVersion } from "../../constants/schema-version";
-import { SINGLE_INDENTATION } from "../../formatter/indent-dsl";
+import { Keyword } from "../../../constants/keyword";
+import { Marker } from "../../../validator/reporters";
+import { ValidationError } from "../../../validator/validation-error";
+import { SchemaVersion } from "../../../constants/schema-version";
+import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
 
 interface CodeActionInput {
   markerRange: MonacoEditor.Range;

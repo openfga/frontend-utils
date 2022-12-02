@@ -1,8 +1,8 @@
 import type * as MonacoEditor from "monaco-editor";
 
-import { Keyword } from "../constants/keyword";
-import { LANGUAGE_NAME } from "../constants/language-name";
-import { OpenFgaDslThemeToken } from "../utilities/theme";
+import { Keyword } from "../../constants/keyword";
+import { LANGUAGE_NAME } from "../../constants/language-name";
+import { OpenFgaDslThemeToken } from "../../theme";
 
 // Source for the code below:
 // https://github.com/microsoft/monaco-editor/blob/main/src/basic-languages/python/python.ts
@@ -142,24 +142,10 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
       ],
     ],
 
-    // Deal with white space, including single and multi-line comments
+    // Deal with white space, including comments
     whitespace: [
       [new RegExp(/\s+/), "white"],
       [new RegExp(/(^(\s+#).*$)/), OpenFgaDslThemeToken.COMMENT],
-      [new RegExp(/'''/), "string", "@endDocString"],
-      [new RegExp(/"""/), "string", "@endDblDocString"],
-    ],
-    endDocString: [
-      [new RegExp(/[^']+/), "string"],
-      [new RegExp(/\\'/), "string"],
-      [new RegExp(/'''/), "string", "@popall"],
-      [new RegExp(/'/), "string"],
-    ],
-    endDblDocString: [
-      [new RegExp(/[^"]+/), "string"],
-      [new RegExp(/\\"/), "string"],
-      [new RegExp(/"""/), "string", "@popall"],
-      [new RegExp(/"/), "string"],
     ],
   },
 };

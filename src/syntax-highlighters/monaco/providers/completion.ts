@@ -3,10 +3,10 @@
 import type * as MonacoEditor from "monaco-editor";
 import type { editor, languages, Position } from "monaco-editor";
 
-import { SINGLE_INDENTATION } from "../../formatter/indent-dsl";
-import { Keyword } from "../../constants/keyword";
-import { assertNever } from "../../inner-utils/assert-never";
-import { SchemaVersion } from "../../constants/schema-version";
+import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
+import { Keyword } from "../../../constants/keyword";
+import { assertNever } from "../../../inner-utils/assert-never";
+import { SchemaVersion } from "../../../constants/schema-version";
 
 const provideCompletionItemsOneDotZero =
   (monaco: typeof MonacoEditor) =>

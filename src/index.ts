@@ -2,8 +2,8 @@ import constants, { enums } from "./constants";
 import formatter from "./formatter";
 import transformer from "./transformer";
 import validator from "./validator";
-import MonacoExtensions from "./monaco-extensions";
-import * as theming from "./utilities/theme";
+import * as syntaxHighlighters from "./syntax-highlighters";
+import * as theming from "./theme";
 
 const { Keyword, SchemaVersion } = enums;
 
@@ -16,7 +16,7 @@ export {
   formatter,
   transformer,
   validator,
-  MonacoExtensions,
+  syntaxHighlighters,
   theming,
 
   // for backward compatibility to prevent breaking changes, to be removed in next major release

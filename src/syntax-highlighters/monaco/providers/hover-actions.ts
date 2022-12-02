@@ -1,4 +1,4 @@
-import { Keyword } from "../../constants/keyword";
+import { Keyword } from "../../../constants/keyword";
 import type { editor, languages, Position } from "monaco-editor";
 import type * as MonacoEditor from "monaco-editor";
 
