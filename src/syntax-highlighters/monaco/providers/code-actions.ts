@@ -139,8 +139,7 @@ export const provideCodeActions =
 
     return {
       actions: codeActions,
-      dispose() {
-        //
-      },
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      dispose() {},
     };
   };
