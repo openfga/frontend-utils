@@ -49,26 +49,44 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
   keywords: [],
   operators: [],
 
-  identifiers: new RegExp(/(?:\w|-[a-zA-Z])*/),
+  identifiers: new RegExp(/(?!self)(?:\w|-[a-zA-Z])*/),
 
   brackets: [
     { open: "[", close: "]", token: OpenFgaDslThemeToken.DELIMITER_BRACKET_TYPE_RESTRICTIONS },
     { open: "(", close: ")", token: OpenFgaDslThemeToken.DELIMITER_BRACKET_RELATION_DEFINITION },
   ],
 
-  typeRestrictionsDelimiters: [
-    { open: "[", close: "]", token: OpenFgaDslThemeToken.DELIMITER_BRACKET_TYPE_RESTRICTIONS },
-    [new RegExp(/,/), OpenFgaDslThemeToken.DELIMITER_BRACKET_RELATION_DEFINITION],
-  ],
-
   tokenizer: {
     root: [
       { include: "@whitespace" },
 
-      [new RegExp(/[:]/), OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON],
-      [new RegExp(/[{}[\]()]/), "@brackets"],
+      [new RegExp(/^(\s*#).*/), OpenFgaDslThemeToken.COMMENT],
 
-      [new RegExp(/@[a-zA-Z]\w*/), "tag"],
+      [
+        new RegExp(/(\[)(\s*)(@identifiers)(\s*)(\])/),
+        ["@brackets", "@whitespace", OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE, "@whitespace", "@brackets"],
+      ],
+      [
+        new RegExp(/(,)(\s*)(@identifiers)(\s*)(\])/),
+        [
+          OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS,
+          "@whitespace",
+          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
+          "@whitespace",
+          "@brackets",
+        ],
+      ],
+      [
+        new RegExp(/(\[)(\s*)(@identifiers)(\s*)(,)/),
+        [
+          "@brackets",
+          "@whitespace",
+          "type.type-restrictions.value",
+          "@whitespace",
+          OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS,
+        ],
+      ],
+      [new RegExp(/[{}[\]()]/), "@brackets"],
 
       [
         new RegExp(/(schema)(\s+)(\d\.\d)/),
@@ -93,6 +111,15 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
       [
         new RegExp(/(but not)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.OPERATOR_BUT_NOT, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
+      ],
+
+      [
+        new RegExp(/(as)(\s+)(@identifiers)/),
+        [OpenFgaDslThemeToken.KEYWORD_AS, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
+      ],
+      [
+        new RegExp(/(:)(\s+)(@identifiers)/),
+        [OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
       ],
       [
         new RegExp(/(@identifiers)(\s+)(from)(\s+)(@identifiers)/),
@@ -120,8 +147,11 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
           OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD,
         ],
       ],
-      [new RegExp(/,/), OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS],
-      [new RegExp(/but\snot/), OpenFgaDslThemeToken.OPERATOR_BUT_NOT],
+
+      [":", OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON],
+      [",", OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS],
+      [Keyword.BUT_NOT, OpenFgaDslThemeToken.OPERATOR_BUT_NOT],
+      [Keyword.SELF, OpenFgaDslThemeToken.KEYWORD_SELF],
       [
         new RegExp(/@identifiers/),
         {
@@ -133,10 +163,12 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
             [Keyword.DEFINE]: OpenFgaDslThemeToken.KEYWORD_DEFINE,
             [Keyword.FROM]: OpenFgaDslThemeToken.KEYWORD_FROM,
             [Keyword.AS]: OpenFgaDslThemeToken.KEYWORD_AS,
-            [Keyword.SELF]: OpenFgaDslThemeToken.KEYWORD_SELF,
             [Keyword.MODEL]: OpenFgaDslThemeToken.KEYWORD_MODEL,
             [Keyword.SCHEMA]: { token: OpenFgaDslThemeToken.KEYWORD_SCHEMA },
-            "@default": "identifier",
+            // TODO: This should be "identifier", however because tupleset was not properly
+            //  detected with the rules above, this is the quickiest hacky fix we can do to
+            //  get it out there for people to use
+            "@default": OpenFgaDslThemeToken.VALUE_RELATION_TUPLE_TO_USERSET_TUPLESET,
           },
         },
       ],

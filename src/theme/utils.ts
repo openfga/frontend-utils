@@ -34,11 +34,11 @@ export function getThemeTokenStyle(
   token: OpenFgaDslThemeToken,
   themeConfig: OpenFgaThemeConfiguration,
 ): {
-  color?: string;
+  foreground?: string;
   fontStyle?: string;
 } {
   return {
-    color:
+    foreground:
       themeConfig.rawColorOverrides?.[token] ||
       themeConfig.colors[tokenTypeMap[token || OpenFgaDslThemeTokenType.DEFAULT]],
     fontStyle:

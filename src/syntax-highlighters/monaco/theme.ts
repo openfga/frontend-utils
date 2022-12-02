@@ -1,12 +1,7 @@
 import type { editor } from "monaco-editor";
 
 import { LANGUAGE_NAME } from "../../constants";
-import {
-  OpenFgaDslThemeToken,
-  OpenFgaThemeConfiguration,
-  SupportedTheme,
-  supportedThemes,
-} from "../../theme";
+import { OpenFgaDslThemeToken, OpenFgaThemeConfiguration, SupportedTheme, supportedThemes } from "../../theme";
 import { getThemeTokenStyle } from "../../theme/utils";
 
 function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): editor.IStandaloneThemeData {
