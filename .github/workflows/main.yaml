@@ -34,15 +34,15 @@ jobs:
           run-tests: true
 
 
-#  # Snyk does not currently support npm package-lock.json version 3
-#  snyk:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: Run Snyk to check for vulnerabilities
-#        uses: snyk/actions/node@master
-#        env:
-#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  # Snyk does not currently support npm package-lock.json version 3
+  snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   build:
     runs-on: ubuntu-latest

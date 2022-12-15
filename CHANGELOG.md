@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.10
+### [0.0.10](https://github.com/openfga/syntax-transformer/compare/v0.0.9...v0.0.10) (2022-12-15)
+
+#### Changes
+- chore(deps): upgrade `@openfga/sdk` to `v0.2.0` and update other deps
+- chore: revert `package-lock.json` to version `2` because it was breaking snyk
+
 ## v0.0.9
 ### [0.0.9](https://github.com/openfga/syntax-transformer/compare/v0.0.8...v0.0.9) (2022-12-02)
 

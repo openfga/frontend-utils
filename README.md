@@ -50,90 +50,145 @@ npm install --save @openfga/syntax-transformer // OR yarn add @openfga/syntax-tr
 
 ## Usage
 
+### From the Friendly Syntax to the JSON Syntax
+```javascript
+const { friendlySyntaxToApiSyntax } = require("@openfga/syntax-transformer");
+
+const apiSyntax = friendlySyntaxToApiSyntax(
+`model
+  schema 1.1
+type user
+type document
+  relations
+    define blocked: [user]
+    define editor: [user] but not blocked
+`);
+```
+
 ### From the JSON Syntax to the Friendly Syntax
 ```javascript
 const { apiSyntaxToFriendlySyntax } = require("@openfga/syntax-transformer");
 
 const friendlySyntax = apiSyntaxToFriendlySyntax({
-  "type_definitions": [
-    {
-      "type": "folder",
+  "schema_version": "1.1",
+  "type_definitions": [{
+    "type": "user",
+    "relations": {}
+  }, {
+    "type": "document",
+    "relations": {
+      "blocked": { "this": {} },
+      "editor": {
+        "difference": {
+          "base": { "this": {} },
+          "subtract": {
+            "computedUserset": {
+              "object": "",
+              "relation": "blocked"
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
       "relations": {
+        "blocked": {
+          "directly_related_user_types": [{ "type": "user" }]
+        },
         "editor": {
-          "this": {}
+          "directly_related_user_types": [{ "type": "user" }]
         }
       }
     }
-  ]
-});
-```
-### From the Friendly Syntax to the JSON Syntax
-```javascript
-const { friendlySyntaxToApiSyntax } = require("@openfga/syntax-transformer");
-
-const apiSyntax = friendlySyntaxToApiSyntax(`type document
-  relations
-    define blocked as self
-    define editor as self but not blocked
-type team
-  relations
-    define member as self
-`);
+  }]
+}
+);
 ```
 
 ## Configuration Syntaxes
 
+### Schema 1.1
 The two below Syntaxes are equivalent. Find out more on OpenFGA's configuration language [here](https://openfga.dev/docs/configuration-language).
+
+### Friendly Syntax (DSL)
+
+```python
+model
+  schema 1.1
+type user
+type folder
+  relations
+    define editor: [user]
+type document
+  relations
+    define parent: [folder]
+    define editor: [user] or editor from parent
+```
 
 ### JSON Syntax
 
 ```json
 {
-  "type_definitions": [
-    {
-      "type": "folder",
-      "relations": {
-        "editor": {
-          "this": {}
-        }
-      }
+  "schema_version": "1.1",
+  "type_definitions": [{
+    "type": "user",
+    "relations": {}
+  }, {
+    "type": "folder",
+    "relations": {
+      "editor": { "this": {} }
     },
-    {
-      "type": "document",
+    "metadata": {
       "relations": {
-        "parent": {
-          "this": {}
-        },
         "editor": {
-          "union": {
-            "child": [
-              {
-                "this": {}
-              },
-              {
-                "tupleToUserset": {
-                  "tupleset": {
-                    "object": "",
-                    "relation": "parent"
-                  },
-                  "computedUserset": {
-                    "object": "",
-                    "relation": "editor"
-                  }
-                }
-              }
-            ]
-          }
+          "directly_related_user_types": [{ "type": "user" }]
         }
       }
     }
-  ]
+  }, {
+    "type": "document",
+    "relations": {
+      "parent": { "this": {} },
+      "editor": {
+        "union": {
+          "child": [{
+            "this": {}
+          }, {
+            "tupleToUserset": {
+              "tupleset": {
+                "object": "",
+                "relation": "parent"
+              },
+              "computedUserset": {
+                "object": "",
+                "relation": "editor"
+              }
+            }
+          }]
+        }
+      }
+    },
+    "metadata": {
+      "relations": {
+        "parent": {
+          "directly_related_user_types": [{ "type": "folder" }]
+        },
+        "editor": {
+          "directly_related_user_types": [{ "type": "user" }]
+        }
+      }
+    }
+  }]
 }
 ```
 
-### Friendly Syntax
+### Schema 1.0
+The two below Syntaxes are equivalent. Find out more on OpenFGA's configuration language [here](https://openfga.dev/docs/configuration-language).
+
+### Friendly Syntax (DSL)
 
 ```python
+type user
 type folder
   relations
     define editor as self
@@ -141,6 +196,46 @@ type document
   relations
     define parent as self
     define editor as self or editor from parent
+```
+
+### JSON Syntax
+
+```json
+{
+  "schema_version": "1.0",
+  "type_definitions": [{
+    "type": "user",
+    "relations": {}
+  }, {
+    "type": "folder",
+    "relations": {
+      "editor": { "this": {} }
+    }
+  }, {
+    "type": "document",
+    "relations": {
+      "parent": { "this": {} },
+      "editor": {
+        "union": {
+          "child": [{
+            "this": {}
+          }, {
+            "tupleToUserset": {
+              "tupleset": {
+                "object": "",
+                "relation": "parent"
+              },
+              "computedUserset": {
+                "object": "",
+                "relation": "editor"
+              }
+            }
+          }]
+        }
+      }
+    }
+  }]
+}
 
 ```
 
@@ -148,7 +243,7 @@ type document
 
 | Repo                                                                   | License                                                                            | Maintainers                                                                           | Language   | Schema v1.0 | Schema v1.1 | Package Managers                                                                                                                                                                                                                                                                                               | Other Links                                                                                                                    |
 |------------------------------------------------------------------------|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------|-------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| [syntax-transformer](https://github.com/openfga/syntax-transformer)    | [Apache-2.0](https://github.com/openfga/syntax-transformer/blob/main/LICENSE)      | [@openfga](https://github.com/orgs/openfga/people)                                    | Typescript | Yes         | No          | [![npm:@openfga/syntax-transformer](https://img.shields.io/npm/v/@openfga/syntax-transformer.svg?style=flat)](https://www.npmjs.com/package/@openfga/syntax-transformer)                                                                                                                                       |                                                                                                                                |
+| [syntax-transformer](https://github.com/openfga/syntax-transformer)    | [Apache-2.0](https://github.com/openfga/syntax-transformer/blob/main/LICENSE)      | [@openfga](https://github.com/orgs/openfga/people)                                    | Typescript | Yes         | Yes         | [![npm:@openfga/syntax-transformer](https://img.shields.io/npm/v/@openfga/syntax-transformer.svg?style=flat)](https://www.npmjs.com/package/@openfga/syntax-transformer)                                                                                                                                       |                                                                                                                                |
 | [openfga-dsl-parser](https://github.com/maxmindlin/openfga-dsl-parser) | [Apache-2.0](https://github.com/maxmindlin/openfga-dsl-parser/blob/master/LICENSE) | [@maxmindlin](https://github.com/maxmindlin) - [@dblclik](https://github.com/dblclik) | Rust       | Yes         | No          | [![crates:openfga-dsl-parser](https://img.shields.io/crates/v/openfga-dsl-parser.svg?style=flat)](https://crates.io/crates/openfga-dsl-parser)[![pypi:openfga-dsl-parser-python](https://img.shields.io/pypi/v/openfga-dsl-parser-python.svg?style=flat)](https://pypi.org/project/openfga-dsl-parser-python/) | [WASM](https://github.com/dblclik/openfga-dsl-parser-wasm) - [Python](https://github.com/maxmindlin/openfga-dsl-parser-python) |
 | [openfga-rs](https://github.com/iammathew/openfga-rs)                  | [Apache-2.0](https://github.com/iammathew/openfga-rs/blob/main/LICENSE.md)         | [@iammathew](https://github.com/iammathew)                                            | Rust       | Yes         | No          |                                                                                                                                                                                                                                                                                                                |                                                                                                                                |
 
