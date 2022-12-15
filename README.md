@@ -50,90 +50,145 @@ npm install --save @openfga/syntax-transformer // OR yarn add @openfga/syntax-tr
 
 ## Usage
 
+### From the Friendly Syntax to the JSON Syntax
+```javascript
+const { friendlySyntaxToApiSyntax } = require("@openfga/syntax-transformer");
+
+const apiSyntax = friendlySyntaxToApiSyntax(
+`model
+  schema 1.1
+type user
+type document
+  relations
+    define blocked: [user]
+    define editor: [user] but not blocked
+`);
+```
+
 ### From the JSON Syntax to the Friendly Syntax
 ```javascript
 const { apiSyntaxToFriendlySyntax } = require("@openfga/syntax-transformer");
 
 const friendlySyntax = apiSyntaxToFriendlySyntax({
-  "type_definitions": [
-    {
-      "type": "folder",
+  "schema_version": "1.1",
+  "type_definitions": [{
+    "type": "user",
+    "relations": {}
+  }, {
+    "type": "document",
+    "relations": {
+      "blocked": { "this": {} },
+      "editor": {
+        "difference": {
+          "base": { "this": {} },
+          "subtract": {
+            "computedUserset": {
+              "object": "",
+              "relation": "blocked"
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
       "relations": {
+        "blocked": {
+          "directly_related_user_types": [{ "type": "user" }]
+        },
         "editor": {
-          "this": {}
+          "directly_related_user_types": [{ "type": "user" }]
         }
       }
     }
-  ]
-});
-```
-### From the Friendly Syntax to the JSON Syntax
-```javascript
-const { friendlySyntaxToApiSyntax } = require("@openfga/syntax-transformer");
-
-const apiSyntax = friendlySyntaxToApiSyntax(`type document
-  relations
-    define blocked as self
-    define editor as self but not blocked
-type team
-  relations
-    define member as self
-`);
+  }]
+}
+);
 ```
 
 ## Configuration Syntaxes
 
+### Schema 1.1
 The two below Syntaxes are equivalent. Find out more on OpenFGA's configuration language [here](https://openfga.dev/docs/configuration-language).
+
+### Friendly Syntax (DSL)
+
+```python
+model
+  schema 1.1
+type user
+type folder
+  relations
+    define editor: [user]
+type document
+  relations
+    define parent: [folder]
+    define editor: [user] or editor from parent
+```
 
 ### JSON Syntax
 
 ```json
 {
-  "type_definitions": [
-    {
-      "type": "folder",
-      "relations": {
-        "editor": {
-          "this": {}
-        }
-      }
+  "schema_version": "1.1",
+  "type_definitions": [{
+    "type": "user",
+    "relations": {}
+  }, {
+    "type": "folder",
+    "relations": {
+      "editor": { "this": {} }
     },
-    {
-      "type": "document",
+    "metadata": {
       "relations": {
-        "parent": {
-          "this": {}
-        },
         "editor": {
-          "union": {
-            "child": [
-              {
-                "this": {}
-              },
-              {
-                "tupleToUserset": {
-                  "tupleset": {
-                    "object": "",
-                    "relation": "parent"
-                  },
-                  "computedUserset": {
-                    "object": "",
-                    "relation": "editor"
-                  }
-                }
-              }
-            ]
-          }
+          "directly_related_user_types": [{ "type": "user" }]
         }
       }
     }
-  ]
+  }, {
+    "type": "document",
+    "relations": {
+      "parent": { "this": {} },
+      "editor": {
+        "union": {
+          "child": [{
+            "this": {}
+          }, {
+            "tupleToUserset": {
+              "tupleset": {
+                "object": "",
+                "relation": "parent"
+              },
+              "computedUserset": {
+                "object": "",
+                "relation": "editor"
+              }
+            }
+          }]
+        }
+      }
+    },
+    "metadata": {
+      "relations": {
+        "parent": {
+          "directly_related_user_types": [{ "type": "folder" }]
+        },
+        "editor": {
+          "directly_related_user_types": [{ "type": "user" }]
+        }
+      }
+    }
+  }]
 }
 ```
 
-### Friendly Syntax
+### Schema 1.0
+The two below Syntaxes are equivalent. Find out more on OpenFGA's configuration language [here](https://openfga.dev/docs/configuration-language).
+
+### Friendly Syntax (DSL)
 
 ```python
+type user
 type folder
   relations
     define editor as self
@@ -141,6 +196,46 @@ type document
   relations
     define parent as self
     define editor as self or editor from parent
+```
+
+### JSON Syntax
+
+```json
+{
+  "schema_version": "1.0",
+  "type_definitions": [{
+    "type": "user",
+    "relations": {}
+  }, {
+    "type": "folder",
+    "relations": {
+      "editor": { "this": {} }
+    }
+  }, {
+    "type": "document",
+    "relations": {
+      "parent": { "this": {} },
+      "editor": {
+        "union": {
+          "child": [{
+            "this": {}
+          }, {
+            "tupleToUserset": {
+              "tupleset": {
+                "object": "",
+                "relation": "parent"
+              },
+              "computedUserset": {
+                "object": "",
+                "relation": "editor"
+              }
+            }
+          }]
+        }
+      }
+    }
+  }]
+}
 
 ```
 
