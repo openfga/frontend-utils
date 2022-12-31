@@ -1,9 +1,14 @@
+#!/usr/bin/env node
 import constants, { enums } from "./constants";
 import formatter from "./formatter";
 import transformer from "./transformer";
 import validator from "./validator";
 import * as syntaxHighlighters from "./syntax-highlighters";
 import * as theming from "./theme";
+
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import { commands } from "./cmds";
 
 const { Keyword, SchemaVersion } = enums;
 
@@ -27,3 +32,11 @@ export {
   apiSyntaxToFriendlySyntax,
   friendlySyntaxToApiSyntax,
 };
+
+yargs(hideBin(process.argv))
+  .command(commands as any)
+  .demandCommand()
+  .recommendCommands()
+  .strict()
+  .help()
+  .completion().argv;
