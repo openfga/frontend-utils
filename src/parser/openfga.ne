@@ -89,8 +89,9 @@ define_10          ->  _newline define_initial _spacing _as _spacing (define_bas
                 type: 'single',
                 targets: [def]
             }
-        // Note that this is in typescript.  Thus, if the grammer is to be used in js only environment, remove the type
-        const allowedTypes: string[] = [];
+
+        // @ts-ignore
+        const allowedTypes = [];
 
         return { comment, allowedTypes, relation, definition};
     }
@@ -121,8 +122,8 @@ define_base  ->  ( _naming | from_phrase) {%
     data => {
         const entry = data[0][0];
         let target, rewrite, from;
-        // Note that this is in typescript.  Thus, if the grammer is to be used in js only environment, remove the type
-        const allowedTypes: string[] = [];
+        // @ts-ignore
+        const allowedTypes = [];
         if (typeof entry === "string") {
             if (entry === "self") {
                 rewrite = "direct";
@@ -146,8 +147,8 @@ define_base_11  ->  (_relation_types | _naming | from_phrase) {%
         }
         const entry = data[0][0];
         let target, rewrite, from;
-        // Note that this is in typescript.  Thus, if the grammer is to be used in js only environment, remove the type
-        const allowedTypes: string[] = [];
+        // @ts-ignore
+        const allowedTypes = [];
         if (typeof entry === "string") {
             if (entry === "self") {
                 rewrite = "direct";

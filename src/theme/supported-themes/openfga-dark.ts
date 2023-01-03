@@ -1,4 +1,4 @@
-import { OpenFgaDslThemeTokenType, OpenFgaThemeConfiguration } from "../types";
+import { OpenFgaDslThemeTokenType, OpenFgaThemeConfiguration } from "../theme.typings";
 
 export const openfgaDark: OpenFgaThemeConfiguration = {
   name: "openfga-dark",

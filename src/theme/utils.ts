@@ -1,4 +1,4 @@
-import { OpenFgaDslThemeToken, OpenFgaDslThemeTokenType, OpenFgaThemeConfiguration } from "./types";
+import { OpenFgaDslThemeToken, OpenFgaDslThemeTokenType, OpenFgaThemeConfiguration } from "./theme.typings";
 
 const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.COMMENT]: OpenFgaDslThemeTokenType.COMMENT,

@@ -4,6 +4,7 @@ import transformer from "./transformer";
 import validator from "./validator";
 import * as syntaxHighlighters from "./syntax-highlighters";
 import * as theming from "./theme";
+import * as graphBuilder from "./utilities/graphs";
 
 const { Keyword, SchemaVersion } = enums;
 
@@ -18,6 +19,7 @@ export {
   validator,
   syntaxHighlighters,
   theming,
+  graphBuilder,
 
   // for backward compatibility to prevent breaking changes, to be removed in next major release
   Keyword,
