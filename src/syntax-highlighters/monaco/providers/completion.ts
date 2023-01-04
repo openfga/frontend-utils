@@ -7,6 +7,7 @@ import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
 import { Keyword } from "../../../constants/keyword";
 import { assertNever } from "../../../inner-utils/assert-never";
 import { SchemaVersion } from "../../../constants/schema-version";
+import { DefaultOneDotOneModel } from "../../../default";
 
 const provideCompletionItemsOneDotZero =
   (monaco: typeof MonacoEditor) =>
@@ -364,28 +365,7 @@ ${SINGLE_INDENTATION}${Keyword.SCHEMA} \${1:1.1}`,
         {
           label: "sample-gdrive",
           kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: `# Google Drive Sample
-${Keyword.TYPE} user
-${Keyword.TYPE} folder
-${SINGLE_INDENTATION}${Keyword.RELATIONS}
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}parent: [folder]
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}owner: [user]
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}editor: [user]
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}viewer: [user]
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_create_file: owner
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_delete: owner
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_edit: editor ${Keyword.OR} owner
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_view: viewer ${Keyword.OR} editor ${Keyword.OR} owner
-${Keyword.TYPE} folder
-${SINGLE_INDENTATION}${Keyword.RELATIONS}
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}parent: [folder]
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}owner: [user] or owner from parent
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}editor: [user] or editor from parent
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}viewer: [user] or viewer from parent
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_create_file: owner
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_delete: owner
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_edit: editor ${Keyword.OR} owner
-${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE}can_view: viewer ${Keyword.OR} editor ${Keyword.OR} owner`,
+          insertText: DefaultOneDotOneModel,
           range,
         },
       ],
