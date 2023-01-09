@@ -34,9 +34,11 @@
       "metadata": {
         "relations": {
           "manager": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "employee"
-            }]
+              }
+            ]
           }
         }
       }
@@ -63,9 +65,11 @@
       "metadata": {
         "relations": {
           "submitter": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "employee"
-            }]
+              }
+            ]
           },
           "approver": {
             "directly_related_user_types": []

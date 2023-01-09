@@ -22,7 +22,7 @@ const sampleAuthorizationModels: Record<string, Promise<Required<Omit<Authorizat
   github,
   iot,
   slack,
-  customRoles
+  customRoles,
 };
 
 export default sampleAuthorizationModels;

@@ -15,9 +15,11 @@
       "metadata": {
         "relations": {
           "member": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "user"
-            }]
+              }
+            ]
           }
         }
       }
@@ -69,25 +71,33 @@
         "relations": {
           "can_create_file": { "directly_related_user_types": [] },
           "owner": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "user"
-            }]
+              }
+            ]
           },
           "parent": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "folder"
-            }]
+              }
+            ]
           },
           "viewer": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "user"
-            }, {
+              },
+              {
                 "type": "user",
                 "wildcard": {}
-            }, {
+              },
+              {
                 "type": "group",
                 "relation": "member"
-            }]
+              }
+            ]
           }
         }
       }
@@ -193,27 +203,35 @@
         "relations": {
           "can_change_owner": { "directly_related_user_types": [] },
           "owner": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "user"
-            }]
+              }
+            ]
           },
           "parent": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "folder"
-            }]
+              }
+            ]
           },
           "can_read": { "directly_related_user_types": [] },
           "can_share": { "directly_related_user_types": [] },
           "viewer": {
-            "directly_related_user_types": [{
+            "directly_related_user_types": [
+              {
                 "type": "user"
-            }, {
+              },
+              {
                 "type": "user",
                 "wildcard": {}
-            }, {
+              },
+              {
                 "type": "group",
                 "relation": "member"
-            }]
+              }
+            ]
           },
           "can_write": { "directly_related_user_types": [] }
         }

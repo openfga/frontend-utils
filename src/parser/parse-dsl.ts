@@ -17,4 +17,3 @@ export const innerParseDSL = (code: string): ParserResult[] => {
 export const parseDSL = (code: string): ParserResult => {
   return innerParseDSL(code)[0] || [];
 };
-

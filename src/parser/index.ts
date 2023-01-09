@@ -1,6 +1,4 @@
-export {
-  parseDSL,
-} from "./parse-dsl";
+export { parseDSL } from "./parse-dsl";
 
 export {
   ParserResult,
