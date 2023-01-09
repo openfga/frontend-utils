@@ -90,10 +90,7 @@ define_10          ->  _newline define_initial _spacing _as _spacing (define_bas
                 targets: [def]
             }
 
-        // @ts-ignore
-        const allowedTypes = [];
-
-        return { comment, allowedTypes, relation, definition};
+        return { comment, allowedTypes: [], relation, definition};
     }
 %}
 
@@ -122,8 +119,6 @@ define_base  ->  ( _naming | from_phrase) {%
     data => {
         const entry = data[0][0];
         let target, rewrite, from;
-        // @ts-ignore
-        const allowedTypes = [];
         if (typeof entry === "string") {
             if (entry === "self") {
                 rewrite = "direct";
@@ -136,7 +131,7 @@ define_base  ->  ( _naming | from_phrase) {%
             target = entry.target;
             rewrite = "tuple_to_userset";
         }
-        return { rewrite, target, from, allowedTypes  }
+        return { rewrite, target, from, allowedTypes: []  }
     }
 %}
 
@@ -147,8 +142,6 @@ define_base_11  ->  (_relation_types | _naming | from_phrase) {%
         }
         const entry = data[0][0];
         let target, rewrite, from;
-        // @ts-ignore
-        const allowedTypes = [];
         if (typeof entry === "string") {
             if (entry === "self") {
                 rewrite = "direct";
@@ -161,7 +154,7 @@ define_base_11  ->  (_relation_types | _naming | from_phrase) {%
             target = entry.target;
             rewrite = "tuple_to_userset";
         }
-        return { rewrite, target, from, allowedTypes  }
+        return { rewrite, target, from, allowedTypes: []  }
     }
 %}
 
