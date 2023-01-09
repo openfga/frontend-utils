@@ -5,6 +5,7 @@ import validator from "./validator";
 import * as syntaxHighlighters from "./syntax-highlighters";
 import * as theming from "./theme";
 import * as graphBuilder from "./utilities/graphs";
+import sampleAuthorizationModels from "./samples";
 
 const { Keyword, SchemaVersion } = enums;
 
@@ -13,6 +14,7 @@ const checkDSL = validator.checkDSL;
 const indentDSL = formatter.indentDSL;
 
 export {
+  sampleAuthorizationModels,
   constants,
   formatter,
   transformer,

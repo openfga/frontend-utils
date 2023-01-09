@@ -1,0 +1,95 @@
+{
+  "type_definitions": [
+    {
+      "type": "user",
+      "relations": {}
+    },
+    {
+      "type": "group",
+      "relations": {
+        "member": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "resource",
+      "relations": {
+        "can_edit": {
+          "computedUserset": {
+            "object": "",
+            "relation": "editor"
+          }
+        },
+        "can_view": {
+          "union": {
+            "child": [
+              {
+                "computedUserset": {
+                  "object": "",
+                  "relation": "viewer"
+                }
+              },
+              {
+                "computedUserset": {
+                  "object": "",
+                  "relation": "editor"
+                }
+              }
+            ]
+          }
+        },
+        "editor": {
+          "this": {}
+        },
+        "viewer": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "can_edit": {
+            "directly_related_user_types": []
+          },
+          "can_view": {
+            "directly_related_user_types": []
+          },
+          "editor": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              },
+              {
+                "type": "group",
+                "relation": "member"
+              }
+            ]
+          },
+          "viewer": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              },
+              {
+                "type": "group",
+                "relation": "member"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "schema_version": "1.1"
+}

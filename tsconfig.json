@@ -3,6 +3,7 @@
     "declaration": true,
     "target": "es6",
     "module": "commonjs",
+    "resolveJsonModule": true,
     "noImplicitAny": true,
     "strict": true,
     "outDir": "dist",
