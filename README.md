@@ -16,6 +16,12 @@ This module transforms between the JSON syntax accepted by the OpenFGA API and t
 - [About OpenFGA](#about-openfga)
 - [Resources](#resources)
 - [Installation](#installation)
+- [Usage](#usage)
+  - [From the Friendly Syntax to the JSON Syntax](#from-the-friendly-syntax-to-the-json-syntax)
+  - [From the JSON Syntax to the Friendly Syntax](#from-the-json-syntax-to-the-friendly-syntax)
+- [Configuration Syntaxes](#configuration-syntaxes)
+  - [Schema v1.1](#schema-11)
+  - [Schema v1.0](#schema-10)
 - [Contributing](#contributing)
 - [Community Parsers](#community-parsers)
 - [Author](#author)
@@ -49,6 +55,8 @@ npm install --save @openfga/syntax-transformer // OR yarn add @openfga/syntax-tr
 ```
 
 ## Usage
+
+The syntax transformer has grown to encompass a lot more functionality than previously intended, mostly components used by the FGA Playground. Please note that all functionality except: `friendlySyntaxToApiSyntax` and `apiSyntaxToFriendlySyntax` is undocumented and should be considered tentative and may be removed at any moment. If you depend on them, please reach out so that we can discuss out future plans for that functionality and make sure our plans are taking your use-case into consideration.
 
 ### From the Friendly Syntax to the JSON Syntax
 ```javascript

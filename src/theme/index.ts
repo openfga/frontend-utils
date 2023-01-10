@@ -1,7 +1,7 @@
 import { openfgaDark } from "./supported-themes/openfga-dark";
-import { OpenFgaThemeConfiguration, SupportedTheme } from "./types";
+import { OpenFgaThemeConfiguration, SupportedTheme } from "./theme.typings";
 
-export * from "./types";
+export * from "./theme.typings";
 export { languageDefinition } from "../syntax-highlighters/prism/language-definition";
 
 export const supportedThemes: Record<SupportedTheme, OpenFgaThemeConfiguration> = {

@@ -1,9 +1,10 @@
+export { parseDSL } from "./parse-dsl";
+
 export {
-  parseDSL,
   ParserResult,
   RelationDefOperator,
   RelationDefParserResult,
   RelationTargetParserResult,
   RewriteType,
   TransformedType,
-} from "./parse-dsl";
+} from "./parser.typings";
