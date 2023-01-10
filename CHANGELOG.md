@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.0.11
+### [0.0.11](https://github.com/openfga/syntax-transformer/compare/v0.0.10...v0.0.11) (2023-01-10)
+
+Please note: All additional undocumented functionality should be considered unstable and may be removed at any moment.
+
+#### Changes
+- feat: export graph for use in the FGA Playground
+- feat: export sample authorization models
+- chore(deps): upgrade dependencies
+
 ## v0.0.10
 ### [0.0.10](https://github.com/openfga/syntax-transformer/compare/v0.0.9...v0.0.10) (2022-12-15)
 
