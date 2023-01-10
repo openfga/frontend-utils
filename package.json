@@ -20,7 +20,7 @@
     "format:fix": "prettier --write {src,tests}/**"
   },
   "bin": {
-    "syntax-transformer": "./dist/index.js"
+    "@openfga/syntax-transformer": "./dist/bin/index.js"
   },
   "keywords": [
     "openfga",
