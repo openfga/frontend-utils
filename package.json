@@ -71,6 +71,7 @@
   },
   "overrides": {
     "eslint-plugin-import": {
+      "debug": "^3.1.0",
       "tsconfig-paths": {
         "json5": "^2.2.2"
       }
