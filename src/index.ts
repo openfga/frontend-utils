@@ -8,10 +8,6 @@ import * as theming from "./theme";
 import * as graphBuilder from "./utilities/graphs";
 import sampleAuthorizationModels from "./samples";
 
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
-import { commands } from "./cmds";
-
 const { Keyword, SchemaVersion } = enums;
 
 const { friendlySyntaxToApiSyntax, apiSyntaxToFriendlySyntax } = transformer;
@@ -36,11 +32,3 @@ export {
   apiSyntaxToFriendlySyntax,
   friendlySyntaxToApiSyntax,
 };
-
-yargs(hideBin(process.argv))
-  .command(commands as any)
-  .demandCommand()
-  .recommendCommands()
-  .strict()
-  .help()
-  .completion().argv;
