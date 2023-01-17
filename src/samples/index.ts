@@ -5,14 +5,14 @@ type AuthorizationModel = {
   type_definitions: TypeDefinition[];
 };
 
-const entitlements = import("./entitlements.json") as Promise<AuthorizationModel>;
+const entitlements = import("./entitlements.json") as unknown as Promise<AuthorizationModel>;
 const expenses = import("./expenses.json") as any as Promise<AuthorizationModel>;
-const gdrive = import("./gdrive.json") as Promise<AuthorizationModel>;
-const generic = import("./generic.json") as Promise<AuthorizationModel>;
-const github = import("./github.json") as Promise<AuthorizationModel>;
+const gdrive = import("./gdrive.json") as unknown as Promise<AuthorizationModel>;
+const generic = import("./generic.json") as unknown as Promise<AuthorizationModel>;
+const github = import("./github.json") as unknown as Promise<AuthorizationModel>;
 const iot = import("./iot.json") as Promise<AuthorizationModel>;
-const slack = import("./slack.json") as Promise<AuthorizationModel>;
-const customRoles = import("./custom-roles.json") as Promise<AuthorizationModel>;
+const slack = import("./slack.json") as unknown as Promise<AuthorizationModel>;
+const customRoles = import("./custom-roles.json") as unknown as Promise<AuthorizationModel>;
 
 const sampleAuthorizationModels: Record<string, Promise<Required<Omit<AuthorizationModel, "id">>>> = {
   entitlements,

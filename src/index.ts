@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import constants, { enums } from "./constants";
 import formatter from "./formatter";
 import transformer from "./transformer";
