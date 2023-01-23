@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.0.12
+### [0.0.12](https://github.com/openfga/syntax-transformer/compare/v0.0.11...v0.0.12) (2023-01-23)
+
+#### Changes
+- feat: add a simple cli to transform models, run it by:
+  ```sh
+  npx @openfga/syntax-transformer transform --from=json --inputFile=test.json
+  npx @openfga/syntax-transformer transform --from=dsl --inputFile=test.openfga
+  ```
+- chore(deps): upgrade dependencies
+
 ## v0.0.11
 ### [0.0.11](https://github.com/openfga/syntax-transformer/compare/v0.0.10...v0.0.11) (2023-01-10)
 
