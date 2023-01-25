@@ -19,6 +19,7 @@ This module transforms between the JSON syntax accepted by the OpenFGA API and t
 - [Usage](#usage)
   - [From the Friendly Syntax to the JSON Syntax](#from-the-friendly-syntax-to-the-json-syntax)
   - [From the JSON Syntax to the Friendly Syntax](#from-the-json-syntax-to-the-friendly-syntax)
+- [CLI](#cli)
 - [Configuration Syntaxes](#configuration-syntaxes)
   - [Schema v1.1](#schema-11)
   - [Schema v1.0](#schema-10)
@@ -111,6 +112,22 @@ const friendlySyntax = apiSyntaxToFriendlySyntax({
   }]
 }
 );
+```
+
+## CLI
+
+This transformer comes with a basic CLI that can be used to transform between the Friendly and API JSON syntaxes
+
+### Transform from OpenFGA API's JSON syntax to the friendly OpenFGA DSL
+
+```shell
+ npx @openfga/syntax-transformer transform --from=json --inputFile=test.json
+```
+
+### Transform from OpenFGA's friendly DSL to the OpenFGA API's JSON syntax
+
+```shell
+npx @openfga/syntax-transformer transform --from=dsl --inputFile=test.openfga
 ```
 
 ## Configuration Syntaxes

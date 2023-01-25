@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.13
+### [0.0.13](https://github.com/openfga/syntax-transformer/compare/v0.0.12...v0.0.13) (2023-01-25)
+
+- fix: add yargs to list of dependencies. fixes openfga/syntax-transformer#111
+
 ## v0.0.12
 ### [0.0.12](https://github.com/openfga/syntax-transformer/compare/v0.0.11...v0.0.12) (2023-01-23)
 
