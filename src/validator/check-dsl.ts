@@ -329,7 +329,7 @@ function childDefDefined(
                 }
               }
             }
-            // if all the children does not have this relation defined, we should raise error.
+            // if none of the children have this relation defined, we should raise error.
             // otherwise, the relation is defined in at least 1 child and should be considered valid
             if (childRelationNotValid.length === fromTypes.length) {
               for (const item of childRelationNotValid) {
