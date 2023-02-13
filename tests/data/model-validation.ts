@@ -1156,6 +1156,26 @@ type user
     expectedError: [],
   },
   {
+    name: "model 1.1 allow TTU with relations as long as 1 child has such relation",
+    friendly: `model
+  schema 1.1
+type final
+  relations
+    define children: [child1, child2]
+    define has_assigned: u1 from children or u2 from children
+type child1
+  relations
+    define role: [user]
+    define u1: role
+type child2
+  relations
+    define role: [user]
+    define u2: role
+type user
+    `,
+    expectedError: [],
+  },
+  {
     name: "model 1.1 wildcard restricted type",
     friendly: `model
   schema 1.1
