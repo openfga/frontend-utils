@@ -1176,6 +1176,83 @@ type user
     expectedError: [],
   },
   {
+    name: "model 1.1 should raise error if none of the children has such relation",
+    friendly: `model
+  schema 1.1
+type final
+  relations
+    define children: [child1, child2]
+    define has_assigned: u3 from children or u2 from children
+type child1
+  relations
+    define role: [user]
+    define u1: role
+type child2
+  relations
+    define role: [user]
+    define u4: role
+type user
+    `,
+    expectedError: [
+      {
+        endColumn: 42,
+        endLineNumber: 6,
+        extraInformation: {
+          error: "invalid-relation-type",
+          relation: "u3",
+          typeName: "child1",
+        },
+        message: "`u3` is not a valid relation for `child1`.",
+        severity: 8,
+        source: "linter",
+        startColumn: 26,
+        startLineNumber: 6,
+      },
+      {
+        endColumn: 42,
+        endLineNumber: 6,
+        extraInformation: {
+          error: "invalid-relation-type",
+          relation: "u3",
+          typeName: "child2",
+        },
+        message: "`u3` is not a valid relation for `child2`.",
+        severity: 8,
+        source: "linter",
+        startColumn: 26,
+        startLineNumber: 6,
+      },
+      {
+        endColumn: 62,
+        endLineNumber: 6,
+        extraInformation: {
+          error: "invalid-relation-type",
+          relation: "u2",
+          typeName: "child1",
+        },
+        message: "`u2` is not a valid relation for `child1`.",
+        severity: 8,
+        source: "linter",
+        startColumn: 46,
+        startLineNumber: 6,
+      },
+      {
+        endColumn: 62,
+        endLineNumber: 6,
+        extraInformation: {
+          error: "invalid-relation-type",
+          relation: "u2",
+          typeName: "child2",
+        },
+        message: "`u2` is not a valid relation for `child2`.",
+        severity: 8,
+        source: "linter",
+        startColumn: 46,
+        startLineNumber: 6,
+      },
+    ],
+  },
+  {
     name: "model 1.1 wildcard restricted type",
     friendly: `model
   schema 1.1
