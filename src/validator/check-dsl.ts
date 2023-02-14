@@ -297,6 +297,7 @@ function childDefDefined(
         } else {
           const [fromTypes, isValid] = allowableTypes(transformedTypes, type, childDef.from);
           if (isValid) {
+            const childRelationNotValid = [];
             for (const item of fromTypes) {
               const { decodedType, decodedRelation, isWildcard } = destructTupleToUserset(item);
               if (isWildcard && decodedRelation) {
@@ -315,16 +316,24 @@ function childDefDefined(
                   value: childDef.from,
                 });
               } else {
+                // check to see if the relation is defined in any children
                 if (!transformedTypes[decodedType] || !transformedTypes[decodedType].relations[childDef.target]) {
                   const typeIndex = getTypeLineNumber(type, lines);
                   const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
-                  reporter.invalidTypeRelation({
+                  childRelationNotValid.push({
                     lineIndex,
                     value: `${childDef.target} from ${childDef.from}`,
                     typeName: decodedType,
                     relationName: childDef.target,
                   });
                 }
+              }
+            }
+            // if none of the children have this relation defined, we should raise error.
+            // otherwise, the relation is defined in at least 1 child and should be considered valid
+            if (childRelationNotValid.length === fromTypes.length) {
+              for (const item of childRelationNotValid) {
+                reporter.invalidTypeRelation(item);
               }
             }
           } else {
