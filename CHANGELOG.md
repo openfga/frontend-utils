@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.14
+### [0.0.14](https://github.com/openfga/syntax-transformer/compare/v0.0.13...v0.0.14) (2023-02-16)
+
+- fix(validation): allow ttu relation as long as one of the child has such relation. fixes openfga/syntax-transformer#113
+- fix(syntax highlighting): regex lookbehind error on Safari. fixes openfga/syntax-transformer#116
+- chore: upgrade dependencies
+
 ## v0.0.13
 ### [0.0.13](https://github.com/openfga/syntax-transformer/compare/v0.0.12...v0.0.13) (2023-01-25)
 
