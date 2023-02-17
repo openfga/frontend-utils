@@ -2,16 +2,16 @@ import { OpenFgaDslThemeTokenType } from "../../theme";
 
 export const languageDefinition = {
   [OpenFgaDslThemeTokenType.COMMENT]: {
-    pattern: /(^|[^\\:])\/\/.*/,
-    lookbehind: true,
-    greedy: true,
+    pattern: /^\s*#.*/,
   },
   [OpenFgaDslThemeTokenType.KEYWORD]: /\b(type|relations|define|and|or|but not|from|as|model|schema)\b/,
   [OpenFgaDslThemeTokenType.TYPE]: {
-    pattern: /(?<=type\s+)\w+/,
+    pattern: /(\btype\s+)\w+/i,
+    lookbehind: true,
   },
   [OpenFgaDslThemeTokenType.RELATION]: {
-    pattern: /(?<=define\s+)\w+/,
+    pattern: /(\bdefine\s+)\w+/i,
+    lookbehind: true,
   },
   [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: /\[.*\]/,
 };
