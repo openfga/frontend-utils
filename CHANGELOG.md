@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.0
+### [0.1.0](https://github.com/openfga/syntax-transformer/compare/v0.0.14...v0.1.0) (2023-03-31)
+
+- feat!: default to schema v1.1 (openfga/syntax-transformer#122)
+- chore: upgrade dependencies (openfga/syntax-transformer#121)
+
 ## v0.0.14
 ### [0.0.14](https://github.com/openfga/syntax-transformer/compare/v0.0.13...v0.0.14) (2023-02-16)
 
