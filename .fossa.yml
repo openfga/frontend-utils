@@ -3,7 +3,7 @@ version: 3
 server: https://app.fossa.com
 
 project:
-  id: github.com/openfga/syntax-transformer
+  id: syntax-transformer
   name: github.com/openfga/syntax-transformer
   link: openfga.dev
   url: github.com/openfga/syntax-transformer
