@@ -12,7 +12,9 @@ export const testModels: { name: string; json: WriteAuthorizationModelRequest; f
         },
       ],
     },
-    friendly: "type document\n",
+    friendly: `model
+  schema 1.0
+type document\n`,
   },
   {
     name: "one type with no relations and another with one relation",
@@ -36,7 +38,8 @@ export const testModels: { name: string; json: WriteAuthorizationModelRequest; f
         },
       ],
     },
-    friendly: "type group\ntype document\n  relations\n    define viewer as self\n    define editor as self\n",
+    friendly:
+      "model\n  schema 1.0\ntype group\ntype document\n  relations\n    define viewer as self\n    define editor as self\n",
   },
   {
     name: "simple model",
@@ -56,7 +59,7 @@ export const testModels: { name: string; json: WriteAuthorizationModelRequest; f
         },
       ],
     },
-    friendly: "type document\n  relations\n    define viewer as self\n    define editor as self\n",
+    friendly: "model\n  schema 1.0\ntype document\n  relations\n    define viewer as self\n    define editor as self\n",
   },
   {
     name: "multiple types",
@@ -102,7 +105,9 @@ export const testModels: { name: string; json: WriteAuthorizationModelRequest; f
         },
       ],
     },
-    friendly: `type folder
+    friendly: `model
+  schema 1.0
+type folder
   relations
     define editor as self
 type document
@@ -147,7 +152,9 @@ type document
         },
       ],
     },
-    friendly: `type document
+    friendly: `model
+  schema 1.0
+type document
   relations
     define blocked as self
     define editor as self but not blocked
@@ -212,7 +219,9 @@ type team
         },
       ],
     },
-    friendly: `type document
+    friendly: `model
+  schema 1.0
+type document
   relations
     define owner as self
     define writer as self
@@ -516,7 +525,9 @@ type user
         },
       ],
     },
-    friendly: `type org
+    friendly: `model
+  schema 1.0
+type org
   relations
     define member as self
 type feature

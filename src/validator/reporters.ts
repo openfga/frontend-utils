@@ -94,6 +94,17 @@ const reportError = ({
   });
 };
 
+export const reportSchemaVersionRequired = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    message: "Schema version is required.",
+    markers,
+    lines,
+    value,
+    extraInformation: { error: ValidationError.SchemaVersionRequired },
+    lineIndex,
+  });
+};
+
 export const reportReservedTypeName = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
     message: `A type cannot be named '${Keyword.SELF}' or '${ReservedKeywords.THIS}'.`,
@@ -367,6 +378,9 @@ export const reportInvalidSyntaxVersion = ({ markers, lines, lineIndex, value }:
 
 export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "markers" | "lines">) {
   return {
+    schemaVersionRequired: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportSchemaVersionRequired({ value, lineIndex, markers, lines }),
+
     useSelf: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportUseSelf({ value, lineIndex, markers, lines }),
 
