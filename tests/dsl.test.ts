@@ -5,13 +5,17 @@ import { ValidationOptions } from "../src/validator";
 describe("DSL", () => {
   describe("parseDSL()", () => {
     it("should correctly parse a type with no relations", () => {
-      const result = parseDSL("type group");
+      const result = parseDSL(`model
+  schema 1.0
+type group`);
 
       expect(result).toMatchSnapshot();
     });
 
     it("should correctly parse a simple sample", () => {
-      const result = parseDSL(`type group
+      const result = parseDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self`);
 
@@ -19,7 +23,9 @@ describe("DSL", () => {
     });
 
     it("should correctly parse a complex sample", () => {
-      const result = parseDSL(`type team
+      const result = parseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
 
@@ -52,7 +58,9 @@ type app
 
   describe("innerParseDSL()", () => {
     it("should only return single result for simple valid model", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define other as self
@@ -61,7 +69,9 @@ type app
     });
 
     it("should only return single result for simple valid model with spaces", () => {
-      const result = innerParseDSL(`type team   
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations   
     define member as self 
     define    other   as   self  
@@ -70,7 +80,9 @@ type app
     });
 
     it("should only return single result for simple valid model with non direct result", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define other as member
@@ -79,7 +91,9 @@ type app
     });
 
     it("should only return single result for simple valid model with non direct result and spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define other as  member  
@@ -88,7 +102,9 @@ type app
     });
 
     it("should only return single result for simple valid model with intersection", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define myfriend as self
@@ -98,7 +114,9 @@ type app
     });
 
     it("should only return single result for simple valid model with intersection and spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define other as self   or   member   or myfriend    
@@ -107,7 +125,9 @@ type app
     });
 
     it("should only return single result for simple valid model with union", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define myfriend as self
@@ -117,7 +137,9 @@ type app
     });
 
     it("should only return single result for simple valid model with union and spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define myfriend as self
@@ -127,7 +149,9 @@ type app
     });
 
     it("should only return single result for simple valid model with but not", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define other as self but not member
@@ -136,7 +160,9 @@ type app
     });
 
     it("should only return single result for simple valid model with but not and spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define other as self   but not   member   
@@ -145,7 +171,9 @@ type app
     });
 
     it("should only return single result for simple valid model with tuple to userset", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define viewer as self
     define parent as self
@@ -155,7 +183,9 @@ type app
     });
 
     it("should only return single result for simple valid model with tuple to userset and spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define viewer as self
     define parent as self
@@ -165,7 +195,9 @@ type app
     });
 
     it("should only return single result for simple valid model with but not + tuple to userset", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define parent as self
@@ -176,7 +208,9 @@ type app
     });
 
     it("should only return single result for simple valid model with but not + tuple to userset and spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
     define parent as self
@@ -187,7 +221,9 @@ type app
     });
 
     it("should only return single result for simple valid model with multiple types", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define viewer as self
 type group
@@ -198,7 +234,9 @@ type group
     });
 
     it("should only return single result for simple valid model with multiple types and empty lines", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define viewer as self
 
@@ -211,7 +249,9 @@ type group
     });
 
     it("should only return single result for simple valid model with multiple types and empty lines + spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define viewer as self
       
@@ -274,7 +314,9 @@ type team
     });
 
     it("should only return single result for complex valid model", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
 
@@ -305,7 +347,9 @@ type app
     });
 
     it("should only return single result for complex model with spaces", () => {
-      const result = innerParseDSL(`type team
+      const result = innerParseDSL(`model
+  schema 1.0
+type team
   relations
     define member as self
 
@@ -386,7 +430,9 @@ type app
 
     it("should parse DSL in reasonable time", () => {
       // Add in addition `define R as X from Y but not Z` to increase the time
-      const result = innerParseDSL(`type T1
+      const result = innerParseDSL(`model
+  schema 1.0
+type T1
   relations
     define A as A1 from A2 but not A3
     define B as B1 from B2 but not B3
@@ -455,7 +501,9 @@ type T5
 
   describe("checkDSL()", () => {
     it("should correctly parse a simple sample", () => {
-      const markers = checkDSL(`type group
+      const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define member as self
 
@@ -472,12 +520,16 @@ type document
 
     describe("invalid code", () => {
       it("should handle `no relations`", () => {
-        const markers = checkDSL("type group");
+        const markers = checkDSL(`model
+  schema 1.0
+type group`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle `no definitions`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations`);
         expect(markers).toMatchSnapshot();
       });
@@ -485,35 +537,45 @@ type document
 
     describe("invalid keywords", () => {
       it("should handle invalid `self`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as se lf`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `as`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer a s self`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `define`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     dec lare writer as self`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `as`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer a s self`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `or`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define reader as self
     define writer as self o r reader`);
@@ -521,7 +583,9 @@ type document
       });
 
       it("should handle invalid `and`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define reader as self
     define writer as self an d reader`);
@@ -529,7 +593,9 @@ type document
       });
 
       it("should handle invalid `but not`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define reader as self
     define writer as self but no t reader`);
@@ -539,28 +605,36 @@ type document
 
     describe("semantics", () => {
       it("should handle invalid `self-error`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as writer`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `relation not define`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as reader`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `relation not define` where name is substring of other word", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as def`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should identify correct error line number if there are spaces", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
 
     define owner as self
@@ -569,42 +643,54 @@ type document
       });
 
       it("should handle invalid `self-ref in but not`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self but not writer`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `invalid but not`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self but not reader`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `invalid from`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self or reader from test`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `invalid or`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self or reader`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle invalid `invalid and`", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self and reader`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should handle duplicated definition", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as self
     define writer as self`);
@@ -612,7 +698,9 @@ type document
       });
 
       it("should be able to handle more than one error", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define writer as writer
     define hi as self
@@ -622,7 +710,9 @@ type document
       });
 
       it("should allow reference from other relation", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define foo as self
     define member as self or member from foo`);
@@ -630,14 +720,18 @@ type document
       });
 
       it("should allow self reference", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define member as self or member from member`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should allow same relation name in from", () => {
-        const markers = checkDSL(`type feature
+        const markers = checkDSL(`model
+  schema 1.0
+type feature
   relations
     define associated_plan as self
     define subscriber as subscriber from associated_plan`);
@@ -645,7 +739,9 @@ type document
       });
 
       it("should not allow self reference in from relation", () => {
-        const markers = checkDSL(`type feature
+        const markers = checkDSL(`model
+  schema 1.0
+type feature
   relations
     define associated_plan as self
     define subscriber as associated_plan from subscriber`);
@@ -653,14 +749,18 @@ type document
       });
 
       it("should not allow impossible self reference", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define member as member from member`);
         expect(markers).toMatchSnapshot();
       });
 
       it("should allow model with relations starting with as", () => {
-        const markers = checkDSL(`type org
+        const markers = checkDSL(`model
+  schema 1.0
+type org
   relations
     define member as self
 type feature
@@ -679,7 +779,9 @@ type permission
       });
 
       it("should gracefully handle error", () => {
-        const markers = checkDSL(`type group
+        const markers = checkDSL(`model
+  schema 1.0
+type group
   relations
     define member as self
     define admin as self

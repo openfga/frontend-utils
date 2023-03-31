@@ -98,7 +98,9 @@ type group
   },
   {
     name: "cannot use this in mode 1.0",
-    friendly: `type document
+    friendly: `model
+  schema 1.0
+type document
   relations
     define editor as self
     define viewer as editor or this
@@ -106,7 +108,7 @@ type group
     expectedError: [
       {
         endColumn: 36,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "The relation `this` does not exist.",
         extraInformation: {
           relation: "this",
@@ -115,7 +117,7 @@ type group
         severity: 8,
         source: "linter",
         startColumn: 32,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
@@ -171,7 +173,9 @@ type org
   },
   {
     name: "ensure errors are highlighted in the right place for same relation name across different types",
-    friendly: `type user
+    friendly: `model
+  schema 1.0
+type user
 type geography
   relations
     define parent as self
@@ -185,7 +189,7 @@ type outlet
     expectedError: [
       {
         endColumn: 72,
-        endLineNumber: 10,
+        endLineNumber: 12,
         message: "The relation `parent` does not exist in type `outlet`",
         extraInformation: {
           error: "invalid-syntax",
@@ -193,7 +197,7 @@ type outlet
         severity: 8,
         source: "linter",
         startColumn: 66,
-        startLineNumber: 10,
+        startLineNumber: 12,
       },
     ],
   },
@@ -867,7 +871,9 @@ type org
   },
   {
     name: "model 1.0 should not have allowedType",
-    friendly: `type user
+    friendly: `model
+  schema 1.0
+type user
 type org
   relations
     define member: [user]
@@ -875,12 +881,12 @@ type org
     expectedError: [
       {
         endColumn: 25,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 18,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
@@ -908,7 +914,9 @@ type folder
   },
   {
     name: "model 1.0 should not have directly allowed types in viewer",
-    friendly: `type user
+    friendly: `model
+  schema 1.0
+type user
 type folder
   relations
     define parent: [folder]
@@ -917,12 +925,12 @@ type folder
     expectedError: [
       {
         endColumn: 27,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 18,
-        startLineNumber: 4,
+        startLineNumber: 6,
       },
     ],
   },
@@ -950,7 +958,9 @@ type folder
   },
   {
     name: "syntax error is highlighted in the right spot",
-    friendly: `type user
+    friendly: `model
+  schema 1.0
+type user
 type group
   relations
     define group: [group] as self
@@ -958,12 +968,32 @@ type group
     expectedError: [
       {
         endColumn: 33,
-        endLineNumber: 4,
+        endLineNumber: 6,
         message: "Invalid syntax",
         severity: 8,
         source: "linter",
         startColumn: 17,
-        startLineNumber: 4,
+        startLineNumber: 6,
+      },
+    ],
+  },
+
+  {
+    name: "should not allow no model schema",
+    friendly: `type user
+type group
+  relations
+    define group: [user] as self
+`,
+    expectedError: [
+      {
+        endColumn: 9,
+        endLineNumber: 1,
+        message: "Invalid syntax",
+        severity: 8,
+        source: "linter",
+        startColumn: 1,
+        startLineNumber: 1,
       },
     ],
   },
@@ -991,7 +1021,9 @@ type group
   // The following are valid cases and should not result in error
   {
     name: "simple model 1.0",
-    friendly: `type user
+    friendly: `model
+  schema 1.0
+type user
 type group
   relations
     define member as self
@@ -1131,7 +1163,9 @@ type group
   },
   {
     name: "model 1.0 does not assert impossible relation",
-    friendly: `type user
+    friendly: `model
+  schema 1.0
+type user
 type folder
   relations
     define parent as self
