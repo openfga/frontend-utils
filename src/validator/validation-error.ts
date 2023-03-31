@@ -1,4 +1,6 @@
 export enum ValidationError {
+  SchemaVersionRequired = "schema-version-required",
+  SchemaVersionUnsupported = "schema-version-unsupported",
   ReservedTypeKeywords = "reserved-type-keywords",
   ReservedRelationKeywords = "reserved-relation-keywords",
   SelfError = "self-error",

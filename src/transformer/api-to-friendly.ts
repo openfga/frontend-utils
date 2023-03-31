@@ -1,6 +1,6 @@
 import { TypeDefinition, WriteAuthorizationModelRequest, Userset, Metadata } from "@openfga/sdk";
 import { Keyword } from "../constants/keyword";
-import { SchemaVersion } from "../constants/schema-version";
+import { DEFAULT_SCHEMA_VERSION } from "../constants";
 
 const readFrom = (obj: Userset, define: string[], schemaVersion: string | undefined, allowedType: string) => {
   const childKeys = Object.keys(obj);
@@ -125,11 +125,9 @@ const apiToFriendlyType = (
   }
 };
 
-const addSchema = (schema: string, newSyntax: string[]) => {
-  if (schema != SchemaVersion.OneDotZero) {
-    newSyntax.push(`${Keyword.MODEL}`);
-    newSyntax.push(`  ${Keyword.SCHEMA} ${schema}`);
-  }
+const addSchema = (schemaVersion: string, newSyntax: string[]) => {
+  newSyntax.push(`${Keyword.MODEL}`);
+  newSyntax.push(`  ${Keyword.SCHEMA} ${schemaVersion}`);
 };
 
 export const apiSyntaxToFriendlySyntax = (
@@ -137,17 +135,17 @@ export const apiSyntaxToFriendlySyntax = (
   newSyntax: string[] = [],
   schemaVersion: string | undefined = undefined,
 ): string => {
-  const parsedSchemaVersion = (config as WriteAuthorizationModelRequest)?.schema_version;
-  if (parsedSchemaVersion) {
-    addSchema(parsedSchemaVersion, newSyntax);
-  }
+  const sVersion = schemaVersion || (config as WriteAuthorizationModelRequest)?.schema_version;
   const typeDefs = (config as WriteAuthorizationModelRequest)?.type_definitions;
   if (typeDefs) {
+    if (sVersion) {
+      addSchema(sVersion, newSyntax);
+    }
     typeDefs.forEach((typeDef) => {
-      apiSyntaxToFriendlySyntax(typeDef, newSyntax, schemaVersion ? schemaVersion : parsedSchemaVersion);
+      apiSyntaxToFriendlySyntax(typeDef, newSyntax, sVersion);
     });
   } else if (config) {
-    apiToFriendlyType(config as TypeDefinition, newSyntax, schemaVersion ? schemaVersion : parsedSchemaVersion);
+    apiToFriendlyType(config as TypeDefinition, newSyntax, sVersion);
   }
 
   return newSyntax.join("\n") + "\n";

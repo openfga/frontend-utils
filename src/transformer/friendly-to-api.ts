@@ -2,6 +2,8 @@ import { AuthorizationModel, Userset } from "@openfga/sdk";
 
 import { parseDSL, ParserResult, RelationDefOperator, RelationTargetParserResult, RewriteType } from "../parser";
 import { assertNever } from "../inner-utils/assert-never";
+import { SchemaVersion } from "../constants/schema-version";
+import { DEFAULT_SCHEMA_VERSION } from "../constants";
 
 const resolveRelation = (relation: RelationTargetParserResult): Userset => {
   switch (relation.rewrite) {
@@ -36,6 +38,7 @@ export const friendlySyntaxToApiSyntax = (
   config: string,
 ): Required<Pick<AuthorizationModel, "type_definitions" | "schema_version">> => {
   const result: ParserResult = parseDSL(config);
+  const schemaVersion = result.schemaVersion || DEFAULT_SCHEMA_VERSION;
 
   const typeDefinitions = result.types.map(({ type: typeName, relations: rawRelations }) => {
     const relationsMap: Record<string, Userset> = {};
@@ -97,12 +100,12 @@ export const friendlySyntaxToApiSyntax = (
       });
     });
 
-    if (metadataAvailable) {
+    if (metadataAvailable && schemaVersion === SchemaVersion.OneDotOne) {
       return { type: typeName, relations: relationsMap, metadata: { relations: relationsMetadataMap } };
     }
 
     return { type: typeName, relations: relationsMap };
   });
 
-  return { type_definitions: typeDefinitions, schema_version: result.schemaVersion };
+  return { schema_version: result.schemaVersion, type_definitions: typeDefinitions };
 };
