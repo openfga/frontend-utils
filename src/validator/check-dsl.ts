@@ -438,6 +438,7 @@ function populateRelations(
 ): [Record<string, boolean>, Record<string, TransformedType>] {
   const globalRelations: Record<string, boolean> = { [Keyword.SELF]: true };
   const transformedTypes: Record<string, TransformedType> = {};
+
   // Looking at the types
   parserResults.types.forEach((typeDef) => {
     const typeName = typeDef.type;
@@ -627,7 +628,12 @@ export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) 
       relationRegex,
     );
 
-    const schemaVersion = parserResults.schemaVersion || SchemaVersion.OneDotZero;
+    const schemaVersion = parserResults.schemaVersion;
+
+    if (!parserResults.schemaVersion) {
+      reporter.reservedType({ lineIndex: 0, value: "" });
+    }
+
     switch (schemaVersion) {
       case SchemaVersion.OneDotZero:
         basicValidateRelation(lines, reporter, parserResults, globalRelations, transformedTypes);
