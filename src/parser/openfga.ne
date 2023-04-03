@@ -1,25 +1,7 @@
 @preprocessor typescript
 
-types           ->  (types_10 | types_10_defined | types_11) {%
+types           ->  (types_10_defined | types_11) {%
      data => {return (data[0][0]) ? data[0][0]: (data[0][1]) ? data[0][1] : data[0][2]}
-%}
-
-types_10           ->   (_newline):* (type (_relations (_multiline_comment define_10):+):*):* {%
-    // @ts-ignore
-    (data) => {
-        // @ts-ignore
-        const types = data[1].map((datum) => {
-            // @ts-ignore
-            const relations = (datum[1] && datum[1][0] && datum[1][0][1].map(innerDatum => innerDatum[1])) || [];
-
-            return { ...datum[0], relations }
-        })
-
-        // @ts-ignore
-        const schemaVersion = "1.0";
-
-        return {types: types, schemaVersion: schemaVersion}
-    }
 %}
 
 types_10_defined ->   (_newline):* model_schema_10 (type (_relations (_multiline_comment define_10):+):*):* {%

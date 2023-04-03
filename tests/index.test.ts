@@ -4,13 +4,17 @@ describe("friendlySyntaxToApiSyntax()", () => {
   describe("invalid syntax", () => {
     it("should throw if syntax is incorrect", () => {
       expect(() => {
-        friendlySyntaxToApiSyntax("t ype t1");
+        friendlySyntaxToApiSyntax(`model
+  schema 1.0
+t ype t1`);
       }).toThrowError();
     });
 
     it("should throw if syntax is incorrect", () => {
       expect(() => {
-        friendlySyntaxToApiSyntax(`type test
+        friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type test
   relations
     define writer as self and a but not test`);
       }).toThrowError();
@@ -18,7 +22,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
 
     it("should throw if syntax is incorrect", () => {
       expect(() => {
-        friendlySyntaxToApiSyntax(`type test
+        friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type test
   relations
     define writer as self and pepe or test `);
       }).toThrowError();
@@ -26,7 +32,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should correctly read from `basic` definition", () => {
-    const result = friendlySyntaxToApiSyntax(`type t1
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type t1
   relations
     define r1 as self
 `);
@@ -42,7 +50,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should be able to handle single character type", () => {
-    const result = friendlySyntaxToApiSyntax(`type t
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type t
   relations
     define r as self
 `);
@@ -58,7 +68,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should correctly read from `and` definition", () => {
-    const result = friendlySyntaxToApiSyntax(`type t1
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type t1
   relations
     define r1 as self and writer
 `);
@@ -83,7 +95,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should correctly read from `and` definition with $ as prefix", () => {
-    const result = friendlySyntaxToApiSyntax(`type $t1
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type $t1
   relations
     define $r1 as self and $writer
 `);
@@ -107,7 +121,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should correctly read from `or` definition", () => {
-    const result = friendlySyntaxToApiSyntax(`type t1
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type t1
   relations
     define r1 as self or writer
 `);
@@ -132,7 +148,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should correctly read from `but not` definition", () => {
-    const result = friendlySyntaxToApiSyntax(`type t1
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type t1
   relations
     define r1 as self but not writer
 `);
@@ -154,7 +172,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should correctly read from `from` definition", () => {
-    const result = friendlySyntaxToApiSyntax(`type t1
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type t1
   relations
     define share as owner from parent
 `);
@@ -164,7 +184,9 @@ describe("friendlySyntaxToApiSyntax()", () => {
   });
 
   it("should read a complex definition 1", () => {
-    const result = friendlySyntaxToApiSyntax(`type folder
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type folder
   relations
     define deleter as self
 type doc
@@ -185,7 +207,9 @@ type doc
   });
 
   it("should read a complex definition 2", () => {
-    const result = friendlySyntaxToApiSyntax(`type website
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type website
   relations
     define admin as self or owner
     define billing as self or admin
@@ -199,7 +223,9 @@ type doc
   });
 
   it("should read a complex definition 3", () => {
-    const result = friendlySyntaxToApiSyntax(`type website
+    const result = friendlySyntaxToApiSyntax(`model
+  schema 1.0
+type website
   relations
     define admin as self or randy
     define billing as self or admin
