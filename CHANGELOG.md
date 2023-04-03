@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.1
+### [0.1.1](https://github.com/openfga/syntax-transformer/compare/v0.1.0...v0.1.1) (2023-04-03)
+
+- fix(validation): raise error if schema is not specified in DSL (openfga/syntax-transformer#127)
+
 ## v0.1.0
 ### [0.1.0](https://github.com/openfga/syntax-transformer/compare/v0.0.14...v0.1.0) (2023-03-31)
 
