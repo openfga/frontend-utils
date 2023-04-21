@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.2
+### [0.1.2](https://github.com/openfga/syntax-transformer/compare/v0.1.1...v0.1.2) (2023-04-21)
+
+- chore(ci): update permissions and publish provenance data
+- chore(deps): upgrade dependencies
+
 ## v0.1.1
 ### [0.1.1](https://github.com/openfga/syntax-transformer/compare/v0.1.0...v0.1.1) (2023-04-03)
 
