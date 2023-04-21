@@ -69,7 +69,8 @@
   },
   "homepage": "https://github.com/openfga/syntax-transformer#readme",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "overrides": {
     "eslint-plugin-import": {
