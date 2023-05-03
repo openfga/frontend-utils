@@ -9,7 +9,7 @@ import {
   RewriteType,
   TransformedType,
 } from "../parser";
-import { report } from "./reporters";
+import { Marker, report } from "./reporters";
 import { SchemaVersion } from "../constants/schema-version";
 
 export interface ValidationRegex {
@@ -579,7 +579,7 @@ export const basicValidateRelation = (
 
 export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) => {
   const lines = codeInEditor.split("\n");
-  const markers: any = [];
+  const markers: Marker[] = [];
   const reporter = report({ lines, markers });
   const typeValidation = options.typeValidation || defaultTypeRule;
   const relationValidation = options.relationValidation || defaultRelationRule;
