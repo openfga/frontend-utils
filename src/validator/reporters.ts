@@ -1,9 +1,9 @@
 import { Keyword, ReservedKeywords } from "../constants/keyword";
 import { TransformedType } from "../parser";
 import { ValidationError } from "./validation-error";
-import type { editor } from "monaco-editor";
+import { IMarkerData } from "../syntax-highlighters/monaco/monaco-editor.types";
 
-export interface Marker extends editor.IMarkerData {
+export interface Marker extends IMarkerData {
   severity: number;
   startColumn: number;
   endColumn: number;

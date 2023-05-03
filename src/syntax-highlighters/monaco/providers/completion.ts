@@ -1,12 +1,20 @@
-import type * as MonacoEditor from "monaco-editor";
-import type { editor, languages, Position } from "monaco-editor";
+import { AuthorizationModel as ApiAuthorizationModel } from "@openfga/sdk";
 
+import { apiSyntaxToFriendlySyntax } from "../../../";
 import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
 import { Keyword } from "../../../constants/keyword";
 import { assertNever } from "../../../inner-utils/assert-never";
 import { SchemaVersion } from "../../../constants/schema-version";
-import { apiSyntaxToFriendlySyntax } from "../../../";
-import { AuthorizationModel as ApiAuthorizationModel } from "@openfga/sdk";
+import {
+  CompletionItem,
+  CompletionItemRanges,
+  CompletionList,
+  CompletionListProviderResult,
+  IRange,
+  ITextModel,
+  MonacoEditorType,
+  Position
+} from "../monaco-editor.types";
 
 type AuthorizationModel = Required<Pick<ApiAuthorizationModel, "schema_version" | "type_definitions">>;
 
@@ -24,12 +32,12 @@ export type CompletionExtraOptions = {
 };
 
 function getSuggestions(
-  monaco: typeof MonacoEditor,
-  range: MonacoEditor.IRange | languages.CompletionItemRanges,
+  monaco: MonacoEditorType,
+  range: IRange | CompletionItemRanges,
   schemaVersion: SchemaVersion,
   samples: CompletionExtraOptions["samples"] = {},
 ) {
-  const suggestions: languages.CompletionItem[] = [];
+  const suggestions: CompletionItem[] = [];
   ["entitlements", "expenses", "gdrive", "generic", "github", "iot", "slack", "customRoles"].forEach((key) => {
     const sampleModel = samples?.[key];
     if (sampleModel) {
@@ -55,9 +63,9 @@ function getSuggestions(
 }
 
 const provideCompletionItemsOneDotZero =
-  (monaco: typeof MonacoEditor, completionExtraOptions: CompletionExtraOptions = {}) =>
-  (model: editor.ITextModel, position: Position): languages.CompletionList => {
-    let suggestions: languages.CompletionItem[] = [];
+  (monaco: MonacoEditorType, completionExtraOptions: CompletionExtraOptions = {}) =>
+  (model: ITextModel, position: Position): CompletionList => {
+    let suggestions: CompletionItem[] = [];
     const word = model.getWordUntilPosition(position);
     const range = {
       startLineNumber: position.lineNumber,
@@ -174,9 +182,9 @@ const provideCompletionItemsOneDotZero =
   };
 
 const provideCompletionItemsOneDotOne =
-  (monaco: typeof MonacoEditor, completionExtraOptions: CompletionExtraOptions = {}) =>
-  (model: editor.ITextModel, position: Position): languages.CompletionList => {
-    let suggestions: languages.CompletionItem[] = [];
+  (monaco: MonacoEditorType, completionExtraOptions: CompletionExtraOptions = {}) =>
+  (model: ITextModel, position: Position): CompletionList => {
+    let suggestions: CompletionItem[] = [];
     const word = model.getWordUntilPosition(position);
     const range = {
       startLineNumber: position.lineNumber,
@@ -325,11 +333,11 @@ ${SINGLE_INDENTATION}${Keyword.SCHEMA} \${1:1.1}`,
 
 export const provideCompletionItems =
   (
-    monaco: typeof MonacoEditor,
+    monaco: MonacoEditorType,
     schemaVersion = SchemaVersion.OneDotZero,
     completionExtraOptions: CompletionExtraOptions = {},
   ) =>
-  (model: editor.ITextModel, position: Position): languages.ProviderResult<languages.CompletionList> => {
+  (model: ITextModel, position: Position): CompletionListProviderResult => {
     switch (schemaVersion) {
       case SchemaVersion.OneDotZero:
         return provideCompletionItemsOneDotZero(monaco, completionExtraOptions)(model, position);

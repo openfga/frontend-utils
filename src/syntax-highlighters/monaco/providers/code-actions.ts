@@ -1,16 +1,23 @@
-import type * as MonacoEditor from "monaco-editor";
-import type { CancellationToken, editor, languages } from "monaco-editor";
-
 import { Keyword } from "../../../constants/keyword";
 import { Marker } from "../../../validator/reporters";
 import { ValidationError } from "../../../validator/validation-error";
 import { SchemaVersion } from "../../../constants/schema-version";
 import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
+import {
+  CancellationToken,
+  CodeAction,
+  CodeActionContext,
+  CodeActionListProviderResult,
+  IMarkerData,
+  ITextModel,
+  MonacoEditorType,
+  Range
+} from "../monaco-editor.types";
 
 interface CodeActionInput {
-  markerRange: MonacoEditor.Range;
-  model: editor.ITextModel;
-  marker: editor.IMarkerData & Marker;
+  markerRange: Range;
+  model: ITextModel;
+  marker: IMarkerData & Marker;
   text: string;
   schemaVersion: SchemaVersion;
 }
@@ -108,14 +115,14 @@ function getCodeActionForError({ markerRange, model, marker, text, schemaVersion
 }
 
 export const provideCodeActions =
-  (monaco: typeof MonacoEditor, schemaVersion: SchemaVersion) =>
+  (monaco: MonacoEditorType, schemaVersion: SchemaVersion) =>
   (
-    model: editor.ITextModel,
-    range: MonacoEditor.Range,
-    context: languages.CodeActionContext & { markers: Marker[] },
+    model: ITextModel,
+    range: Range,
+    context: CodeActionContext & { markers: Marker[] },
     token: CancellationToken,
-  ): languages.ProviderResult<languages.CodeActionList> => {
-    const codeActions: languages.CodeAction[] = [];
+  ): CodeActionListProviderResult => {
+    const codeActions: CodeAction[] = [];
 
     context.markers
       .map((marker: Marker) => {

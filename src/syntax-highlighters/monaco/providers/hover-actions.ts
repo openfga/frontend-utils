@@ -1,6 +1,5 @@
 import { Keyword } from "../../../constants/keyword";
-import type { editor, languages, Position } from "monaco-editor";
-import type * as MonacoEditor from "monaco-editor";
+import { Hover, ITextModel, MonacoEditorType, Position } from "../monaco-editor.types";
 
 export type DocumentationMap = Partial<Record<Keyword, { summary: string; link?: string }>>;
 
@@ -69,8 +68,8 @@ function getDocumentation(keyword: Keyword, documentationMap: DocumentationMap):
 }
 
 export const providerHover =
-  (monaco: typeof MonacoEditor, documentationMap = defaultDocumentationMap) =>
-  (model: editor.ITextModel, position: Position): languages.Hover | undefined => {
+  (monaco: MonacoEditorType, documentationMap = defaultDocumentationMap) =>
+  (model: ITextModel, position: Position): Hover | undefined => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const wordMeta = model.getWordAtPosition(position)!;
 

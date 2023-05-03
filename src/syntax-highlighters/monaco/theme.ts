@@ -1,10 +1,9 @@
-import type { editor } from "monaco-editor";
-
 import { LANGUAGE_NAME } from "../../constants";
 import { OpenFgaDslThemeToken, OpenFgaThemeConfiguration, SupportedTheme, supportedThemes } from "../../theme";
 import { getThemeTokenStyle } from "../../theme/utils";
+import { IStandaloneThemeData } from "./monaco-editor.types";
 
-function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): editor.IStandaloneThemeData {
+function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): IStandaloneThemeData {
   return {
     base: themeConfig.baseTheme || "vs",
     inherit: false,
@@ -21,7 +20,7 @@ function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): editor.IStand
   };
 }
 
-const monacoThemes: Record<string, editor.IStandaloneThemeData> = {};
+const monacoThemes: Record<string, IStandaloneThemeData> = {};
 Object.values(SupportedTheme).forEach((themeName) => {
   monacoThemes[themeName] = buildMonacoTheme(supportedThemes[themeName]);
 });

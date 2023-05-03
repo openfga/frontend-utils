@@ -1,24 +1,23 @@
-import type * as MonacoEditor from "monaco-editor";
-
 import { getLanguageConfiguration, language } from "./language-definition";
-import { LANGUAGE_NAME } from "../../constants/language-name";
+import { LANGUAGE_NAME } from "../../constants";
 import { DocumentationMap, providerHover } from "./providers/hover-actions";
 import { provideCompletionItems } from "./providers/completion";
 import { provideCodeActions } from "./providers/code-actions";
 import { SchemaVersion } from "../../constants/schema-version";
+import { ILanguageExtensionPoint, MonacoEditorType } from "./monaco-editor.types";
 
 export interface RegisterDslOverrides {
   documentationMap: DocumentationMap;
 }
 
 export const registerDSL = (
-  monaco: typeof MonacoEditor,
+  monaco: MonacoEditorType,
   schemaVersion = SchemaVersion.OneDotZero,
   overrides: RegisterDslOverrides,
 ) => {
   const isLanguageRegistered = !!monaco.languages
     .getLanguages()
-    .find((language: MonacoEditor.languages.ILanguageExtensionPoint) => language.id === LANGUAGE_NAME);
+    .find((language: ILanguageExtensionPoint) => language.id === LANGUAGE_NAME);
 
   if (isLanguageRegistered) {
     return;

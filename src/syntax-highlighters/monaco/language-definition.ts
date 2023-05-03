@@ -1,15 +1,14 @@
-import type * as MonacoEditor from "monaco-editor";
-
 import { Keyword } from "../../constants/keyword";
-import { LANGUAGE_NAME } from "../../constants/language-name";
+import { LANGUAGE_NAME } from "../../constants";
 import { OpenFgaDslThemeToken } from "../../theme";
+import { MonacoEditorType, LanguageConfiguration, IMonarchLanguage } from "./monaco-editor.types";
 
 // Source for the code below:
 // https://github.com/microsoft/monaco-editor/blob/main/src/basic-languages/python/python.ts
 
 // This is exported as a function so that we can keep referencing monaco as just a type rather than loading it directly,
 // thus keeping it as a dev dependency for those who do not want to use it
-export function getLanguageConfiguration(monaco: typeof MonacoEditor): MonacoEditor.languages.LanguageConfiguration {
+export function getLanguageConfiguration(monaco: MonacoEditorType): LanguageConfiguration {
   return {
     comments: {
       lineComment: "#",
@@ -42,7 +41,7 @@ export function getLanguageConfiguration(monaco: typeof MonacoEditor): MonacoEdi
   };
 }
 
-export const language = <MonacoEditor.languages.IMonarchLanguage>{
+export const language = <IMonarchLanguage>{
   defaultToken: "",
   tokenPostfix: `.${LANGUAGE_NAME}`,
 
