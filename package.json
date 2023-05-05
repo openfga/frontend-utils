@@ -8,6 +8,7 @@
   "scripts": {
     "build:grammar": "npx nearleyc src/parser/openfga.ne > src/parser/grammar.ts",
     "build:ts": "rm -rf dist/ && tsc --outDir dist/",
+    "build:light": "tsc --outDir dist/",
     "build": "npm run build:grammar; npm run build:ts",
     "build:npx": "tsc --build tsconfig.json",
     "clean": "rm -r dist/",
@@ -43,6 +44,7 @@
     "@types/nearley": "^2.11.2",
     "@types/node": "^18.15.13",
     "@types/prismjs": "^1.26.0",
+    "@types/vscode": "^1.78.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "eslint": "^8.38.0",
@@ -52,7 +54,8 @@
     "monaco-editor": "0.37.1",
     "prettier": "^2.8.7",
     "ts-jest": "^29.1.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vscode-languageserver-types": "^3.17.3"
   },
   "files": [
     "README.md",

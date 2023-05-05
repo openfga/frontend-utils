@@ -577,7 +577,7 @@ export const basicValidateRelation = (
   });
 };
 
-export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}) => {
+export const checkDSL = (codeInEditor: string, options: ValidationOptions = {}): Marker[] => {
   const lines = codeInEditor.split("\n");
   const markers: Marker[] = [];
   const reporter = report({ lines, markers });

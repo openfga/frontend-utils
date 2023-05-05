@@ -13,7 +13,7 @@ import {
   IRange,
   ITextModel,
   MonacoEditorType,
-  Position
+  Position,
 } from "../monaco-editor.types";
 
 type AuthorizationModel = Required<Pick<ApiAuthorizationModel, "schema_version" | "type_definitions">>;

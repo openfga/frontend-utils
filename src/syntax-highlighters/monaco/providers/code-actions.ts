@@ -11,7 +11,7 @@ import {
   IMarkerData,
   ITextModel,
   MonacoEditorType,
-  Range
+  Range,
 } from "../monaco-editor.types";
 
 interface CodeActionInput {
