@@ -35,7 +35,7 @@
     "@openfga/sdk": "^0.2.5",
     "assert-never": "^1.2.1",
     "nearley": "^2.20.1",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.1",
