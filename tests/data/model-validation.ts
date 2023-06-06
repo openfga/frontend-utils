@@ -229,7 +229,6 @@ type group
         startColumn: 12,
         startLineNumber: 7,
       },
-
       {
         endColumn: 18,
         endLineNumber: 11,
@@ -1018,6 +1017,114 @@ type group
       },
     ],
   },
+  {
+    name: "no entry point intersection that relates to itself",
+    friendly: `model
+  schema 1.1
+type user
+type doc
+  relations
+    define admin: [user]
+    define action1: admin and action2 and action3
+    define action2: admin and action3 and action1
+    define action3: admin and action1 and action2
+`,
+    expectedError: [
+      {
+        endColumn: 19 ,
+        endLineNumber: 7,
+        message: "`action1` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action1",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 19 ,
+        endLineNumber: 8,
+        message: "`action2` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action2",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 8,
+      },
+      {
+        endColumn: 19 ,
+        endLineNumber: 9,
+        message: "`action3` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action3",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 9,
+      },
+    ],
+  },
+  {
+    name: "no entry point exclusion that relates to itself",
+    friendly: `model
+  schema 1.1
+type user
+type doc
+  relations
+    define admin: [user]
+    define action1: admin but not action2
+    define action2: admin but not action3
+    define action3: admin but not action1
+`,
+    expectedError: [
+      {
+        endColumn: 19 ,
+        endLineNumber: 7,
+        message: "`action1` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action1",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 19 ,
+        endLineNumber: 8,
+        message: "`action2` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action2",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 8,
+      },
+      {
+        endColumn: 19 ,
+        endLineNumber: 9,
+        message: "`action3` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action3",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 9,
+      },
+    ],
+  },
   // The following are valid cases and should not result in error
   {
     name: "simple model 1.0",
@@ -1321,6 +1428,50 @@ type folder
 
 type user
 type group
+`,
+    expectedError: [],
+  },
+  {
+    name: "union does not require all child to have entry",
+    friendly: `model
+  schema 1.1
+type user
+type doc
+  relations
+    define admin: [user]
+    define action1: admin or action2 or action3
+    define action2: admin or action3 or action1
+    define action3: admin or action1 or action2
+`,
+    expectedError: [],
+  },
+  {
+    name: "union does not require all child to have entry even for intersection child",
+    friendly: `model
+  schema 1.1
+type user
+type docs
+  relations
+    define admin: [user]
+    define union1: admin or union2
+    define union2: admin or union1
+    define intersection1: union1 and union2
+    define intersection2: union1 and union2
+`,
+    expectedError: [],
+  },
+  {
+    name: "union does not require all child to have entry even for exclusion child",
+    friendly: `model
+  schema 1.1
+type user
+type docs
+  relations
+    define admin: [user]
+    define union1: admin or union2
+    define union2: admin or union1
+    define exclusion1: admin but not union1
+    define exclusion2: admin but not union2
 `,
     expectedError: [],
   },

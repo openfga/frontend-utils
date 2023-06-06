@@ -161,34 +161,61 @@ function hasEntryPoint(
     return false;
   }
 
-  // there are two main cases, exclusion and non-exclusion
-  if (
-    currentRelation.definition.type === RelationDefOperator.Single ||
-    currentRelation.definition.type === RelationDefOperator.Union ||
-    currentRelation.definition.type === RelationDefOperator.Intersection
-  ) {
-    // for non-exclusion, check all targets
-    for (const childDef of currentRelation.definition.targets || []) {
-      if (childHasEntryPoint(transformedTypes, visitedRecords, type, childDef, currentRelation.allowedTypes)) {
-        return true;
+  switch (currentRelation.definition.type) {
+    case RelationDefOperator.Single:
+    case RelationDefOperator.Union:
+      for (const childDef of currentRelation.definition.targets || []) {
+        if (
+          childHasEntryPoint(
+            transformedTypes,
+            // create deep copy
+            JSON.parse(JSON.stringify(visitedRecords)),
+            type,
+            childDef,
+            currentRelation.allowedTypes,
+          )
+        ) {
+          return true;
+        }
       }
-    }
-  } else {
-    // this is a exclusion which means there are no targets. Instead, look at base
-    if (
-      childHasEntryPoint(
-        transformedTypes,
-        visitedRecords,
-        type,
-        currentRelation.definition.base,
-        currentRelation.allowedTypes,
-      )
-    ) {
+      return false;
+    case RelationDefOperator.Intersection:
+      for (const childDef of currentRelation.definition.targets || []) {
+        // this requires all child to have entry point
+        if (
+          !childHasEntryPoint(
+            transformedTypes,
+            JSON.parse(JSON.stringify(visitedRecords)),
+            type,
+            childDef,
+            currentRelation.allowedTypes,
+          )
+        ) {
+          return false;
+        }
+      }
       return true;
-    }
+    default: // exclusion requires both base and diff to have entry
+      if (
+        !childHasEntryPoint(
+          transformedTypes,
+          JSON.parse(JSON.stringify(visitedRecords)),
+          type,
+          currentRelation.definition.base,
+          currentRelation.allowedTypes,
+        ) ||
+        !childHasEntryPoint(
+          transformedTypes,
+          JSON.parse(JSON.stringify(visitedRecords)),
+          type,
+          currentRelation.definition.diff,
+          currentRelation.allowedTypes,
+        )
+      ) {
+        return false;
+      }
+      return true;
   }
-
-  return false;
 }
 
 // Return all the allowable types for the specified type/relation
