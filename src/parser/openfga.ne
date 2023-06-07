@@ -165,7 +165,7 @@ define_but_not  -> define_base _spacing _but_not _spacing define_base {%
 %}
 
 define_but_not_11  -> define_base_11 _spacing _but_not _spacing define_base_11 {%
-    data => ({ base: data[0], diff: data[4], type: "exclusion", allowedTypes: data[0].allowedTypes })
+    data => ({ base: data[0], diff: data[4], type: "exclusion", allowedTypes: data[0].allowedTypes.concat(...data[4].allowedTypes) })
 %}
 
 from_phrase -> _naming _spacing _from _spacing _naming {%
