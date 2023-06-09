@@ -388,6 +388,7 @@ function relationDefined(
   relation: string,
 ) {
   const currentRelation = transformedTypes[type].relations[relation];
+  let hasDirectRelationship = false;
   if (
     currentRelation.definition.type === RelationDefOperator.Single ||
     currentRelation.definition.type === RelationDefOperator.Union ||
@@ -396,13 +397,39 @@ function relationDefined(
     // we need to check all the child target to ensure they are defined
     for (const childDef of currentRelation.definition.targets || []) {
       childDefDefined(lines, reporter, transformedTypes, type, relation, childDef);
+      if (childDef.rewrite === RewriteType.Direct) {
+        if (hasDirectRelationship) {
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.maximumOneDirectRelationship({ lineIndex, value: relation });
+
+          break;
+        }
+        hasDirectRelationship = true;
+      }
     }
   } else if (currentRelation.definition.type === RelationDefOperator.Exclusion) {
     if (currentRelation.definition.base) {
       childDefDefined(lines, reporter, transformedTypes, type, relation, currentRelation.definition.base);
+      if (currentRelation.definition.base.rewrite === RewriteType.Direct) {
+        if (hasDirectRelationship) {
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.maximumOneDirectRelationship({ lineIndex, value: relation });
+        }
+        hasDirectRelationship = true;
+      }
     }
     if (currentRelation.definition.diff) {
       childDefDefined(lines, reporter, transformedTypes, type, relation, currentRelation.definition.diff);
+      if (currentRelation.definition.diff.rewrite === RewriteType.Direct) {
+        if (hasDirectRelationship) {
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.maximumOneDirectRelationship({ lineIndex, value: relation });
+        }
+        hasDirectRelationship = true;
+      }
     }
   }
 }

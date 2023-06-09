@@ -211,6 +211,21 @@ export const reportAssignableRelationMustHaveTypes = ({ markers, lines, lineInde
   });
 };
 
+export const reportMaximumOneDirectRelationship = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
+  reportError({
+    message: "Each relationship must have at most 1 set of direct relations defined.",
+    markers,
+    lineIndex,
+    lines,
+    value,
+    extraInformation: { error: ValidationError.AssignableRelationsMustHaveType },
+    customResolver: (wordIdx, rawLine, value) => {
+      wordIdx = rawLine.indexOf(value.substring(1));
+      return wordIdx;
+    },
+  });
+};
+
 export const reportAssignableTypeWildcardRelation = ({ markers, lines, lineIndex, value }: ReporterOpts) => {
   reportError({
     message: `Type restriction '${value}' cannot contain both wildcard and relation`,
@@ -422,6 +437,9 @@ export const report = function ({ markers, lines }: Pick<BaseReporterOpts, "mark
 
     assignableRelationMustHaveTypes: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportAssignableRelationMustHaveTypes({ lineIndex, markers, lines, value }),
+
+    maximumOneDirectRelationship: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
+      reportMaximumOneDirectRelationship({ lineIndex, markers, lines, value }),
 
     assignableTypeWildcardRelation: ({ lineIndex, value }: Omit<ReporterOpts, "markers" | "lines">) =>
       reportAssignableTypeWildcardRelation({ lineIndex, markers, lines, value }),

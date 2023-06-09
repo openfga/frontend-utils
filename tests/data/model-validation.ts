@@ -1217,10 +1217,9 @@ type document
       {
         endColumn: 18,
         endLineNumber: 5,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "Each relationship must have at most 1 set of direct relations defined.",
         extraInformation: {
-          relation: "viewer",
-          error: "relation-no-entry-point",
+          error: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
@@ -1230,10 +1229,9 @@ type document
       {
         endColumn: 18,
         endLineNumber: 6,
-        message: "`editor` is an impossible relation (no entrypoint).",
+        message: "Each relationship must have at most 1 set of direct relations defined.",
         extraInformation: {
-          relation: "editor",
-          error: "relation-no-entry-point",
+          error: "assignable-relation-must-have-type",
         },
         severity: 8,
         source: "linter",
@@ -1281,6 +1279,107 @@ type document
         source: "linter",
         startColumn: 12,
         startLineNumber: 10,
+      },
+    ],
+  },
+  {
+    name: "intersection child to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [user] and [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "exclusion base to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [document#editor] but not [user]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "exclusion target to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [user] but not [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+
+  {
+    name: "union child to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [user] or [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
       },
     ],
   },
@@ -1635,18 +1734,6 @@ type docs
     expectedError: [],
   },
   {
-    name: "union child allow to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [user] or [document#editor]
-`,
-    expectedError: [],
-  },
-  {
     name: "union child allow to reference itself in TTU",
     friendly: `model
   schema 1.1
@@ -1659,38 +1746,18 @@ type document
     expectedError: [],
   },
   {
-    name: "intersection child allow to reference other relations for same type",
+    name: "mixture of relations from relations for same type",
     friendly: `model
   schema 1.1
 type user
+
 type document
   relations
+    define restricted: [user]
     define editor: [user]
-    define viewer: [user] and [document#editor]
-`,
-    expectedError: [],
-  },
-  {
-    name: "exclusion base allow to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [document#editor] but not [user]
-`,
-    expectedError: [],
-  },
-  {
-    name: "exclusion target allow to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [user] but not [document#editor]
+    define viewer: [document#viewer] or editor
+    define can_view: viewer but not restricted
+    define can_view_actual: can_view
 `,
     expectedError: [],
   },
