@@ -1761,4 +1761,30 @@ type document
 `,
     expectedError: [],
   },
+  {
+    name: "self reference with wildcard",
+    friendly: `model
+  schema 1.1
+type user
+
+type document
+  relations
+    define parent: [document, document:*]
+    define viewer: [user] or viewer from parent
+`,
+    expectedError: [
+      {
+        endColumn: 10,
+        endLineNumber: 8,
+        extraInformation: {
+          error: "type-wildcard-relation",
+        },
+        message: "Type restriction 'document:*' cannot contain both wildcard and relation",
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 8,
+      },
+    ],
+  },
 ];

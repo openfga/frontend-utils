@@ -327,7 +327,7 @@ function childDefDefined(
             const childRelationNotValid = [];
             for (const item of fromTypes) {
               const { decodedType, decodedRelation, isWildcard } = destructTupleToUserset(item);
-              if (isWildcard && decodedRelation) {
+              if (isWildcard) {
                 // we cannot have both wild carded and relation at the same time
                 const typeIndex = getTypeLineNumber(type, lines);
                 const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
