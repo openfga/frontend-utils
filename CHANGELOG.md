@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.2]3
+### [0.1.3](https://github.com/openfga/syntax-transformer/compare/v0.1.2...v0.1.3) (2023-06-26)
+
+- feat(validation): Allow self-referencing type restrictions
+- fix(validation): Prevent invalid model that may introduce infinite loop
+- chore(deps): upgrade dependencies
+
 ## v0.1.2
 ### [0.1.2](https://github.com/openfga/syntax-transformer/compare/v0.1.1...v0.1.2) (2023-04-21)
 
