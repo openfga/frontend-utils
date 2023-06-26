@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.2]3
+## v0.1.3
 ### [0.1.3](https://github.com/openfga/syntax-transformer/compare/v0.1.2...v0.1.3) (2023-06-26)
 
 - feat(validation): Allow self-referencing type restrictions
