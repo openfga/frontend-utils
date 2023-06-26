@@ -161,34 +161,61 @@ function hasEntryPoint(
     return false;
   }
 
-  // there are two main cases, exclusion and non-exclusion
-  if (
-    currentRelation.definition.type === RelationDefOperator.Single ||
-    currentRelation.definition.type === RelationDefOperator.Union ||
-    currentRelation.definition.type === RelationDefOperator.Intersection
-  ) {
-    // for non-exclusion, check all targets
-    for (const childDef of currentRelation.definition.targets || []) {
-      if (childHasEntryPoint(transformedTypes, visitedRecords, type, childDef, currentRelation.allowedTypes)) {
-        return true;
+  switch (currentRelation.definition.type) {
+    case RelationDefOperator.Single:
+    case RelationDefOperator.Union:
+      for (const childDef of currentRelation.definition.targets || []) {
+        if (
+          childHasEntryPoint(
+            transformedTypes,
+            // create deep copy
+            JSON.parse(JSON.stringify(visitedRecords)),
+            type,
+            childDef,
+            currentRelation.allowedTypes,
+          )
+        ) {
+          return true;
+        }
       }
-    }
-  } else {
-    // this is a exclusion which means there are no targets. Instead, look at base
-    if (
-      childHasEntryPoint(
-        transformedTypes,
-        visitedRecords,
-        type,
-        currentRelation.definition.base,
-        currentRelation.allowedTypes,
-      )
-    ) {
+      return false;
+    case RelationDefOperator.Intersection:
+      for (const childDef of currentRelation.definition.targets || []) {
+        // this requires all child to have entry point
+        if (
+          !childHasEntryPoint(
+            transformedTypes,
+            JSON.parse(JSON.stringify(visitedRecords)),
+            type,
+            childDef,
+            currentRelation.allowedTypes,
+          )
+        ) {
+          return false;
+        }
+      }
       return true;
-    }
+    default: // exclusion requires both base and diff to have entry
+      if (
+        !childHasEntryPoint(
+          transformedTypes,
+          JSON.parse(JSON.stringify(visitedRecords)),
+          type,
+          currentRelation.definition.base,
+          currentRelation.allowedTypes,
+        ) ||
+        !childHasEntryPoint(
+          transformedTypes,
+          JSON.parse(JSON.stringify(visitedRecords)),
+          type,
+          currentRelation.definition.diff,
+          currentRelation.allowedTypes,
+        )
+      ) {
+        return false;
+      }
+      return true;
   }
-
-  return false;
 }
 
 // Return all the allowable types for the specified type/relation
@@ -300,7 +327,7 @@ function childDefDefined(
             const childRelationNotValid = [];
             for (const item of fromTypes) {
               const { decodedType, decodedRelation, isWildcard } = destructTupleToUserset(item);
-              if (isWildcard && decodedRelation) {
+              if (isWildcard) {
                 // we cannot have both wild carded and relation at the same time
                 const typeIndex = getTypeLineNumber(type, lines);
                 const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
@@ -361,6 +388,7 @@ function relationDefined(
   relation: string,
 ) {
   const currentRelation = transformedTypes[type].relations[relation];
+  let hasDirectRelationship = false;
   if (
     currentRelation.definition.type === RelationDefOperator.Single ||
     currentRelation.definition.type === RelationDefOperator.Union ||
@@ -369,13 +397,39 @@ function relationDefined(
     // we need to check all the child target to ensure they are defined
     for (const childDef of currentRelation.definition.targets || []) {
       childDefDefined(lines, reporter, transformedTypes, type, relation, childDef);
+      if (childDef.rewrite === RewriteType.Direct) {
+        if (hasDirectRelationship) {
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.maximumOneDirectRelationship({ lineIndex, value: relation });
+
+          break;
+        }
+        hasDirectRelationship = true;
+      }
     }
   } else if (currentRelation.definition.type === RelationDefOperator.Exclusion) {
     if (currentRelation.definition.base) {
       childDefDefined(lines, reporter, transformedTypes, type, relation, currentRelation.definition.base);
+      if (currentRelation.definition.base.rewrite === RewriteType.Direct) {
+        if (hasDirectRelationship) {
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.maximumOneDirectRelationship({ lineIndex, value: relation });
+        }
+        hasDirectRelationship = true;
+      }
     }
     if (currentRelation.definition.diff) {
       childDefDefined(lines, reporter, transformedTypes, type, relation, currentRelation.definition.diff);
+      if (currentRelation.definition.diff.rewrite === RewriteType.Direct) {
+        if (hasDirectRelationship) {
+          const typeIndex = getTypeLineNumber(type, lines);
+          const lineIndex = getRelationLineNumber(relation, lines, typeIndex);
+          reporter.maximumOneDirectRelationship({ lineIndex, value: relation });
+        }
+        hasDirectRelationship = true;
+      }
     }
   }
 }

@@ -229,7 +229,6 @@ type group
         startColumn: 12,
         startLineNumber: 7,
       },
-
       {
         endColumn: 18,
         endLineNumber: 11,
@@ -1018,6 +1017,372 @@ type group
       },
     ],
   },
+  {
+    name: "no entry point intersection that relates to itself",
+    friendly: `model
+  schema 1.1
+type user
+type doc
+  relations
+    define admin: [user]
+    define action1: admin and action2 and action3
+    define action2: admin and action3 and action1
+    define action3: admin and action1 and action2
+`,
+    expectedError: [
+      {
+        endColumn: 19,
+        endLineNumber: 7,
+        message: "`action1` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action1",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 8,
+        message: "`action2` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action2",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 8,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 9,
+        message: "`action3` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action3",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 9,
+      },
+    ],
+  },
+  {
+    name: "no entry point exclusion that relates to itself",
+    friendly: `model
+  schema 1.1
+type user
+type doc
+  relations
+    define admin: [user]
+    define action1: admin but not action2
+    define action2: admin but not action3
+    define action3: admin but not action1
+`,
+    expectedError: [
+      {
+        endColumn: 19,
+        endLineNumber: 7,
+        message: "`action1` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action1",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 8,
+        message: "`action2` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action2",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 8,
+      },
+      {
+        endColumn: 19,
+        endLineNumber: 9,
+        message: "`action3` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "action3",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 9,
+      },
+    ],
+  },
+  {
+    name: "intersection child not allow to reference itself in TTU",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: editor and [document#viewer]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        message: "`viewer` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "viewer",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "exclusion base not allow to reference itself in TTU",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [document#viewer] but not editor
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        message: "`viewer` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "viewer",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "exclusion target not allow to reference itself in TTU",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: editor but not [document#viewer]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        message: "`viewer` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "viewer",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+
+  {
+    name: "detect if every child in union are related",
+    friendly: `model
+  schema 1.1
+type document
+  relations
+    define viewer: [document#viewer] or [document#editor]
+    define editor: [document#viewer] or [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 5,
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 5,
+      },
+      {
+        endColumn: 18,
+        endLineNumber: 6,
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 6,
+      },
+    ],
+  },
+  {
+    name: "detect loop in TTU dependency",
+    friendly: `model
+  schema 1.1
+type folder
+  relations
+    define parent: [document]
+    define viewer: viewer from parent
+type document
+  relations
+    define parent: [folder]
+    define viewer: viewer from parent
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 6,
+        message: "`viewer` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "viewer",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 6,
+      },
+      {
+        endColumn: 18,
+        endLineNumber: 10,
+        message: "`viewer` is an impossible relation (no entrypoint).",
+        extraInformation: {
+          relation: "viewer",
+          error: "relation-no-entry-point",
+        },
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 10,
+      },
+    ],
+  },
+  {
+    name: "intersection child to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [user] and [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "exclusion base to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [document#editor] but not [user]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+  {
+    name: "exclusion target to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [user] but not [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
+
+  {
+    name: "union child to reference other relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: [user] or [document#editor]
+`,
+    expectedError: [
+      {
+        endColumn: 18,
+        endLineNumber: 7,
+        extraInformation: {
+          error: "assignable-relation-must-have-type",
+        },
+        message: "Each relationship must have at most 1 set of direct relations defined.",
+        severity: 8,
+        source: "linter",
+        startColumn: 12,
+        startLineNumber: 7,
+      },
+    ],
+  },
   // The following are valid cases and should not result in error
   {
     name: "simple model 1.0",
@@ -1323,5 +1688,103 @@ type user
 type group
 `,
     expectedError: [],
+  },
+  {
+    name: "union does not require all child to have entry",
+    friendly: `model
+  schema 1.1
+type user
+type doc
+  relations
+    define admin: [user]
+    define action1: admin or action2 or action3
+    define action2: admin or action3 or action1
+    define action3: admin or action1 or action2
+`,
+    expectedError: [],
+  },
+  {
+    name: "union does not require all child to have entry even for intersection child",
+    friendly: `model
+  schema 1.1
+type user
+type docs
+  relations
+    define admin: [user]
+    define union1: admin or union2
+    define union2: admin or union1
+    define intersection1: union1 and union2
+    define intersection2: union1 and union2
+`,
+    expectedError: [],
+  },
+  {
+    name: "union does not require all child to have entry even for exclusion child",
+    friendly: `model
+  schema 1.1
+type user
+type docs
+  relations
+    define admin: [user]
+    define union1: admin or union2
+    define union2: admin or union1
+    define exclusion1: admin but not union1
+    define exclusion2: admin but not union2
+`,
+    expectedError: [],
+  },
+  {
+    name: "union child allow to reference itself in TTU",
+    friendly: `model
+  schema 1.1
+type user
+type document
+  relations
+    define editor: [user]
+    define viewer: editor or [document#viewer]
+`,
+    expectedError: [],
+  },
+  {
+    name: "mixture of relations from relations for same type",
+    friendly: `model
+  schema 1.1
+type user
+
+type document
+  relations
+    define restricted: [user]
+    define editor: [user]
+    define viewer: [document#viewer] or editor
+    define can_view: viewer but not restricted
+    define can_view_actual: can_view
+`,
+    expectedError: [],
+  },
+  {
+    name: "self reference with wildcard",
+    friendly: `model
+  schema 1.1
+type user
+
+type document
+  relations
+    define parent: [document, document:*]
+    define viewer: [user] or viewer from parent
+`,
+    expectedError: [
+      {
+        endColumn: 10,
+        endLineNumber: 8,
+        extraInformation: {
+          error: "type-wildcard-relation",
+        },
+        message: "Type restriction 'document:*' cannot contain both wildcard and relation",
+        severity: 8,
+        source: "linter",
+        startColumn: 0,
+        startLineNumber: 8,
+      },
+    ],
   },
 ];
