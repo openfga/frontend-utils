@@ -1,5 +1,5 @@
 import type * as MonacoEditor from "monaco-editor";
-import type { CancellationToken, editor, languages } from "monaco-editor";
+import type { editor, languages } from "monaco-editor";
 
 import { Keyword } from "../../../constants/keyword";
 import { Marker } from "../../../validator/reporters";
@@ -113,7 +113,6 @@ export const provideCodeActions =
     model: editor.ITextModel,
     range: MonacoEditor.Range,
     context: languages.CodeActionContext & { markers: Marker[] },
-    token: CancellationToken,
   ): languages.ProviderResult<languages.CodeActionList> => {
     const codeActions: languages.CodeAction[] = [];
 

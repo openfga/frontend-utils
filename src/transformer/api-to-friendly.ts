@@ -1,6 +1,5 @@
 import { TypeDefinition, WriteAuthorizationModelRequest, Userset, Metadata } from "@openfga/sdk";
 import { Keyword } from "../constants/keyword";
-import { DEFAULT_SCHEMA_VERSION } from "../constants";
 
 const readFrom = (obj: Userset, define: string[], schemaVersion: string | undefined, allowedType: string) => {
   const childKeys = Object.keys(obj);
