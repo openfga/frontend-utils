@@ -8,10 +8,12 @@ export const languageDefinition = {
   [OpenFgaDslThemeTokenType.TYPE]: {
     pattern: /(\btype\s+)\w+/i,
     lookbehind: true,
+    greedy: true,
   },
   [OpenFgaDslThemeTokenType.RELATION]: {
     pattern: /(\bdefine\s+)\w+/i,
     lookbehind: true,
+    greedy: true,
   },
-  [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: /\[.*\]/,
+  [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: /\[.*]|self/,
 };

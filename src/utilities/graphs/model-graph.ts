@@ -4,7 +4,10 @@ import { GraphDefinition, GraphEdgeGroup, GraphNodeGroup } from "./graph.typings
 export class AuthorizationModelGraphBuilder {
   private _graph: GraphDefinition = { nodes: [], edges: [] };
 
-  constructor(private authorizationModel: AuthorizationModel, private store?: { name?: string }) {
+  constructor(
+    private authorizationModel: AuthorizationModel,
+    private store?: { name?: string },
+  ) {
     this.buildGraph();
   }
 

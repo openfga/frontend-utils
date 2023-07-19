@@ -7,7 +7,7 @@ export enum ValidationError {
   InvalidName = "invalid-name",
   MissingDefinition = "missing-definition",
   InvalidRelationType = "invalid-relation-type",
-  InvalidType = "invalid-relation-type",
+  InvalidType = "invalid-type",
   RelationNoEntrypoint = "relation-no-entry-point",
   TuplesetNotDirect = "tupleuset-not-direct",
   DuplicatedError = "duplicated-error",

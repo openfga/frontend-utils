@@ -361,7 +361,7 @@ type group
         endLineNumber: 6,
         message: "`unknown` is not a valid type.",
         extraInformation: {
-          error: "invalid-relation-type",
+          error: "invalid-type",
           typeName: "unknown",
         },
         severity: 8,
