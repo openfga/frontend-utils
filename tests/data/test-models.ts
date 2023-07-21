@@ -1,237 +1,7 @@
-import { WriteAuthorizationModelRequest } from "@openfga/sdk";
+import {AuthorizationModel} from "../../src/transformer/authzmodel.types";
+import { loadTransformerTestCases } from "../../src/language/pkg/js/transformer/_testcases";
 
-export const testModels: { name: string; json: WriteAuthorizationModelRequest; friendly: string }[] = [
-  {
-    name: "one type with no relations",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        {
-          type: "document",
-          relations: {},
-        },
-      ],
-    },
-    friendly: `model
-  schema 1.0
-type document\n`,
-  },
-  {
-    name: "one type with no relations and another with one relation",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        {
-          type: "group",
-          relations: {},
-        },
-        {
-          type: "document",
-          relations: {
-            viewer: {
-              this: {},
-            },
-            editor: {
-              this: {},
-            },
-          },
-        },
-      ],
-    },
-    friendly:
-      "model\n  schema 1.0\ntype group\ntype document\n  relations\n    define viewer as self\n    define editor as self\n",
-  },
-  {
-    name: "simple model",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        {
-          type: "document",
-          relations: {
-            viewer: {
-              this: {},
-            },
-            editor: {
-              this: {},
-            },
-          },
-        },
-      ],
-    },
-    friendly: "model\n  schema 1.0\ntype document\n  relations\n    define viewer as self\n    define editor as self\n",
-  },
-  {
-    name: "multiple types",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        {
-          type: "folder",
-          relations: {
-            editor: {
-              this: {},
-            },
-          },
-        },
-        {
-          type: "document",
-          relations: {
-            parent: {
-              this: {},
-            },
-            editor: {
-              union: {
-                child: [
-                  {
-                    this: {},
-                  },
-                  {
-                    tupleToUserset: {
-                      tupleset: {
-                        object: "",
-                        relation: "parent",
-                      },
-                      computedUserset: {
-                        object: "",
-                        relation: "editor",
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        },
-      ],
-    },
-    friendly: `model
-  schema 1.0
-type folder
-  relations
-    define editor as self
-type document
-  relations
-    define parent as self
-    define editor as self or editor from parent
-`,
-  },
-  {
-    name: "difference",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        {
-          type: "document",
-          relations: {
-            blocked: {
-              this: {},
-            },
-            editor: {
-              difference: {
-                base: {
-                  this: {},
-                },
-                subtract: {
-                  computedUserset: {
-                    object: "",
-                    relation: "blocked",
-                  },
-                },
-              },
-            },
-          },
-        },
-        {
-          type: "team",
-          relations: {
-            member: {
-              this: {},
-            },
-          },
-        },
-      ],
-    },
-    friendly: `model
-  schema 1.0
-type document
-  relations
-    define blocked as self
-    define editor as self but not blocked
-type team
-  relations
-    define member as self
-`,
-  },
-  {
-    name: "intersection",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        {
-          type: "document",
-          relations: {
-            owner: {
-              this: {},
-            },
-            writer: {
-              this: {},
-            },
-            can_write: {
-              computedUserset: {
-                object: "",
-                relation: "writer",
-              },
-            },
-            can_delete: {
-              intersection: {
-                child: [
-                  {
-                    computedUserset: {
-                      object: "",
-                      relation: "writer",
-                    },
-                  },
-                  {
-                    tupleToUserset: {
-                      tupleset: {
-                        object: "",
-                        relation: "owner",
-                      },
-                      computedUserset: {
-                        object: "",
-                        relation: "member",
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        },
-        {
-          type: "organization",
-          relations: {
-            member: {
-              this: {},
-            },
-          },
-        },
-      ],
-    },
-    friendly: `model
-  schema 1.0
-type document
-  relations
-    define owner as self
-    define writer as self
-    define can_write as writer
-    define can_delete as writer and member from owner
-type organization
-  relations
-    define member as self
-`,
-  },
+export const testModels: { name: string; json: AuthorizationModel; dsl: string }[] = [
   {
     name: "union for 1.1",
     json: {
@@ -240,49 +10,11 @@ type organization
         {
           type: "user",
           relations: {},
+          metadata: null as any,
         },
         {
           type: "document",
           relations: {
-            owner: {
-              this: {},
-            },
-            writer: {
-              union: {
-                child: [
-                  {
-                    computedUserset: {
-                      object: "",
-                      relation: "owner",
-                    },
-                  },
-                  {
-                    this: {},
-                  },
-                ],
-              },
-            },
-            reader: {
-              union: {
-                child: [
-                  {
-                    computedUserset: {
-                      object: "",
-                      relation: "owner",
-                    },
-                  },
-                  {
-                    this: {},
-                  },
-                  {
-                    computedUserset: {
-                      object: "",
-                      relation: "writer",
-                    },
-                  },
-                ],
-              },
-            },
             can_write: {
               computedUserset: {
                 object: "",
@@ -313,14 +45,53 @@ type organization
                 ],
               },
             },
+            owner: {
+              this: {},
+            },
+            reader: {
+              union: {
+                child: [
+                  {
+                    this: {},
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "owner",
+                    },
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "writer",
+                    },
+                  },
+                ],
+              },
+            },
+            writer: {
+              union: {
+                child: [
+                  {
+                    this: {},
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "owner",
+                    },
+                  },
+                ],
+              },
+            },
           },
           metadata: {
             relations: {
-              owner: { directly_related_user_types: [{ type: "user" }] },
-              writer: { directly_related_user_types: [{ type: "user" }] },
-              reader: { directly_related_user_types: [{ type: "user" }] },
               can_write: { directly_related_user_types: [] },
               can_delete: { directly_related_user_types: [] },
+              owner: { directly_related_user_types: [{ type: "user" }] },
+              reader: { directly_related_user_types: [{ type: "user" }] },
+              writer: { directly_related_user_types: [{ type: "user" }] },
             },
           },
         },
@@ -339,16 +110,19 @@ type organization
         },
       ],
     },
-    friendly: `model
+    dsl: `model
   schema 1.1
+
 type user
+
 type document
   relations
-    define owner: [user]
-    define writer: owner or [user]
-    define reader: owner or [user] or writer
     define can_write: writer
     define can_delete: writer and member from owner
+    define owner: [user]
+    define reader: [user] or owner or writer
+    define writer: [user] or owner
+
 type organization
   relations
     define member: [user]
@@ -362,6 +136,7 @@ type organization
         {
           type: "user",
           relations: {},
+          metadata: null as any,
         },
         {
           type: "document",
@@ -372,32 +147,17 @@ type organization
             member: {
               this: {},
             },
-            writer: {
-              intersection: {
-                child: [
-                  {
-                    computedUserset: {
-                      object: "",
-                      relation: "member",
-                    },
-                  },
-                  {
-                    this: {},
-                  },
-                ],
-              },
-            },
             reader: {
               intersection: {
                 child: [
                   {
+                    this: {},
+                  },
+                  {
                     computedUserset: {
                       object: "",
                       relation: "member",
                     },
-                  },
-                  {
-                    this: {},
                   },
                   {
                     computedUserset: {
@@ -408,27 +168,44 @@ type organization
                 ],
               },
             },
+            writer: {
+              intersection: {
+                child: [
+                  {
+                    this: {},
+                  },
+                  {
+                    computedUserset: {
+                      object: "",
+                      relation: "member",
+                    },
+                  },
+                ],
+              },
+            },
           },
           metadata: {
             relations: {
               allowed: { directly_related_user_types: [{ type: "user" }] },
               member: { directly_related_user_types: [{ type: "user" }] },
-              writer: { directly_related_user_types: [{ type: "user" }] },
               reader: { directly_related_user_types: [{ type: "user" }] },
+              writer: { directly_related_user_types: [{ type: "user" }] },
             },
           },
         },
       ],
     },
-    friendly: `model
+    dsl: `model
   schema 1.1
+
 type user
+
 type document
   relations
     define allowed: [user]
     define member: [user]
-    define writer: member and [user]
-    define reader: member and [user] and allowed
+    define reader: [user] and member and allowed
+    define writer: [user] and member
 `,
   },
   {
@@ -466,82 +243,19 @@ type document
         {
           type: "user",
           relations: {},
+          metadata: null as any,
         },
       ],
     },
-    friendly: `model
+    dsl: `model
   schema 1.1
+
 type document
   relations
     define blocked: [user]
     define editor: [user] but not blocked
+
 type user
-`,
-  },
-  {
-    name: "relations-starting-with-as",
-    json: {
-      schema_version: "1.0",
-      type_definitions: [
-        { type: "org", relations: { member: { this: {} } } },
-        {
-          type: "feature",
-          relations: {
-            associated_plan: { this: {} },
-            access: {
-              tupleToUserset: {
-                tupleset: { object: "", relation: "associated_plan" },
-                computedUserset: { object: "", relation: "subscriber_member" },
-              },
-            },
-          },
-        },
-        {
-          type: "plan",
-          relations: {
-            subscriber: { this: {} },
-            subscriber_member: {
-              tupleToUserset: {
-                tupleset: { object: "", relation: "subscriber" },
-                computedUserset: { object: "", relation: "member" },
-              },
-            },
-          },
-        },
-        {
-          type: "permission",
-          relations: {
-            access_feature: {
-              tupleToUserset: {
-                tupleset: {
-                  object: "",
-                  relation: "associated_feature",
-                },
-                computedUserset: { object: "", relation: "access" },
-              },
-            },
-            associated_feature: { this: {} },
-          },
-        },
-      ],
-    },
-    friendly: `model
-  schema 1.0
-type org
-  relations
-    define member as self
-type feature
-  relations
-    define associated_plan as self
-    define access as subscriber_member from associated_plan
-type plan
-  relations
-    define subscriber as self
-    define subscriber_member as member from subscriber
-type permission
-  relations
-    define access_feature as access from associated_feature
-    define associated_feature as self
 `,
   },
   {
@@ -564,8 +278,9 @@ type permission
         },
       ],
     },
-    friendly: `model
+    dsl: `model
   schema 1.1
+
 type document
   relations
     define viewer: [team#member]
@@ -591,11 +306,12 @@ type document
         },
       ],
     },
-    friendly: `model
+    dsl: `model
   schema 1.1
+
 type document
   relations
-    define viewer: [user,group]
+    define viewer: [user, group]
 `,
   },
   {
@@ -620,11 +336,17 @@ type document
         },
       ],
     },
-    friendly: `model
+    dsl: `model
   schema 1.1
+
 type document
   relations
-    define viewer: [user,user:*,group]
+    define viewer: [user, user:*, group]
 `,
   },
 ];
+
+testModels.push(...(loadTransformerTestCases().map(testCase => ({
+  ...testCase,
+  json: JSON.parse(testCase.json),
+}))));

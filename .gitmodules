@@ -1,0 +1,3 @@
+[submodule "src/language"]
+	path = src/language
+	url = git@github.com:openfga/language.git
