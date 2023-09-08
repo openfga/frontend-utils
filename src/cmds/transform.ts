@@ -36,9 +36,10 @@ exports.handler = async (argv: CommandArgs) => {
     const fileContents = await loadFile(argv.inputFile);
     switch (argv.from) {
       case "dsl": {
-        const validateResult = checkDSL.checkDSL(fileContents);
-        if (validateResult.length) {
-          throw new Error(`Invalid DSL with error ${JSON.stringify(validateResult)}`);
+        try {
+          checkDSL.checkDSL(fileContents);
+        } catch (err) {
+          throw new Error(`Invalid DSL with error ${err}`);
         }
         const transformedResult = transformSyntax.friendlySyntaxToApiSyntax(fileContents);
         console.log(JSON.stringify(transformedResult, null, 4));

@@ -14,7 +14,7 @@
     "prepublishOnly": "npm run build",
     "test": "npm run build:grammar; jest --config ./tests/jest.config.js",
     "typecheck": "npm run build:grammar; tsc  --skipLibCheck",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint -c .eslintrc.js --ext .ts",
     "lint:fix": "npm run lint -- --fix",
     "format:check": "prettier --check {src,tests}/**",
     "format:fix": "prettier --write {src,tests}/**"
@@ -33,6 +33,8 @@
   "author": "OpenFGA",
   "dependencies": {
     "@openfga/sdk": "^0.2.6",
+    "@openfga/language": "./src/language/pkg/js",
+    "antlr4": "^4.13.1",
     "assert-never": "^1.2.1",
     "nearley": "^2.20.1",
     "yargs": "^17.7.2"

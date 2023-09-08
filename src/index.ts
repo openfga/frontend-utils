@@ -2,7 +2,7 @@
 import constants, { enums } from "./constants";
 import formatter from "./formatter";
 import transformer from "./transformer";
-import validator from "./validator";
+import validator, * as ValidationErrors from "./validator";
 import * as syntaxHighlighters from "./syntax-highlighters";
 import * as theming from "./theme";
 import * as graphBuilder from "./utilities/graphs";
@@ -20,6 +20,7 @@ export {
   formatter,
   transformer,
   validator,
+  ValidationErrors,
   syntaxHighlighters,
   theming,
   graphBuilder,
