@@ -32,7 +32,7 @@
   ],
   "author": "OpenFGA",
   "dependencies": {
-    "@openfga/sdk": "^0.2.6",
+    "@openfga/sdk": "^0.2.7",
     "assert-never": "^1.2.1",
     "nearley": "^2.20.1",
     "yargs": "^17.7.2"
