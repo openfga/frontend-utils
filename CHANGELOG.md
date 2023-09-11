@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.4
+### [0.1.4](https://github.com/openfga/syntax-transformer/compare/v0.1.3...v0.1.4) (2023-06-26)
+
+- feat: export the language
+- chore(deps): upgrade dependencies
+
 ## v0.1.3
 ### [0.1.3](https://github.com/openfga/syntax-transformer/compare/v0.1.2...v0.1.3) (2023-06-26)
 
