@@ -7,6 +7,9 @@ import * as syntaxHighlighters from "./syntax-highlighters";
 import * as theming from "./theme";
 import * as graphBuilder from "./utilities/graphs";
 import sampleAuthorizationModels from "./samples";
+// `language` imported like a module to avoid including antlr in the top level dependencies
+// Local package path in package.json will be replaced with npm package version once published
+import * as language from "@openfga/language";
 
 const { Keyword, SchemaVersion } = enums;
 
@@ -23,6 +26,7 @@ export {
   syntaxHighlighters,
   theming,
   graphBuilder,
+  language,
 
   // for backward compatibility to prevent breaking changes, to be removed in next major release
   Keyword,
