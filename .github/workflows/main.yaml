@@ -19,6 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        with:
+          submodules: recursive
 
       - name: Set up node
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
@@ -43,6 +45,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        with:
+          submodules: recursive
 
       - name: Set up node
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
@@ -63,7 +67,7 @@ jobs:
         run: npm audit
 
       - name: Check for circular dependencies
-        run: npx madge --circular . --extensions ts,js
+        run: npx madge --circular . --extensions ts,js --exclude '(src|dist)/language/pkg/js/' 
 
       # Run Prettier
       - name: Run Prettier
@@ -86,6 +90,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        with:
+          submodules: recursive
 
       - name: Set up node
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1

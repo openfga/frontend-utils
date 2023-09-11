@@ -1,3 +1,4 @@
 tests/__snapshots__/*
 src/parser/grammar.ts
 *.ne
+src/language/
