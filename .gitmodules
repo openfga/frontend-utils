@@ -1,3 +1,0 @@
-[submodule "src/language"]
-	path = src/language
-	url = https://github.com/openfga/language
