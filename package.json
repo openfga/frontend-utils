@@ -1,6 +1,6 @@
 {
   "name": "@openfga/syntax-transformer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -33,7 +33,6 @@
   "author": "OpenFGA",
   "dependencies": {
     "@openfga/sdk": "^0.2.6",
-    "@openfga/language": "./src/language/pkg/js",
     "assert-never": "^1.2.1",
     "nearley": "^2.20.1",
     "yargs": "^17.7.2"

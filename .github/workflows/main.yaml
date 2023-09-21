@@ -67,7 +67,7 @@ jobs:
         run: npm audit
 
       - name: Check for circular dependencies
-        run: npx madge --circular . --extensions ts,js --exclude '(src|dist)/language/pkg/js/' 
+        run: npx madge --circular . --extensions ts,js
 
       # Run Prettier
       - name: Run Prettier
