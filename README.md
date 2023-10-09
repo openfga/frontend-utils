@@ -58,7 +58,7 @@ npm install --save @openfga/frontend-utils
 
 ## Features
 
-- Theming  (for Monaco and Prism)
+- Theming (for Monaco and Prism)
 - Graphing
 - Diagnostics (for Monaco and VS Code)
 - Snippets (for Monaco and VS Code)

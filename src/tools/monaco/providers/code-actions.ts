@@ -1,12 +1,12 @@
-import type * as MonacoEditor from "monaco-editor";
+import { errors } from "@openfga/syntax-transformer";
 import type { editor, languages } from "monaco-editor";
 
 import { Keyword } from "../../../constants/keyword";
-import { Marker } from "../../../validator/reporters";
-import { ValidationError } from "../../../validator/validation-error";
 import { SchemaVersion } from "../../../constants/schema-version";
-import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
+import { SINGLE_INDENTATION } from "../../../constants/single-indentation";
+import { Marker, MonacoEditor } from "../typings";
 
+type ValidationError = errors.ValidationError;
 interface CodeActionInput {
   markerRange: MonacoEditor.Range;
   model: editor.ITextModel;
@@ -31,7 +31,7 @@ const errorFixesByErrorCodeAndSchema: Partial<
     >
   >
 > = {
-  [ValidationError.MissingDefinition]: {
+  [errors.ValidationError.MissingDefinition]: {
     [SchemaVersion.OneDotZero]: ({ model, marker, relation }) => {
       const lineContent = model.getLineContent(marker.startLineNumber);
       return {
@@ -49,7 +49,7 @@ const errorFixesByErrorCodeAndSchema: Partial<
       };
     },
   },
-  [ValidationError.SelfError]: {
+  [errors.ValidationError.SelfError]: {
     [SchemaVersion.OneDotZero]: ({ text }) => ({
       title: `Fix: replace \`${text}\` by \`self\`.`,
       text: Keyword.SELF,
@@ -59,7 +59,7 @@ const errorFixesByErrorCodeAndSchema: Partial<
       text: "[typeName]",
     }),
   },
-  [ValidationError.DuplicatedError]: {
+  [errors.ValidationError.DuplicatedError]: {
     [SchemaVersion.OneDotZero]: ({ model, marker, markerRange, text }) => ({
       startLineNumber: markerRange.startLineNumber - 1,
       startColumn: model.getLineContent(marker.startLineNumber - 1).length + 1,

@@ -60,9 +60,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build grammar
-        run: npm run build:grammar
-
       - name: Audit dependencies
         run: npm audit
 
