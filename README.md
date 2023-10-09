@@ -1,30 +1,25 @@
-# OpenFGA Syntax Transformer
+# OpenFGA Frontend Utils
 
-[![npm](https://img.shields.io/npm/v/@openfga/syntax-transformer.svg?style=flat)](https://www.npmjs.com/package/@openfga/syntax-transformer)
-[![Release](https://img.shields.io/github/v/release/openfga/syntax-transformer?sort=semver&color=green)](https://github.com/openfga/syntax-transformer/releases)
+Exposes helpful utilities for building authoring experiences of OpenFGA Models.
+
+Currently used in the OpenFGA Docs and the FGA Playground to provide theming, model validation and diagnostics and graphic capabilities.
+
+[![npm](https://img.shields.io/npm/v/@openfga/frontend-utils.svg?style=flat)](https://www.npmjs.com/package/@openfga/frontend-utils)
+[![Release](https://img.shields.io/github/v/release/openfga/frontend-utils?sort=semver&color=green)](https://github.com/openfga/frontend-utils/releases)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
-[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B4989%2Fgithub.com%2Fopenfga%2Fsyntax-transformer.svg?type=shield)](https://app.fossa.com/reports/fb48e89d-655d-4656-8c7d-4eaa77e19e72)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B4989%2Fgithub.com%2Fopenfga%2Ffrontend-utils.svg?type=shield)](https://app.fossa.com/reports/fb48e89d-655d-4656-8c7d-4eaa77e19e72)
 [![Discord Server](https://img.shields.io/discord/759188666072825867?color=7289da&logo=discord "Discord Server")](https://discord.gg/8naAwJfWN6)
 [![Twitter](https://img.shields.io/twitter/follow/openfga?color=%23179CF0&logo=twitter&style=flat-square "@openfga on Twitter")](https://twitter.com/openfga)
-
-The [OpenFGA](https://openfga.dev) API accepts a JSON syntax for the configuration of the authorization model. The OpenFGA docs showcase an alternate friendlier syntax that can be used to build an OpenFGA authorization model.
-
-This module transforms between the JSON syntax accepted by the OpenFGA API and the friendlier syntax you see throughout the documentation.
 
 ## Table of Contents
 
 - [About OpenFGA](#about-openfga)
 - [Resources](#resources)
+- [Syntax Transformer & CLI](#syntax-transformer--cli)
 - [Installation](#installation)
+- [Features](#features)
 - [Usage](#usage)
-  - [From the Friendly Syntax to the JSON Syntax](#from-the-friendly-syntax-to-the-json-syntax)
-  - [From the JSON Syntax to the Friendly Syntax](#from-the-json-syntax-to-the-friendly-syntax)
-- [CLI](#cli)
-- [Configuration Syntaxes](#configuration-syntaxes)
-  - [Schema v1.1](#schema-11)
-  - [Schema v1.0](#schema-10)
 - [Contributing](#contributing)
-- [Community Parsers](#community-parsers)
 - [Author](#author)
 - [License](#license)
 
@@ -49,235 +44,29 @@ More SDKs and integrations such as Rego are planned for the future.
 - [Zanzibar Academy](https://zanzibar.academy)
 - [Google's Zanzibar Paper (2019)](https://research.google/pubs/pub48190/)
 
+## Syntax Transformer & CLI
+
+The Syntax Transformer has a new home in the [language repo](https://github.com/openfga/language).
+
+The CLI can now be found at https://github.com/openfga/cli.
+
 ## Installation
 
 ```bash
-npm install --save @openfga/syntax-transformer // OR yarn add @openfga/syntax-transformer
+npm install --save @openfga/frontend-utils
 ```
+
+## Features
+
+- Theming  (for Monaco and Prism)
+- Graphing
+- Diagnostics (for Monaco and VS Code)
+- Snippets (for Monaco and VS Code)
+- Hover suggestions (for Monaco and VS Code)
 
 ## Usage
 
-The syntax transformer has grown to encompass a lot more functionality than previously intended, mostly components used by the FGA Playground. Please note that all functionality except: `friendlySyntaxToApiSyntax` and `apiSyntaxToFriendlySyntax` is undocumented and should be considered tentative and may be removed at any moment. If you depend on them, please reach out so that we can discuss out future plans for that functionality and make sure our plans are taking your use-case into consideration.
-
-### From the Friendly Syntax to the JSON Syntax
-```javascript
-const { friendlySyntaxToApiSyntax } = require("@openfga/syntax-transformer");
-
-const apiSyntax = friendlySyntaxToApiSyntax(
-`model
-  schema 1.1
-type user
-type document
-  relations
-    define blocked: [user]
-    define editor: [user] but not blocked
-`);
-```
-
-### From the JSON Syntax to the Friendly Syntax
-```javascript
-const { apiSyntaxToFriendlySyntax } = require("@openfga/syntax-transformer");
-
-const friendlySyntax = apiSyntaxToFriendlySyntax({
-  "schema_version": "1.1",
-  "type_definitions": [{
-    "type": "user",
-    "relations": {}
-  }, {
-    "type": "document",
-    "relations": {
-      "blocked": { "this": {} },
-      "editor": {
-        "difference": {
-          "base": { "this": {} },
-          "subtract": {
-            "computedUserset": {
-              "object": "",
-              "relation": "blocked"
-            }
-          }
-        }
-      }
-    },
-    "metadata": {
-      "relations": {
-        "blocked": {
-          "directly_related_user_types": [{ "type": "user" }]
-        },
-        "editor": {
-          "directly_related_user_types": [{ "type": "user" }]
-        }
-      }
-    }
-  }]
-}
-);
-```
-
-## CLI
-
-This transformer comes with a basic CLI that can be used to transform between the Friendly and API JSON syntaxes
-
-### Transform from OpenFGA API's JSON syntax to the friendly OpenFGA DSL
-
-```shell
- npx @openfga/syntax-transformer transform --from=json --inputFile=test.json
-```
-
-### Transform from OpenFGA's friendly DSL to the OpenFGA API's JSON syntax
-
-```shell
-npx @openfga/syntax-transformer transform --from=dsl --inputFile=test.openfga
-```
-
-## Configuration Syntaxes
-
-### Schema 1.1
-The two below Syntaxes are equivalent. Find out more on OpenFGA's configuration language [here](https://openfga.dev/docs/configuration-language).
-
-### Friendly Syntax (DSL)
-
-```python
-model
-  schema 1.1
-type user
-type folder
-  relations
-    define editor: [user]
-type document
-  relations
-    define parent: [folder]
-    define editor: [user] or editor from parent
-```
-
-### JSON Syntax
-
-```json
-{
-  "schema_version": "1.1",
-  "type_definitions": [{
-    "type": "user",
-    "relations": {}
-  }, {
-    "type": "folder",
-    "relations": {
-      "editor": { "this": {} }
-    },
-    "metadata": {
-      "relations": {
-        "editor": {
-          "directly_related_user_types": [{ "type": "user" }]
-        }
-      }
-    }
-  }, {
-    "type": "document",
-    "relations": {
-      "parent": { "this": {} },
-      "editor": {
-        "union": {
-          "child": [{
-            "this": {}
-          }, {
-            "tupleToUserset": {
-              "tupleset": {
-                "object": "",
-                "relation": "parent"
-              },
-              "computedUserset": {
-                "object": "",
-                "relation": "editor"
-              }
-            }
-          }]
-        }
-      }
-    },
-    "metadata": {
-      "relations": {
-        "parent": {
-          "directly_related_user_types": [{ "type": "folder" }]
-        },
-        "editor": {
-          "directly_related_user_types": [{ "type": "user" }]
-        }
-      }
-    }
-  }]
-}
-```
-
-### Schema 1.0
-The two below Syntaxes are equivalent. Find out more on OpenFGA's configuration language [here](https://openfga.dev/docs/configuration-language).
-
-### Friendly Syntax (DSL)
-
-```python
-type user
-type folder
-  relations
-    define editor as self
-type document
-  relations
-    define parent as self
-    define editor as self or editor from parent
-```
-
-### JSON Syntax
-
-```json
-{
-  "schema_version": "1.0",
-  "type_definitions": [{
-    "type": "user",
-    "relations": {}
-  }, {
-    "type": "folder",
-    "relations": {
-      "editor": { "this": {} }
-    }
-  }, {
-    "type": "document",
-    "relations": {
-      "parent": { "this": {} },
-      "editor": {
-        "union": {
-          "child": [{
-            "this": {}
-          }, {
-            "tupleToUserset": {
-              "tupleset": {
-                "object": "",
-                "relation": "parent"
-              },
-              "computedUserset": {
-                "object": "",
-                "relation": "editor"
-              }
-            }
-          }]
-        }
-      }
-    }
-  }]
-}
-
-```
-
-## Community Parsers
-
-| Repo                                                                    | License                                                                            | Maintainers                                                                           | Language   | Schema v1.0 | Schema v1.1                                                                                          | Package Managers                                                                                                                                                                                                                                                                                               | Other Links                                                                                                                    |
-|-------------------------------------------------------------------------|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------|-------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| [syntax-transformer](https://github.com/openfga/syntax-transformer)     | [Apache-2.0](https://github.com/openfga/syntax-transformer/blob/main/LICENSE)      | [@openfga](https://github.com/orgs/openfga/people)                                    | Typescript | Yes         | Yes                                                                                                  | [![npm:@openfga/syntax-transformer](https://img.shields.io/npm/v/@openfga/syntax-transformer.svg?style=flat)](https://www.npmjs.com/package/@openfga/syntax-transformer)                                                                                                                                       |                                                                                                                                |
-| [openfga-dsl-parser](https://github.com/maxmindlin/openfga-dsl-parser)  | [Apache-2.0](https://github.com/maxmindlin/openfga-dsl-parser/blob/master/LICENSE) | [@maxmindlin](https://github.com/maxmindlin) - [@dblclik](https://github.com/dblclik) | Rust       | Yes         | No                                                                                                   | [![crates:openfga-dsl-parser](https://img.shields.io/crates/v/openfga-dsl-parser.svg?style=flat)](https://crates.io/crates/openfga-dsl-parser)[![pypi:openfga-dsl-parser-python](https://img.shields.io/pypi/v/openfga-dsl-parser-python.svg?style=flat)](https://pypi.org/project/openfga-dsl-parser-python/) | [WASM](https://github.com/dblclik/openfga-dsl-parser-wasm) - [Python](https://github.com/maxmindlin/openfga-dsl-parser-python) |
-| [openfga-rs](https://github.com/iammathew/openfga-rs)                   | [Apache-2.0](https://github.com/iammathew/openfga-rs/blob/main/LICENSE.md)         | [@iammathew](https://github.com/iammathew)                                            | Rust       | Yes         | No                                                                                                   |                                                                                                                                                                                                                                                                                                                |                                                                                                                                |
-| [openfga-dsl-parser](https://github.com/craigpastro/openfga-dsl-parser) | [Apache-2.0](https://github.com/craigpastro/openfga-dsl-parser/blob/main/LICENSE)  | [@craigpastro](https://github.com/craigpastro)                                        | ANTLR & Go | Yes         | Partial (requires self). [Supports nesting](https://github.com/openfga/syntax-transformer/issues/34) | ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/craigpastro/openfga-dsl-parser?label=go)                                                                                                                                                                                             |                                                                                                                                |
-
-## Community Wrapper
-| Repo                                                                  | License                                                                 | Maintainers                                        | Language   | Schema v1.0 | Schema v1.1 | Package Managers                                                                                                                                                           | Other Links |
-|-----------------------------------------------------------------------|-------------------------------------------------------------------------|----------------------------------------------------|------------|-------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [fga-transformer-cli](https://github.com/ozee-io/fga-transformer-cli) | [MIT](https://github.com/ozee-io/fga-transformer-cli/blob/main/LICENSE) | [@ozee-io](https://github.com/orgs/ozee-io/people) | Javascript | Yes         | Yes         | [![npm:@openfga/syntax-transformer](https://img.shields.io/npm/v/@ozee-io/fga-transformer-cli.svg?style=flat)](https://www.npmjs.com/package/@ozee-io/fga-transformer-cli) |             |
-
+TBD
 
 ## Contributing
 Take a look at our [Contributing Guide](./CONTRIBUTING.md)

@@ -1,6 +1,6 @@
 {
-  "name": "@openfga/syntax-transformer",
-  "version": "0.1.6",
+  "name": "@openfga/frontend-utils",
+  "version": "0.2.0",
   "description": "",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -18,9 +18,6 @@
     "lint:fix": "npm run lint -- --fix",
     "format:check": "prettier --check {src,tests}/**",
     "format:fix": "prettier --write {src,tests}/**"
-  },
-  "bin": {
-    "@openfga/syntax-transformer": "./dist/bin/index.js"
   },
   "keywords": [
     "openfga",
@@ -62,12 +59,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com:openfga/syntax-transformer.git"
+    "url": "git://github.com:openfga/frontend-utils.git"
   },
   "bugs": {
-    "url": "https://github.com/openfga/syntax-transformer/issues"
+    "url": "https://github.com/openfga/frontend-utils/issues"
   },
-  "homepage": "https://github.com/openfga/syntax-transformer#readme",
+  "homepage": "https://github.com/openfga/frontend-utils#readme",
   "publishConfig": {
     "access": "public",
     "provenance": true
