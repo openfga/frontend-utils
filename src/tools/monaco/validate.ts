@@ -30,7 +30,7 @@ export function validateDSL(monaco: typeof MonacoEditor, dsl: string): Marker[] 
       if (errorMetadata.errorType) {
         extraInformation.error = errorMetadata.errorType;
       }
-      ["typeName", "relation"].forEach(field => {
+      ["typeName", "relation"].forEach((field) => {
         if (errorMetadata[field]) {
           (extraInformation as any)[field] = errorMetadata[field];
         }
