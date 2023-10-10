@@ -13,12 +13,12 @@ type self
       {
         endColumn: 10,
         endLineNumber: 4,
-        message: "A type cannot be named 'self' or 'this'.",
+        message: "a type cannot be named 'self' or 'this'.",
         extraInformation: {
           error: "reserved-type-keywords",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 6,
         startLineNumber: 4,
       },
@@ -37,12 +37,12 @@ type this
       {
         endColumn: 10,
         endLineNumber: 4,
-        message: "A type cannot be named 'self' or 'this'.",
+        message: "a type cannot be named 'self' or 'this'.",
         extraInformation: {
           error: "reserved-type-keywords",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 6,
         startLineNumber: 4,
       },
@@ -61,12 +61,12 @@ type group
       {
         endColumn: 16,
         endLineNumber: 6,
-        message: "A relation cannot be named 'self' or 'this'.",
+        message: "a relation cannot be named 'self' or 'this'.",
         extraInformation: {
           error: "reserved-relation-keywords",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 6,
       },
@@ -85,38 +85,13 @@ type group
       {
         endColumn: 16,
         endLineNumber: 6,
-        message: "A relation cannot be named 'self' or 'this'.",
+        message: "a relation cannot be named 'self' or 'this'.",
         extraInformation: {
           error: "reserved-relation-keywords",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
-        startLineNumber: 6,
-      },
-    ],
-  },
-  {
-    name: "cannot use this in mode 1.0",
-    friendly: `model
-  schema 1.0
-type document
-  relations
-    define editor as self
-    define viewer as editor or this
-`,
-    expectedError: [
-      {
-        endColumn: 36,
-        endLineNumber: 6,
-        message: "The relation `this` does not exist.",
-        extraInformation: {
-          relation: "this",
-          error: "missing-definition",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 32,
         startLineNumber: 6,
       },
     ],
@@ -135,12 +110,12 @@ type aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         endColumn: 350,
         endLineNumber: 4,
         message:
-          "Type 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' does not match naming rule: '^[^:#@\\s]{1,254}$'.",
+          "type 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' does not match naming rule: '^[^:#@\\s]{1,254}$'.",
         extraInformation: {
           error: "invalid-name",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 6,
         startLineNumber: 4,
       },
@@ -160,44 +135,14 @@ type org
         endColumn: 112,
         endLineNumber: 6,
         message:
-          "Relation 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' of type 'org' does not match naming rule: '^[^:#@\\s]{1,50}$'.",
+          "relation 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' of type 'org' does not match naming rule: '^[^:#@\\s]{1,50}$'.",
         extraInformation: {
           error: "invalid-name",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 6,
-      },
-    ],
-  },
-  {
-    name: "ensure errors are highlighted in the right place for same relation name across different types",
-    friendly: `model
-  schema 1.0
-type user
-type geography
-  relations
-    define parent as self
-    define can_view_locations as self or can_view_locations from parent
-
-type outlet
-  relations
-    define geography as self
-    define can_view_locations as self or can_view_locations from parent
-`,
-    expectedError: [
-      {
-        endColumn: 72,
-        endLineNumber: 12,
-        message: "The relation `parent` does not exist in type `outlet`",
-        extraInformation: {
-          error: "invalid-syntax",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 66,
-        startLineNumber: 12,
       },
     ],
   },
@@ -219,26 +164,26 @@ type group
       {
         endColumn: 18,
         endLineNumber: 7,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `team` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 7,
       },
       {
         endColumn: 18,
         endLineNumber: 11,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `group` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 11,
       },
@@ -257,13 +202,13 @@ type group
       {
         endColumn: 17,
         endLineNumber: 6,
-        message: "`group` is an impossible relation (no entrypoint).",
+        message: "`group` is an impossible relation for `group` (no entrypoint).",
         extraInformation: {
           relation: "group",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 6,
       },
@@ -283,13 +228,13 @@ type group
       {
         endColumn: 18,
         endLineNumber: 7,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `group` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 7,
       },
@@ -307,13 +252,13 @@ type group
       {
         endColumn: 18,
         endLineNumber: 5,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `group` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 5,
       },
@@ -340,7 +285,7 @@ type group
           typeName: "group",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 20,
         startLineNumber: 7,
       },
@@ -365,7 +310,7 @@ type group
           typeName: "unknown",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 21,
         startLineNumber: 6,
       },
@@ -393,7 +338,7 @@ type group
           typeName: "group",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 20,
         startLineNumber: 8,
       },
@@ -421,7 +366,7 @@ type group
           typeName: "group",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 20,
         startLineNumber: 8,
       },
@@ -448,7 +393,7 @@ type group
           typeName: "group",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 28,
         startLineNumber: 7,
       },
@@ -471,13 +416,13 @@ type group
       {
         endColumn: 18,
         endLineNumber: 10,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `group` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 10,
       },
@@ -499,12 +444,23 @@ type group
 `,
     expectedError: [
       {
+        endColumn: 20,
+        endLineNumber: 9,
+        message: "missing ':' at 'as'",
+        extraInformation: {},
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 18,
+        startLineNumber: 9,
+      },
+      {
         endColumn: 25,
         endLineNumber: 9,
-        message: "Invalid syntax",
+        message: "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 19,
+        source: "SyntaxError",
+        startColumn: 21,
         startLineNumber: 9,
       },
     ],
@@ -522,26 +478,26 @@ type document
       {
         endColumn: 18,
         endLineNumber: 5,
-        message: "`reader` is an impossible relation (no entrypoint).",
+        message: "`reader` is an impossible relation for `document` (no entrypoint).",
         extraInformation: {
           relation: "reader",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 5,
       },
       {
         endColumn: 18,
         endLineNumber: 6,
-        message: "`writer` is an impossible relation (no entrypoint).",
+        message: "`writer` is an impossible relation for `document` (no entrypoint).",
         extraInformation: {
           relation: "writer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 6,
       },
@@ -567,7 +523,7 @@ type folder
           error: "tupleuset-not-direct",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 44,
         startLineNumber: 6,
       },
@@ -580,7 +536,7 @@ type folder
           error: "tupleuset-not-direct",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 42,
         startLineNumber: 7,
       },
@@ -607,7 +563,7 @@ type folder
           error: "tupleuset-not-direct",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 42,
         startLineNumber: 8,
       },
@@ -634,7 +590,7 @@ type folder
           error: "tupleuset-not-direct",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 42,
         startLineNumber: 8,
       },
@@ -654,13 +610,13 @@ type group
       {
         endColumn: 38,
         endLineNumber: 7,
-        message: "The relation `allowed` does not exist.",
+        message: "the relation `allowed` does not exist.",
         extraInformation: {
           relation: "allowed",
           error: "missing-definition",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 31,
         startLineNumber: 7,
       },
@@ -680,13 +636,13 @@ type group
       {
         endColumn: 37,
         endLineNumber: 7,
-        message: "The relation `allowed` does not exist.",
+        message: "the relation `allowed` does not exist.",
         extraInformation: {
           relation: "allowed",
           error: "missing-definition",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 30,
         startLineNumber: 7,
       },
@@ -706,13 +662,13 @@ type group
       {
         endColumn: 27,
         endLineNumber: 7,
-        message: "The relation `allowed` does not exist.",
+        message: "the relation `allowed` does not exist.",
         extraInformation: {
           relation: "allowed",
           error: "missing-definition",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 20,
         startLineNumber: 7,
       },
@@ -732,13 +688,13 @@ type group
       {
         endColumn: 42,
         endLineNumber: 7,
-        message: "The relation `allowed` does not exist.",
+        message: "the relation `allowed` does not exist.",
         extraInformation: {
           relation: "allowed",
           error: "missing-definition",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 35,
         startLineNumber: 7,
       },
@@ -758,13 +714,13 @@ type group
       {
         endColumn: 49,
         endLineNumber: 7,
-        message: "The relation `allowed` does not exist.",
+        message: "the relation `allowed` does not exist.",
         extraInformation: {
           relation: "allowed",
           error: "missing-definition",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 42,
         startLineNumber: 7,
       },
@@ -782,15 +738,13 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 23,
+        endColumn: 22,
         endLineNumber: 6,
-        message: "Assignable relation 'member' must have types",
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
+        message: "mismatched input ']' expecting ALPHA_NUMERIC",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 20,
+        source: "SyntaxError",
+        startColumn: 21,
         startLineNumber: 6,
       },
     ],
@@ -807,14 +761,12 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 22,
+        endColumn: 21,
         endLineNumber: 6,
-        message: "Assignable relation 'member' must have types",
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
+        message: "mismatched input ']' expecting {ALPHA_NUMERIC, WS}",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
+        source: "SyntaxError",
         startColumn: 20,
         startLineNumber: 6,
       },
@@ -834,15 +786,13 @@ type org
   `,
     expectedError: [
       {
-        endColumn: 52,
+        endColumn: 50,
         endLineNumber: 9,
-        message: "Type restriction 'department#member:*' cannot contain both wildcard and relation",
-        extraInformation: {
-          error: "type-wildcard-relation",
-        },
+        message: "extraneous input ':' expecting {']', ',', WS}",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 33,
+        source: "SyntaxError",
+        startColumn: 49,
         startLineNumber: 9,
       },
     ],
@@ -858,12 +808,13 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 12,
+        endColumn: 10,
         endLineNumber: 2,
-        message: "Invalid syntax",
+        message: "mismatched input '0' expecting '1.1'",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 10,
+        source: "SyntaxError",
+        startColumn: 9,
         startLineNumber: 2,
       },
     ],
@@ -879,13 +830,14 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 25,
-        endLineNumber: 6,
-        message: "Invalid syntax",
+        endColumn: 10,
+        endLineNumber: 2,
+        message: "mismatched input '1' expecting '1.1'",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 18,
-        startLineNumber: 6,
+        source: "SyntaxError",
+        startColumn: 9,
+        startLineNumber: 2,
       },
     ],
   },
@@ -901,18 +853,29 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 47,
+        endColumn: 20,
         endLineNumber: 7,
-        message: "Invalid syntax",
+        message: "missing ':' at 'as'",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 19,
+        source: "SyntaxError",
+        startColumn: 18,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 25,
+        endLineNumber: 7,
+        message: "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+        extraInformation: {},
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 21,
         startLineNumber: 7,
       },
     ],
   },
   {
-    name: "model 1.0 should not have directly allowed types in viewer",
+    name: "model 1.0 should not be allowed",
     friendly: `model
   schema 1.0
 type user
@@ -923,13 +886,14 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 27,
-        endLineNumber: 6,
-        message: "Invalid syntax",
+        endColumn: 10,
+        endLineNumber: 2,
+        message: "mismatched input '1' expecting '1.1'",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 18,
-        startLineNumber: 6,
+        source: "SyntaxError",
+        startColumn: 9,
+        startLineNumber: 2,
       },
     ],
   },
@@ -945,38 +909,27 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 35,
+        endColumn: 20,
         endLineNumber: 7,
-        message: "Invalid syntax",
+        message: "missing ':' at 'as'",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 19,
+        source: "SyntaxError",
+        startColumn: 18,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 25,
+        endLineNumber: 7,
+        message: "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+        extraInformation: {},
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 21,
         startLineNumber: 7,
       },
     ],
   },
-  {
-    name: "syntax error is highlighted in the right spot",
-    friendly: `model
-  schema 1.0
-type user
-type group
-  relations
-    define group: [group] as self
-`,
-    expectedError: [
-      {
-        endColumn: 33,
-        endLineNumber: 6,
-        message: "Invalid syntax",
-        severity: 8,
-        source: "linter",
-        startColumn: 17,
-        startLineNumber: 6,
-      },
-    ],
-  },
-
   {
     name: "should not allow no model schema",
     friendly: `type user
@@ -986,13 +939,34 @@ type group
 `,
     expectedError: [
       {
+        endColumn: 4,
+        endLineNumber: 1,
+        message: "extraneous input 'type' expecting {'model', '#', WS}",
+        extraInformation: {},
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 0,
+        startLineNumber: 1,
+      },
+      {
         endColumn: 9,
         endLineNumber: 1,
-        message: "Invalid syntax",
+        message: "extraneous input 'user' expecting {'#', WS}",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 1,
+        source: "SyntaxError",
+        startColumn: 5,
         startLineNumber: 1,
+      },
+      {
+        endColumn: 4,
+        endLineNumber: 2,
+        message: "mismatched input 'type' expecting 'model'",
+        extraInformation: {},
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 0,
+        startLineNumber: 2,
       },
     ],
   },
@@ -1007,12 +981,13 @@ type group
 `,
     expectedError: [
       {
-        endColumn: 35,
+        endColumn: 33,
         endLineNumber: 6,
-        message: "Invalid syntax",
+        message: "extraneous input ':' expecting {']', ',', WS}",
+        extraInformation: {},
         severity: 8,
-        source: "linter",
-        startColumn: 33,
+        source: "SyntaxError",
+        startColumn: 32,
         startLineNumber: 6,
       },
     ],
@@ -1033,39 +1008,39 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 7,
-        message: "`action1` is an impossible relation (no entrypoint).",
+        message: "`action1` is an impossible relation for `doc` (no entrypoint).",
         extraInformation: {
           relation: "action1",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 7,
       },
       {
         endColumn: 19,
         endLineNumber: 8,
-        message: "`action2` is an impossible relation (no entrypoint).",
+        message: "`action2` is an impossible relation for `doc` (no entrypoint).",
         extraInformation: {
           relation: "action2",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 8,
       },
       {
         endColumn: 19,
         endLineNumber: 9,
-        message: "`action3` is an impossible relation (no entrypoint).",
+        message: "`action3` is an impossible relation for `doc` (no entrypoint).",
         extraInformation: {
           relation: "action3",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 9,
       },
@@ -1087,39 +1062,39 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 7,
-        message: "`action1` is an impossible relation (no entrypoint).",
+        message: "`action1` is an impossible relation for `doc` (no entrypoint).",
         extraInformation: {
           relation: "action1",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 7,
       },
       {
         endColumn: 19,
         endLineNumber: 8,
-        message: "`action2` is an impossible relation (no entrypoint).",
+        message: "`action2` is an impossible relation for `doc` (no entrypoint).",
         extraInformation: {
           relation: "action2",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 8,
       },
       {
         endColumn: 19,
         endLineNumber: 9,
-        message: "`action3` is an impossible relation (no entrypoint).",
+        message: "`action3` is an impossible relation for `doc` (no entrypoint).",
         extraInformation: {
           relation: "action3",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 9,
       },
@@ -1133,19 +1108,19 @@ type user
 type document
   relations
     define editor: [user]
-    define viewer: editor and [document#viewer]
+    define viewer: [document#viewer] and editor
 `,
     expectedError: [
       {
         endColumn: 18,
         endLineNumber: 7,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `document` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 7,
       },
@@ -1165,78 +1140,15 @@ type document
       {
         endColumn: 18,
         endLineNumber: 7,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `document` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 7,
-      },
-    ],
-  },
-  {
-    name: "exclusion target not allow to reference itself in TTU",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: editor but not [document#viewer]
-`,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 7,
-        message: "`viewer` is an impossible relation (no entrypoint).",
-        extraInformation: {
-          relation: "viewer",
-          error: "relation-no-entry-point",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 7,
-      },
-    ],
-  },
-
-  {
-    name: "detect if every child in union are related",
-    friendly: `model
-  schema 1.1
-type document
-  relations
-    define viewer: [document#viewer] or [document#editor]
-    define editor: [document#viewer] or [document#editor]
-`,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 5,
-        message: "Each relationship must have at most 1 set of direct relations defined.",
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 5,
-      },
-      {
-        endColumn: 18,
-        endLineNumber: 6,
-        message: "Each relationship must have at most 1 set of direct relations defined.",
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 6,
       },
     ],
   },
@@ -1257,155 +1169,32 @@ type document
       {
         endColumn: 18,
         endLineNumber: 6,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `folder` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 6,
       },
       {
         endColumn: 18,
         endLineNumber: 10,
-        message: "`viewer` is an impossible relation (no entrypoint).",
+        message: "`viewer` is an impossible relation for `document` (no entrypoint).",
         extraInformation: {
           relation: "viewer",
           error: "relation-no-entry-point",
         },
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 12,
         startLineNumber: 10,
       },
     ],
   },
-  {
-    name: "intersection child to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [user] and [document#editor]
-`,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 7,
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
-        message: "Each relationship must have at most 1 set of direct relations defined.",
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 7,
-      },
-    ],
-  },
-  {
-    name: "exclusion base to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [document#editor] but not [user]
-`,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 7,
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
-        message: "Each relationship must have at most 1 set of direct relations defined.",
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 7,
-      },
-    ],
-  },
-  {
-    name: "exclusion target to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [user] but not [document#editor]
-`,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 7,
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
-        message: "Each relationship must have at most 1 set of direct relations defined.",
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 7,
-      },
-    ],
-  },
-
-  {
-    name: "union child to reference other relations for same type",
-    friendly: `model
-  schema 1.1
-type user
-type document
-  relations
-    define editor: [user]
-    define viewer: [user] or [document#editor]
-`,
-    expectedError: [
-      {
-        endColumn: 18,
-        endLineNumber: 7,
-        extraInformation: {
-          error: "assignable-relation-must-have-type",
-        },
-        message: "Each relationship must have at most 1 set of direct relations defined.",
-        severity: 8,
-        source: "linter",
-        startColumn: 12,
-        startLineNumber: 7,
-      },
-    ],
-  },
   // The following are valid cases and should not result in error
-  {
-    name: "simple model 1.0",
-    friendly: `model
-  schema 1.0
-type user
-type group
-  relations
-    define member as self
-`,
-    expectedError: [],
-  },
-  {
-    name: "simple model where the model is explicit",
-    friendly: `model
-  schema 1.0
-type user
-type group
-  relations
-    define member as self
-`,
-    expectedError: [],
-  },
   {
     name: "simple group reference to itself",
     friendly: `model
@@ -1449,22 +1238,6 @@ type group
     expectedError: [],
   },
   {
-    name: "should allow directly assigned as last item",
-    friendly: `model
-  schema 1.1
-type user
-type org
-  relations
-    define member: [user]
-type group
-  relations
-    define parent: [group]
-    define writer: [user, org#member]
-    define viewer: writer or [user, org#member]
-`,
-    expectedError: [],
-  },
-  {
     name: "union with directly related",
     friendly: `model
   schema 1.1
@@ -1477,22 +1250,6 @@ type group
     define parent: [group]
     define writer: [user, org#member]
     define viewer: [user, org#member] and writer
-`,
-    expectedError: [],
-  },
-  {
-    name: "union allow directly assigned as last item",
-    friendly: `model
-  schema 1.1
-type user
-type org
-  relations
-    define member: [user]
-type group
-  relations
-    define parent: [group]
-    define writer: [user, org#member]
-    define viewer: writer and [user, org#member]
 `,
     expectedError: [],
   },
@@ -1523,18 +1280,6 @@ type group
     define parent: [group]
     define writer: [user, org#member]
     define viewer:    [   user,    org#member   ]       or    writer
-`,
-    expectedError: [],
-  },
-  {
-    name: "model 1.0 does not assert impossible relation",
-    friendly: `model
-  schema 1.0
-type user
-type folder
-  relations
-    define parent as self
-    define viewer as self or viewer from parent
 `,
     expectedError: [],
   },
@@ -1603,7 +1348,7 @@ type user
         },
         message: "`u3` is not a valid relation for `child1`.",
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 26,
         startLineNumber: 6,
       },
@@ -1617,7 +1362,7 @@ type user
         },
         message: "`u3` is not a valid relation for `child2`.",
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 26,
         startLineNumber: 6,
       },
@@ -1631,7 +1376,7 @@ type user
         },
         message: "`u2` is not a valid relation for `child1`.",
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 46,
         startLineNumber: 6,
       },
@@ -1645,7 +1390,7 @@ type user
         },
         message: "`u2` is not a valid relation for `child2`.",
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 46,
         startLineNumber: 6,
       },
@@ -1741,7 +1486,7 @@ type user
 type document
   relations
     define editor: [user]
-    define viewer: editor or [document#viewer]
+    define viewer: [document#viewer] or editor
 `,
     expectedError: [],
   },
@@ -1779,9 +1524,9 @@ type document
         extraInformation: {
           error: "type-wildcard-relation",
         },
-        message: "Type restriction 'document:*' cannot contain both wildcard and relation",
+        message: "type restriction `document:*` cannot contain both wildcard and relation",
         severity: 8,
-        source: "linter",
+        source: "ModelValidationError",
         startColumn: 0,
         startLineNumber: 8,
       },

@@ -1,26 +1,22 @@
 {
-  "name": "@openfga/syntax-transformer",
-  "version": "0.1.6",
+  "name": "@openfga/frontend-utils",
+  "version": "0.2.0-beta.1",
   "description": "",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build:grammar": "npx nearleyc src/parser/openfga.ne > src/parser/grammar.ts",
     "build:ts": "rm -rf dist/ && tsc --outDir dist/",
-    "build": "npm run build:grammar; npm run build:ts",
+    "build": "npm run build:ts",
     "build:npx": "tsc --build tsconfig.json",
     "clean": "rm -r dist/",
     "prepublishOnly": "npm run build",
-    "test": "npm run build:grammar; jest --config ./tests/jest.config.js",
-    "typecheck": "npm run build:grammar; tsc  --skipLibCheck",
+    "test": "jest --config ./tests/jest.config.js",
+    "typecheck": "tsc  --skipLibCheck",
     "lint": "eslint -c .eslintrc.js --ext .ts",
     "lint:fix": "npm run lint -- --fix",
     "format:check": "prettier --check {src,tests}/**",
     "format:fix": "prettier --write {src,tests}/**"
-  },
-  "bin": {
-    "@openfga/syntax-transformer": "./dist/bin/index.js"
   },
   "keywords": [
     "openfga",
@@ -28,19 +24,21 @@
     "fga",
     "fine-grained-authorization",
     "rebac",
-    "zanzibar"
+    "zanzibar",
+    "vscode",
+    "monaco",
+    "prism",
+    "language",
+    "theme"
   ],
   "author": "OpenFGA",
   "dependencies": {
     "@openfga/sdk": "^0.2.6",
-    "assert-never": "^1.2.1",
-    "nearley": "^2.20.1",
-    "yargs": "^17.7.2"
+    "@openfga/syntax-transformer": "^0.2.0-beta.4"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
     "@types/lodash": "^4.14.195",
-    "@types/nearley": "^2.11.2",
     "@types/node": "^20.4.2",
     "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
@@ -62,23 +60,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com:openfga/syntax-transformer.git"
+    "url": "git://github.com:openfga/frontend-utils.git"
   },
   "bugs": {
-    "url": "https://github.com/openfga/syntax-transformer/issues"
+    "url": "https://github.com/openfga/frontend-utils/issues"
   },
-  "homepage": "https://github.com/openfga/syntax-transformer#readme",
+  "homepage": "https://github.com/openfga/frontend-utils#readme",
   "publishConfig": {
     "access": "public",
     "provenance": true
-  },
-  "overrides": {
-    "eslint-plugin-import": {
-      "debug": "^3.1.0",
-      "tsconfig-paths": {
-        "json5": "^2.2.2"
-      }
-    },
-    "semver": "7.5.3"
   }
 }

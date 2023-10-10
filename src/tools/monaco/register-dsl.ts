@@ -1,11 +1,10 @@
-import type * as MonacoEditor from "monaco-editor";
-
+import { LANGUAGE_NAME } from "../../constants";
+import { SchemaVersion } from "../../constants/schema-version";
 import { getLanguageConfiguration, language } from "./language-definition";
-import { LANGUAGE_NAME } from "../../constants/language-name";
 import { DocumentationMap, providerHover } from "./providers/hover-actions";
 import { provideCompletionItems } from "./providers/completion";
 import { provideCodeActions } from "./providers/code-actions";
-import { SchemaVersion } from "../../constants/schema-version";
+import { MonacoEditor } from "./typings";
 
 export interface RegisterDslOverrides {
   documentationMap: DocumentationMap;

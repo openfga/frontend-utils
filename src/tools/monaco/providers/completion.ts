@@ -1,12 +1,12 @@
-import type * as MonacoEditor from "monaco-editor";
+import { AuthorizationModel as ApiAuthorizationModel } from "@openfga/sdk";
+import { transformer } from "@openfga/syntax-transformer";
 import type { editor, languages, Position } from "monaco-editor";
 
-import { SINGLE_INDENTATION } from "../../../formatter/indent-dsl";
 import { Keyword } from "../../../constants/keyword";
+import { SINGLE_INDENTATION } from "../../../constants/single-indentation";
 import { assertNever } from "../../../inner-utils/assert-never";
 import { SchemaVersion } from "../../../constants/schema-version";
-import { apiSyntaxToFriendlySyntax } from "../../../";
-import { AuthorizationModel as ApiAuthorizationModel } from "@openfga/sdk";
+import { MonacoEditor } from "../typings";
 
 type AuthorizationModel = Required<Pick<ApiAuthorizationModel, "schema_version" | "type_definitions">>;
 
@@ -36,7 +36,7 @@ function getSuggestions(
       suggestions.push({
         label: `sample-${key}`,
         kind: monaco.languages.CompletionItemKind.Struct,
-        insertText: apiSyntaxToFriendlySyntax(
+        insertText: transformer.transformJSONToDSL(
           schemaVersion === SchemaVersion.OneDotOne
             ? sampleModel
             : {
@@ -53,125 +53,6 @@ function getSuggestions(
   });
   return suggestions;
 }
-
-const provideCompletionItemsOneDotZero =
-  (monaco: typeof MonacoEditor, completionExtraOptions: CompletionExtraOptions = {}) =>
-  (model: editor.ITextModel, position: Position): languages.CompletionList => {
-    let suggestions: languages.CompletionItem[] = [];
-    const word = model.getWordUntilPosition(position);
-    const range = {
-      startLineNumber: position.lineNumber,
-      endLineNumber: position.lineNumber,
-      startColumn: word.startColumn,
-      endColumn: word.endColumn,
-    };
-
-    if (position.column === 2) {
-      suggestions = [
-        {
-          label: Keyword.TYPE,
-          kind: monaco.languages.CompletionItemKind.Function,
-          // eslint-disable-next-line no-template-curly-in-string
-          insertText: `${Keyword.TYPE} \${1:typeName}
-  ${Keyword.RELATIONS}
-    ${Keyword.DEFINE} \${2:relation} as \${3:self}`,
-          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range,
-        },
-        {
-          label: "type_group",
-          kind: monaco.languages.CompletionItemKind.Function,
-          // eslint-disable-next-line no-template-curly-in-string
-          insertText: `${Keyword.TYPE} \${1:group}
-  ${Keyword.RELATIONS}
-    ${Keyword.DEFINE} \${2:member} as \${3:self}`,
-          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range,
-        },
-        {
-          label: Keyword.TYPE,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: Keyword.TYPE,
-          range,
-        },
-      ];
-    } else if (position.column === 4) {
-      suggestions = [
-        {
-          label: Keyword.RELATIONS,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: Keyword.RELATIONS,
-          range,
-        },
-      ];
-    } else if (position.column > 6) {
-      suggestions = [
-        {
-          label: Keyword.OR,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: Keyword.OR,
-          range,
-        },
-        {
-          label: Keyword.AS,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: Keyword.AS,
-          range,
-        },
-        {
-          label: Keyword.SELF,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: Keyword.SELF,
-          range,
-        },
-        {
-          label: Keyword.FROM,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: Keyword.FROM,
-          range,
-        },
-      ];
-    } else if (position.column === 6) {
-      suggestions = [
-        {
-          label: "define",
-          kind: monaco.languages.CompletionItemKind.Function,
-          // eslint-disable-next-line no-template-curly-in-string
-          insertText: "define ${1:relation} as ${2:self}",
-          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range,
-        },
-        {
-          label: "define-from-other-relation",
-          kind: monaco.languages.CompletionItemKind.Function,
-          // eslint-disable-next-line no-template-curly-in-string
-          insertText: "define ${1:relation} as ${2:other_relation}",
-          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range,
-        },
-        {
-          label: "define-from-object",
-          kind: monaco.languages.CompletionItemKind.Function,
-          // eslint-disable-next-line no-template-curly-in-string
-          insertText: "define ${1:relation} as ${2:relation_in_other_object} from ${2:another_relation}",
-          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range,
-        },
-        {
-          label: "define",
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: "define",
-          range,
-        },
-      ];
-    } else {
-      suggestions = getSuggestions(monaco, range, SchemaVersion.OneDotOne, completionExtraOptions.samples);
-    }
-
-    return {
-      suggestions,
-    };
-  };
 
 const provideCompletionItemsOneDotOne =
   (monaco: typeof MonacoEditor, completionExtraOptions: CompletionExtraOptions = {}) =>
@@ -331,10 +212,10 @@ export const provideCompletionItems =
   ) =>
   (model: editor.ITextModel, position: Position): languages.ProviderResult<languages.CompletionList> => {
     switch (schemaVersion) {
-      case SchemaVersion.OneDotZero:
-        return provideCompletionItemsOneDotZero(monaco, completionExtraOptions)(model, position);
       case SchemaVersion.OneDotOne:
         return provideCompletionItemsOneDotOne(monaco, completionExtraOptions)(model, position);
+      case SchemaVersion.OneDotZero:
+        throw new Error("unsupported schema version");
       default:
         assertNever(schemaVersion);
     }
