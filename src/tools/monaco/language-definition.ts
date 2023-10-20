@@ -17,10 +17,12 @@ export function getLanguageConfiguration(monaco: typeof MonacoEditor): MonacoEdi
     brackets: [
       ["[", "]"],
       ["(", ")"],
+      ["{", "}"]
     ],
     autoClosingPairs: [
       { open: "[", close: "]" },
       { open: "(", close: ")" },
+      { open: "{", close: "}" },
     ],
     surroundingPairs: [
       { open: "[", close: "]" },
@@ -54,6 +56,7 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
   brackets: [
     { open: "[", close: "]", token: OpenFgaDslThemeToken.DELIMITER_BRACKET_TYPE_RESTRICTIONS },
     { open: "(", close: ")", token: OpenFgaDslThemeToken.DELIMITER_BRACKET_RELATION_DEFINITION },
+    { open: "{", close: "}", token: OpenFgaDslThemeToken.DELIMITER_BRACKET_CONDITION_EXPRESSION },
   ],
 
   tokenizer: {
@@ -81,7 +84,7 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         [
           "@brackets",
           "@whitespace",
-          "type.type-restrictions.value",
+          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
           "@whitespace",
           OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS,
         ],
@@ -112,7 +115,10 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         new RegExp(/(but not)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.OPERATOR_BUT_NOT, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
       ],
-
+      [
+        new RegExp(/(\s+)(with)(\s+)/),
+        ["@whitespace", OpenFgaDslThemeToken.KEYWORD_WITH, "@whitespace"],
+      ],
       [
         new RegExp(/(as)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.KEYWORD_AS, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
@@ -120,6 +126,14 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
       [
         new RegExp(/(:)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
+      ],
+      [
+        new RegExp(/(@identifiers)(:)(\s+)(@identifiers)/),
+        [OpenFgaDslThemeToken.CONDITION_PARAM, OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON, "@whitespace", OpenFgaDslThemeToken.CONDITION_PARAM_TYPE],
+      ],
+      [
+        new RegExp(/(condition)(\s)(@identifiers)(\()/),
+        [OpenFgaDslThemeToken.KEYWORD_CONDITION, "@whitespace", OpenFgaDslThemeToken.VALUE_CONDITION, "@brackets"]
       ],
       [
         new RegExp(/(@identifiers)(\s+)(from)(\s+)(@identifiers)/),
@@ -162,6 +176,8 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
             [Keyword.RELATIONS]: OpenFgaDslThemeToken.KEYWORD_RELATIONS,
             [Keyword.DEFINE]: OpenFgaDslThemeToken.KEYWORD_DEFINE,
             [Keyword.FROM]: OpenFgaDslThemeToken.KEYWORD_FROM,
+            [Keyword.WITH]: OpenFgaDslThemeToken.KEYWORD_WITH,
+            [Keyword.CONDITION]: OpenFgaDslThemeToken.KEYWORD_CONDITION,
             [Keyword.AS]: OpenFgaDslThemeToken.KEYWORD_AS,
             [Keyword.MODEL]: OpenFgaDslThemeToken.KEYWORD_MODEL,
             [Keyword.SCHEMA]: { token: OpenFgaDslThemeToken.KEYWORD_SCHEMA },

@@ -7,9 +7,11 @@ export enum Keyword {
   OR = "or",
   AND = "and",
   FROM = "from",
+  WITH = "with",
   BUT_NOT = "but not",
   MODEL = "model",
   SCHEMA = "schema",
+  CONDITION = "condition",
 }
 
 export enum ReservedKeywords {
