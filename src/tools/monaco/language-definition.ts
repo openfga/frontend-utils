@@ -1,7 +1,7 @@
 import type * as MonacoEditor from "monaco-editor";
 
 import { Keyword } from "../../constants/keyword";
-import { LANGUAGE_NAME } from "../../constants/language-name";
+import { LANGUAGE_NAME } from "../../constants";
 import { OpenFgaDslThemeToken } from "../../theme";
 
 // Source for the code below:
