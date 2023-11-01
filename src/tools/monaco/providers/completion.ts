@@ -1,4 +1,4 @@
-import { AuthorizationModel as ApiAuthorizationModel } from "@openfga/sdk";
+import type { AuthorizationModel as ApiAuthorizationModel } from "@openfga/sdk";
 import { transformer } from "@openfga/syntax-transformer";
 import type { editor, languages, Position } from "monaco-editor";
 

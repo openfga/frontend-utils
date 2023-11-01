@@ -1,4 +1,4 @@
-import { AuthorizationModel, ObjectRelation, TypeDefinition, Userset } from "@openfga/sdk";
+import type { AuthorizationModel, ObjectRelation, TypeDefinition, Userset } from "@openfga/sdk";
 import { GraphDefinition, GraphEdgeGroup, GraphNodeGroup } from "./graph.typings";
 
 export class AuthorizationModelGraphBuilder {

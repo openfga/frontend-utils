@@ -1,4 +1,4 @@
-import { WriteAuthorizationModelRequest } from "@openfga/sdk";
+import type { WriteAuthorizationModelRequest } from "@openfga/sdk";
 
 export const testModels: { name: string; json: WriteAuthorizationModelRequest; friendly: string }[] = [
   {
