@@ -1,4 +1,4 @@
-import { AuthorizationModel as ApiAuthorizationModel, TypeDefinition } from "@openfga/sdk";
+import type { AuthorizationModel as ApiAuthorizationModel, TypeDefinition } from "@openfga/sdk";
 
 type AuthorizationModel = {
   schema_version: Required<ApiAuthorizationModel["schema_version"]>;

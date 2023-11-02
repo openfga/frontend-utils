@@ -1,4 +1,4 @@
-import { ExpandResponse, Node, OpenFgaApi, TupleKey } from "@openfga/sdk";
+import type { ExpandResponse, Node, OpenFgaApi, TupleKey } from "@openfga/sdk";
 import { GraphDefinition, GraphEdgeGroup, RelationType, ResolutionTree } from "./graph.typings";
 
 /**
