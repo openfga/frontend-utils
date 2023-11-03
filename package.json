@@ -33,7 +33,7 @@
   ],
   "author": "OpenFGA",
   "dependencies": {
-    "@openfga/syntax-transformer": "^0.2.0-beta.4"
+    "@openfga/syntax-transformer": "^0.2.0-beta.5"
   },
   "devDependencies": {
     "@openfga/sdk": "^0.2.10",
