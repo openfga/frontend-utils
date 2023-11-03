@@ -7,7 +7,7 @@ import { getThemeTokenStyle } from "../../theme/utils";
 function buildMonacoTheme(themeConfig: OpenFgaThemeConfiguration): editor.IStandaloneThemeData {
   return {
     base: themeConfig.baseTheme || "vs",
-    inherit: false,
+    inherit: true,
     colors: {
       "editor.background": themeConfig.background.color,
     },

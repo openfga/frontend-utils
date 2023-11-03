@@ -11,6 +11,7 @@ export enum GraphEdgeGroup {
   StoreToType = "store-to-type",
   TypeToRelation = "type-to-relation",
   RelationToRelation = "relation-to-relation",
+  AssignableSourceToRelation = "assignable-sourcee-to-relation",
   Default = "default",
 }
 
@@ -27,6 +28,7 @@ export interface GraphEdge {
   from: string;
   label?: string;
   group: GraphEdgeGroup;
+  dashes?: boolean;
   isActive?: boolean;
 }
 

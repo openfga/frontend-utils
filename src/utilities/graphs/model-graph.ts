@@ -1,19 +1,33 @@
-import type { AuthorizationModel, ObjectRelation, TypeDefinition, Userset } from "@openfga/sdk";
+import { AuthorizationModel, ObjectRelation, RelationMetadata, TypeDefinition, Userset } from "@openfga/sdk";
 import { GraphDefinition, GraphEdgeGroup, GraphNodeGroup } from "./graph.typings";
+
+export type TypeGraphOpts = { showAssignable?: boolean };
 
 export class AuthorizationModelGraphBuilder {
   private _graph: GraphDefinition = { nodes: [], edges: [] };
 
   constructor(
     private authorizationModel: AuthorizationModel,
-    private store?: { name?: string },
+    private store?: { name?: string; id?: string },
   ) {
     this.buildGraph();
   }
 
+  private static getStoreId(storeName: string) {
+    return `store|${storeName}`;
+  }
+
+  private static getTypeId(typeId: string) {
+    return `type|${typeId}`;
+  }
+
+  private static getRelationId(typeId: string, relationKey: string) {
+    return `${typeId}.relation|${relationKey}`;
+  }
+
   private buildGraph() {
-    const storeName = this.store?.name || "Store";
-    const rootId = `store|${storeName}`;
+    const storeName = this.store?.name || this.store?.id || "Store";
+    const rootId = AuthorizationModelGraphBuilder.getStoreId(storeName);
     const authorizationModelGraph: GraphDefinition = {
       nodes: [{ id: rootId, label: storeName, group: GraphNodeGroup.StoreName }],
       edges: [],
@@ -38,6 +52,53 @@ export class AuthorizationModelGraphBuilder {
       (relationDef.union?.child || []).some((child) => this.checkIfRelationAssignable(child))
     );
   }
+
+  // Get the sources that can be assignable to a relation
+  private getAssignableSourcesForRelation(
+    relationDef: Userset,
+    relationMetadata: RelationMetadata,
+  ): {
+    types: string[];
+    relations: string[];
+    conditions: string[];
+    publicTypes: string[];
+    isAssignable: boolean;
+  } {
+    const assignableSources: {
+      types: string[];
+      relations: string[];
+      conditions: string[];
+      publicTypes: string[];
+      isAssignable: boolean;
+    } = { types: [], relations: [], conditions: [], publicTypes: [], isAssignable: false };
+
+    // If this is not used anywhere, then it's not assignable
+    if (!this.checkIfRelationAssignable(relationDef)) {
+      return assignableSources;
+    }
+
+    const assignable = relationMetadata.directly_related_user_types;
+    assignable?.forEach((relationRef) => {
+      // TODO: wildcard and conditions
+      if (!(relationRef.relation || relationRef.wildcard || (relationRef as any).condition)) {
+        return;
+      }
+
+      // TODO: Mark relations as assignable once supported
+      if (relationRef.relation) {
+        assignableSources.relations.push(
+          AuthorizationModelGraphBuilder.getRelationId(relationRef.type, relationRef.relation),
+        );
+        return;
+      }
+
+      assignableSources.isAssignable = true;
+      assignableSources.types.push(AuthorizationModelGraphBuilder.getTypeId(relationRef.type));
+    });
+
+    return assignableSources;
+  }
+
   private addRelationToRelationEdge(
     typeGraph: GraphDefinition,
     typeId: string,
@@ -45,14 +106,19 @@ export class AuthorizationModelGraphBuilder {
     toRelation: ObjectRelation,
   ): void {
     typeGraph.edges.push({
-      from: `${typeId}.relation|${fromRelationKey}`,
-      to: `${typeId}.relation|${toRelation.relation}`,
+      from: AuthorizationModelGraphBuilder.getRelationId(typeId, fromRelationKey),
+      to: AuthorizationModelGraphBuilder.getRelationId(typeId, toRelation.relation!),
       group: GraphEdgeGroup.RelationToRelation,
+      dashes: true,
     });
   }
 
-  private getTypeGraph(typeDef: TypeDefinition, authorizationModelGraph: GraphDefinition): GraphDefinition {
-    const typeId = `type|${typeDef.type}`;
+  private getTypeGraph(
+    typeDef: TypeDefinition,
+    authorizationModelGraph: GraphDefinition,
+    { showAssignable }: TypeGraphOpts = {},
+  ): GraphDefinition {
+    const typeId = AuthorizationModelGraphBuilder.getTypeId(typeDef.type);
     const typeGraph: GraphDefinition = {
       nodes: [{ id: typeId, label: typeDef.type, group: GraphNodeGroup.Type }],
       edges: [{ from: authorizationModelGraph.nodes[0].id, to: typeId, group: GraphEdgeGroup.StoreToType }],
@@ -61,19 +127,34 @@ export class AuthorizationModelGraphBuilder {
     const relationDefs = typeDef?.relations || {};
 
     Object.keys(relationDefs).forEach((relationKey: string) => {
-      const relationId = `${typeId}.relation|${relationKey}`;
+      const relationId = AuthorizationModelGraphBuilder.getRelationId(typeId, relationKey);
 
       const relationDef = relationDefs[relationKey] || {};
-      const hasSelf = this.checkIfRelationAssignable(relationDef);
+      const assignableSources = this.getAssignableSourcesForRelation(
+        relationDef,
+        typeDef.metadata?.relations?.[relationKey] || {},
+      );
+      const isAssignable = assignableSources.isAssignable;
 
-      // If a relation definition does not have self, then we call it a `permission`, e.g. not directly assignable
+      // If a relation definition does not have this, then we call it a `permission`, e.g. not directly assignable
       typeGraph.nodes.push({
         id: relationId,
         label: relationKey,
-        group: hasSelf ? GraphNodeGroup.AssignableRelation : GraphNodeGroup.NonassignableRelation,
+        group: isAssignable ? GraphNodeGroup.AssignableRelation : GraphNodeGroup.NonassignableRelation,
       });
 
-      // TODO: Support - 1. AND, 2. BUT NOT, 3. Nested relations
+      if (showAssignable) {
+        // TODO: Support assignable relations and wildcards, and conditionals
+        assignableSources.types.forEach((assignableSource) => {
+          typeGraph.edges.push({
+            from: AuthorizationModelGraphBuilder.getTypeId(assignableSource),
+            to: relationId,
+            group: GraphEdgeGroup.AssignableSourceToRelation,
+          });
+        });
+      }
+
+      // TODO: Support - 1. AND, 2. BUT NOT, 3. Nested relations, 4. Tuple to Userset
       typeGraph.edges.push({ from: typeId, to: relationId, group: GraphEdgeGroup.TypeToRelation });
       if (relationDef.computedUserset) {
         this.addRelationToRelationEdge(typeGraph, typeId, relationKey, relationDef.computedUserset);
