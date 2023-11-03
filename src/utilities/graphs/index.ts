@@ -1,3 +1,3 @@
-export { GraphDefinition, GraphEdge, GraphNode, ResolutionTree } from "./graph.typings";
+export { GraphDefinition, GraphEdge, GraphNode, GraphNodeGroup, GraphEdgeGroup, ResolutionTree } from "./graph.typings";
 export { TreeBuilder } from "./related-users-graph";
 export { AuthorizationModelGraphBuilder } from "./model-graph";
