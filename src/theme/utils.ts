@@ -33,7 +33,7 @@ const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.CONDITION_PARAM]: OpenFgaDslThemeTokenType.RELATION,
-  [OpenFgaDslThemeToken.CONDITION_PARAM_TYPE]: OpenFgaDslThemeTokenType.DEFAULT
+  [OpenFgaDslThemeToken.CONDITION_PARAM_TYPE]: OpenFgaDslThemeTokenType.DEFAULT,
 };
 
 export function getThemeTokenStyle(

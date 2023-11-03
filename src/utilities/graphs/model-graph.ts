@@ -8,7 +8,7 @@ export class AuthorizationModelGraphBuilder {
 
   constructor(
     private authorizationModel: AuthorizationModel,
-    private store?: { name?: string, id?: string },
+    private store?: { name?: string; id?: string },
   ) {
     this.buildGraph();
   }
@@ -54,11 +54,22 @@ export class AuthorizationModelGraphBuilder {
   }
 
   // Get the sources that can be assignable to a relation
-  private getAssignableSourcesForRelation(relationDef: Userset, relationMetadata: RelationMetadata): {
-    types: string[], relations: string[], conditions: string[], publicTypes: string[], isAssignable: boolean,
+  private getAssignableSourcesForRelation(
+    relationDef: Userset,
+    relationMetadata: RelationMetadata,
+  ): {
+    types: string[];
+    relations: string[];
+    conditions: string[];
+    publicTypes: string[];
+    isAssignable: boolean;
   } {
     const assignableSources: {
-      types: string[], relations: string[], conditions: string[], publicTypes: string[], isAssignable: boolean,
+      types: string[];
+      relations: string[];
+      conditions: string[];
+      publicTypes: string[];
+      isAssignable: boolean;
     } = { types: [], relations: [], conditions: [], publicTypes: [], isAssignable: false };
 
     // If this is not used anywhere, then it's not assignable
@@ -67,7 +78,7 @@ export class AuthorizationModelGraphBuilder {
     }
 
     const assignable = relationMetadata.directly_related_user_types;
-    assignable?.forEach(relationRef => {
+    assignable?.forEach((relationRef) => {
       // TODO: wildcard and conditions
       if (!(relationRef.relation || relationRef.wildcard || (relationRef as any).condition)) {
         return;
@@ -76,8 +87,8 @@ export class AuthorizationModelGraphBuilder {
       // TODO: Mark relations as assignable once supported
       if (relationRef.relation) {
         assignableSources.relations.push(
-          AuthorizationModelGraphBuilder.getRelationId(relationRef.type, relationRef.relation,
-        ));
+          AuthorizationModelGraphBuilder.getRelationId(relationRef.type, relationRef.relation),
+        );
         return;
       }
 
@@ -103,7 +114,9 @@ export class AuthorizationModelGraphBuilder {
   }
 
   private getTypeGraph(
-    typeDef: TypeDefinition, authorizationModelGraph: GraphDefinition, { showAssignable }: TypeGraphOpts = {},
+    typeDef: TypeDefinition,
+    authorizationModelGraph: GraphDefinition,
+    { showAssignable }: TypeGraphOpts = {},
   ): GraphDefinition {
     const typeId = AuthorizationModelGraphBuilder.getTypeId(typeDef.type);
     const typeGraph: GraphDefinition = {

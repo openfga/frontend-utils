@@ -17,7 +17,7 @@ export function getLanguageConfiguration(monaco: typeof MonacoEditor): MonacoEdi
     brackets: [
       ["[", "]"],
       ["(", ")"],
-      ["{", "}"]
+      ["{", "}"],
     ],
     autoClosingPairs: [
       { open: "[", close: "]" },
@@ -115,10 +115,7 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         new RegExp(/(but not)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.OPERATOR_BUT_NOT, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
       ],
-      [
-        new RegExp(/(\s+)(with)(\s+)/),
-        ["@whitespace", OpenFgaDslThemeToken.KEYWORD_WITH, "@whitespace"],
-      ],
+      [new RegExp(/(\s+)(with)(\s+)/), ["@whitespace", OpenFgaDslThemeToken.KEYWORD_WITH, "@whitespace"]],
       [
         new RegExp(/(as)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.KEYWORD_AS, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
@@ -129,11 +126,16 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
       ],
       [
         new RegExp(/(@identifiers)(:)(\s+)(@identifiers)/),
-        [OpenFgaDslThemeToken.CONDITION_PARAM, OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON, "@whitespace", OpenFgaDslThemeToken.CONDITION_PARAM_TYPE],
+        [
+          OpenFgaDslThemeToken.CONDITION_PARAM,
+          OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON,
+          "@whitespace",
+          OpenFgaDslThemeToken.CONDITION_PARAM_TYPE,
+        ],
       ],
       [
         new RegExp(/(condition)(\s)(@identifiers)(\()/),
-        [OpenFgaDslThemeToken.KEYWORD_CONDITION, "@whitespace", OpenFgaDslThemeToken.VALUE_CONDITION, "@brackets"]
+        [OpenFgaDslThemeToken.KEYWORD_CONDITION, "@whitespace", OpenFgaDslThemeToken.VALUE_CONDITION, "@brackets"],
       ],
       [
         new RegExp(/(@identifiers)(\s+)(from)(\s+)(@identifiers)/),

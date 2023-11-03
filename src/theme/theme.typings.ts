@@ -40,7 +40,7 @@ export enum OpenFgaDslThemeToken {
   VALUE_TYPE_RESTRICTIONS_TYPE = "variable.parameter.type-restrictions.type.value",
   VALUE_TYPE_RESTRICTIONS_WILDCARD = "variable.parameter.type-restrictions.wildcard.value",
   CONDITION_PARAM = "variable.parameter.name.condition",
-  CONDITION_PARAM_TYPE = "variable.parameter.type.condition"
+  CONDITION_PARAM_TYPE = "variable.parameter.type.condition",
 }
 
 export interface OpenFgaThemeConfiguration {
