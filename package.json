@@ -1,6 +1,6 @@
 {
   "name": "@openfga/frontend-utils",
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.2",
   "description": "",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -33,7 +33,7 @@
   ],
   "author": "OpenFGA",
   "dependencies": {
-    "@openfga/syntax-transformer": "^0.2.0-beta.4"
+    "@openfga/syntax-transformer": "^0.2.0-beta.5"
   },
   "devDependencies": {
     "@openfga/sdk": "^0.2.10",
