@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.0 Beta 2 (Frontend Utils)
+### [0.2.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-11-03)
+
+- fix: bump dependencies
+  - brings in improvements to monaco alerts and support for conditions
+
 ## v0.2.0 Beta 1 (Frontend Utils)
 ### [0.2.0](https://github.com/openfga/frontend-utils/releases/tag/v0.2.0-beta.1) (2023-10-09)
 
