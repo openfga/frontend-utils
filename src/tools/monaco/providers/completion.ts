@@ -109,6 +109,16 @@ ${SINGLE_INDENTATION}${Keyword.SCHEMA} \${1:1.1}`,
           insertText: Keyword.TYPE,
           range,
         },
+        {
+          label: Keyword.CONDITION,
+          kind: monaco.languages.CompletionItemKind.Function,
+          // eslint-disable-next-line no-template-curly-in-string
+          insertText: `${Keyword.CONDITION} \${1:conditionName}(\${2:parameterName}: \${3:string}) {
+  \${4}
+}`,
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          range,
+        },
       ];
     } else if (position.column === 4) {
       suggestions = [
@@ -151,6 +161,12 @@ ${SINGLE_INDENTATION}${Keyword.SCHEMA} \${1:1.1}`,
           label: Keyword.FROM,
           kind: monaco.languages.CompletionItemKind.Keyword,
           insertText: Keyword.FROM,
+          range,
+        },
+        {
+          label: Keyword.CONDITION,
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: Keyword.CONDITION,
           range,
         },
       ];
