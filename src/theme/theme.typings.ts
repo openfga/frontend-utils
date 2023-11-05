@@ -5,6 +5,9 @@ export enum OpenFgaDslThemeTokenType {
   TYPE = "type",
   RELATION = "relation",
   DIRECTLY_ASSIGNABLE = "directly-assignable",
+  CONDITION = "condition",
+  CONDITION_PARAM = "condition-param",
+  CONDITION_PARAM_TYPE = "condition-param-type",
 }
 
 export enum OpenFgaDslThemeToken {

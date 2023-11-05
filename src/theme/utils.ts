@@ -22,7 +22,7 @@ const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.OPERATOR_OR]: OpenFgaDslThemeTokenType.KEYWORD,
   [OpenFgaDslThemeToken.KEYWORD_CONDITION]: OpenFgaDslThemeTokenType.KEYWORD,
   [OpenFgaDslThemeToken.KEYWORD_WITH]: OpenFgaDslThemeTokenType.KEYWORD,
-  [OpenFgaDslThemeToken.VALUE_CONDITION]: OpenFgaDslThemeTokenType.TYPE,
+  [OpenFgaDslThemeToken.VALUE_CONDITION]: OpenFgaDslThemeTokenType.CONDITION,
   [OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED]: OpenFgaDslThemeTokenType.DEFAULT,
   [OpenFgaDslThemeToken.VALUE_RELATION_NAME]: OpenFgaDslThemeTokenType.RELATION,
   [OpenFgaDslThemeToken.VALUE_RELATION_TUPLE_TO_USERSET_COMPUTED]: OpenFgaDslThemeTokenType.DEFAULT,
@@ -32,8 +32,8 @@ const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_RELATION]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
-  [OpenFgaDslThemeToken.CONDITION_PARAM]: OpenFgaDslThemeTokenType.RELATION,
-  [OpenFgaDslThemeToken.CONDITION_PARAM_TYPE]: OpenFgaDslThemeTokenType.DEFAULT,
+  [OpenFgaDslThemeToken.CONDITION_PARAM]: OpenFgaDslThemeTokenType.CONDITION_PARAM,
+  [OpenFgaDslThemeToken.CONDITION_PARAM_TYPE]: OpenFgaDslThemeTokenType.CONDITION_PARAM_TYPE,
 };
 
 export function getThemeTokenStyle(
