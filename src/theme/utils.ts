@@ -7,6 +7,8 @@ const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.DELIMITER_BRACKET_CONDITION_EXPRESSION]: OpenFgaDslThemeTokenType.DEFAULT,
   [OpenFgaDslThemeToken.DELIMITER_COLON_TYPE_RESTRICTIONS]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
+  [OpenFgaDslThemeToken.DELIMITER_COLON_CONDITION_PARAM]: OpenFgaDslThemeTokenType.DEFAULT,
+  [OpenFgaDslThemeToken.DELIMITER_COMMA_CONDITION_PARAM]: OpenFgaDslThemeTokenType.DEFAULT,
   [OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON]: OpenFgaDslThemeTokenType.DEFAULT,
   [OpenFgaDslThemeToken.DELIMITER_HASHTAG_TYPE_RESTRICTIONS]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.KEYWORD_AS]: OpenFgaDslThemeTokenType.KEYWORD,
@@ -34,6 +36,7 @@ const tokenTypeMap: Record<OpenFgaDslThemeToken, OpenFgaDslThemeTokenType> = {
   [OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD]: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
   [OpenFgaDslThemeToken.CONDITION_PARAM]: OpenFgaDslThemeTokenType.CONDITION_PARAM,
   [OpenFgaDslThemeToken.CONDITION_PARAM_TYPE]: OpenFgaDslThemeTokenType.CONDITION_PARAM_TYPE,
+  [OpenFgaDslThemeToken.CONDITION_SYMBOL]: OpenFgaDslThemeTokenType.DEFAULT,
 };
 
 export function getThemeTokenStyle(

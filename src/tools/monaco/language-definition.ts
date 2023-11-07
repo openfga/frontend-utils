@@ -61,6 +61,7 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
 
   tokenizer: {
     root: [
+      { include: "@cel_symbol" },
       { include: "@whitespace" },
 
       [new RegExp(/^(\s*#).*/), OpenFgaDslThemeToken.COMMENT],
@@ -125,19 +126,6 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         [OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
       ],
       [
-        new RegExp(/(@identifiers)(:)(\s+)(@identifiers)/),
-        [
-          OpenFgaDslThemeToken.CONDITION_PARAM,
-          OpenFgaDslThemeToken.DELIMITER_DEFINE_COLON,
-          "@whitespace",
-          OpenFgaDslThemeToken.CONDITION_PARAM_TYPE,
-        ],
-      ],
-      [
-        new RegExp(/(condition)(\s)(@identifiers)(\()/),
-        [OpenFgaDslThemeToken.KEYWORD_CONDITION, "@whitespace", OpenFgaDslThemeToken.VALUE_CONDITION, "@brackets"],
-      ],
-      [
         new RegExp(/(@identifiers)(\s+)(from)(\s+)(@identifiers)/),
         [
           OpenFgaDslThemeToken.VALUE_RELATION_TUPLE_TO_USERSET_COMPUTED,
@@ -161,6 +149,32 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
           OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
           OpenFgaDslThemeToken.DELIMITER_COLON_TYPE_RESTRICTIONS,
           OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD,
+        ],
+      ],
+
+      [/"/, "string", "@string_double"],
+      [/'/, "string", "@string_single"],
+
+      [
+        new RegExp(/(@identifiers)(\s*)(:)(\s*)(@identifiers)(,?)(\s*)/),
+        [
+          OpenFgaDslThemeToken.CONDITION_PARAM,
+          "@whitespace",
+          OpenFgaDslThemeToken.DELIMITER_COLON_CONDITION_PARAM,
+          "@whitespace",
+          OpenFgaDslThemeToken.CONDITION_PARAM_TYPE,
+          OpenFgaDslThemeToken.DELIMITER_COMMA_CONDITION_PARAM,
+          "@whitespace",
+        ],
+      ],
+      [
+        new RegExp(/(condition)(\s*)(@identifiers)(\s*)(\()/),
+        [
+          OpenFgaDslThemeToken.KEYWORD_CONDITION,
+          "@whitespace",
+          OpenFgaDslThemeToken.VALUE_CONDITION,
+          "@whitespace",
+          "@brackets",
         ],
       ],
 
@@ -190,6 +204,20 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
           },
         },
       ],
+    ],
+
+    cel_symbol: [[/(<|<=|>=|>|=|!=|&&|\|\||\.|null|in)/, OpenFgaDslThemeToken.CONDITION_SYMBOL]],
+
+    string_double: [
+      [/[^\\"]+/, "string"],
+      [/\\./, "string.escape.invalid"],
+      [/"/, "string", "@pop"],
+    ],
+
+    string_single: [
+      [/[^\\']+/, "string"],
+      [/\\./, "string.escape.invalid"],
+      [/'/, "string", "@pop"],
     ],
 
     // Deal with white space, including comments
