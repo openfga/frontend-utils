@@ -13,6 +13,9 @@ export const openfgaDark: OpenFgaThemeConfiguration = {
     [OpenFgaDslThemeTokenType.TYPE]: "#79ED83",
     [OpenFgaDslThemeTokenType.RELATION]: "#20F1F5",
     [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: "#CEEC93",
+    [OpenFgaDslThemeTokenType.CONDITION]: "#79ED83",
+    [OpenFgaDslThemeTokenType.CONDITION_PARAM]: "#20F1F5",
+    [OpenFgaDslThemeTokenType.CONDITION_PARAM_TYPE]: "#AAAAAA",
   },
   styles: {},
 };
