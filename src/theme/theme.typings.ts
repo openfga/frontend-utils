@@ -17,6 +17,8 @@ export enum OpenFgaDslThemeToken {
   DELIMITER_BRACKET_CONDITION_EXPRESSION = "delimiter.bracket.condition-expression",
   DELIMITER_COLON_TYPE_RESTRICTIONS = "delimiter.colon.type-restrictions",
   DELIMITER_COMMA_TYPE_RESTRICTIONS = "delimiter.comma.type-restrictions",
+  DELIMITER_COLON_CONDITION_PARAM = "delimiter.colon.condition",
+  DELIMITER_COMMA_CONDITION_PARAM = "delimiter.comma.condition",
   DELIMITER_DEFINE_COLON = "delimiter.colon.define",
   DELIMITER_HASHTAG_TYPE_RESTRICTIONS = "delimiter.hashtag.type-restrictions",
   KEYWORD_AS = "keyword.as",
@@ -44,6 +46,7 @@ export enum OpenFgaDslThemeToken {
   VALUE_TYPE_RESTRICTIONS_WILDCARD = "variable.parameter.type-restrictions.wildcard.value",
   CONDITION_PARAM = "variable.parameter.name.condition",
   CONDITION_PARAM_TYPE = "variable.parameter.type.condition",
+  CONDITION_SYMBOL = "identifier.symbol.condition",
 }
 
 export interface OpenFgaThemeConfiguration {
