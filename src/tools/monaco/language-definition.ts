@@ -61,35 +61,14 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
 
   tokenizer: {
     root: [
-      { include: "@cel_symbol" },
       { include: "@whitespace" },
 
       [new RegExp(/^(\s*#).*/), OpenFgaDslThemeToken.COMMENT],
 
-      [
-        new RegExp(/(\[)(\s*)(@identifiers)(\s*)(\])/),
-        ["@brackets", "@whitespace", OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE, "@whitespace", "@brackets"],
-      ],
-      [
-        new RegExp(/(,)(\s*)(@identifiers)(\s*)(\])/),
-        [
-          OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS,
-          "@whitespace",
-          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
-          "@whitespace",
-          "@brackets",
-        ],
-      ],
-      [
-        new RegExp(/(\[)(\s*)(@identifiers)(\s*)(,)/),
-        [
-          "@brackets",
-          "@whitespace",
-          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
-          "@whitespace",
-          OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS,
-        ],
-      ],
+      [new RegExp(/(\[)/), "@brackets", "@restrictions"],
+
+      [new RegExp(/(\{)/), "@brackets", "@cel_symbols"],
+
       [new RegExp(/[{}[\]()]/), "@brackets"],
 
       [
@@ -116,7 +95,6 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         new RegExp(/(but not)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.OPERATOR_BUT_NOT, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
       ],
-      [new RegExp(/(\s+)(with)(\s+)/), ["@whitespace", OpenFgaDslThemeToken.KEYWORD_WITH, "@whitespace"]],
       [
         new RegExp(/(as)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.KEYWORD_AS, "@whitespace", OpenFgaDslThemeToken.VALUE_RELATION_COMPUTED],
@@ -136,25 +114,18 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         ],
       ],
       [
-        new RegExp(/(@identifiers)(#)(@identifiers)/),
+        new RegExp(/(@identifiers)(\s*)(:)(\s*)(@identifiers)(<@identifiers>)(,?)(\s*)/),
         [
-          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
-          OpenFgaDslThemeToken.DELIMITER_HASHTAG_TYPE_RESTRICTIONS,
-          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_RELATION,
+          OpenFgaDslThemeToken.CONDITION_PARAM,
+          "@whitespace",
+          OpenFgaDslThemeToken.DELIMITER_COLON_CONDITION_PARAM,
+          "@whitespace",
+          OpenFgaDslThemeToken.CONDITION_PARAM_TYPE,
+          OpenFgaDslThemeToken.CONDITION_PARAM_TYPE,
+          OpenFgaDslThemeToken.DELIMITER_COMMA_CONDITION_PARAM,
+          "@whitespace",
         ],
       ],
-      [
-        new RegExp(/(@identifiers)(:)(\*)/),
-        [
-          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE,
-          OpenFgaDslThemeToken.DELIMITER_COLON_TYPE_RESTRICTIONS,
-          OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD,
-        ],
-      ],
-
-      [/"/, "string", "@string_double"],
-      [/'/, "string", "@string_single"],
-
       [
         new RegExp(/(@identifiers)(\s*)(:)(\s*)(@identifiers)(,?)(\s*)/),
         [
@@ -206,7 +177,14 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
       ],
     ],
 
-    cel_symbol: [[/(<|<=|>=|>|=|!=|&&|\|\||\.|null|in)/, OpenFgaDslThemeToken.CONDITION_SYMBOL]],
+    cel_symbols: [
+      [/"/, "string", "@string_double"],
+      [/'/, "string", "@string_single"],
+      [/(\w|-[a-zA-Z])+/, OpenFgaDslThemeToken.CONDITION_SYMBOL],
+      [/(<|<=|>=|>|=|!=|&&|\|\||\.|null|in)/, OpenFgaDslThemeToken.CONDITION_SYMBOL],
+      [/\[|\]|\(|\)/, "@brackets"],
+      [/\}/, "@brackets", "@pop"],
+    ],
 
     string_double: [
       [/[^\\"]+/, "string"],
@@ -218,6 +196,19 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
       [/[^\\']+/, "string"],
       [/\\./, "string.escape.invalid"],
       [/'/, "string", "@pop"],
+    ],
+
+    restrictions: [
+      { include: "@whitespace" },
+      [new RegExp(`${Keyword.WITH}`), OpenFgaDslThemeToken.KEYWORD_WITH],
+      [/(\w|-[a-zA-Z])+/, OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_TYPE],
+      [
+        /(:)(\*)/,
+        [OpenFgaDslThemeToken.DELIMITER_COLON_TYPE_RESTRICTIONS, OpenFgaDslThemeToken.VALUE_TYPE_RESTRICTIONS_WILDCARD],
+      ],
+      [/#/, OpenFgaDslThemeToken.DELIMITER_HASHTAG_TYPE_RESTRICTIONS],
+      [/,/, OpenFgaDslThemeToken.DELIMITER_COMMA_TYPE_RESTRICTIONS],
+      [/\]/, "@brackets", "@pop"],
     ],
 
     // Deal with white space, including comments
