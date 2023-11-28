@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.0 Beta 3 (Frontend Utils)
+### [0.2.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.2...v0.2.0-beta.3) (2023-11-20)
+
+- feat: add conditions tokens for prism
+- fix: monaco grammar for conditions
+- fix: monaco grammar for type restrictions 
+
 ## v0.2.0 Beta 2 (Frontend Utils)
 ### [0.2.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-11-03)
 
