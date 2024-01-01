@@ -36,7 +36,7 @@
     "@openfga/syntax-transformer": "^0.2.0-beta.5"
   },
   "devDependencies": {
-    "@openfga/sdk": "^0.2.10",
+    "@openfga/sdk": "^0.3.0",
     "@types/jest": "^29.5.7",
     "@types/lodash": "^4.14.200",
     "@types/node": "^20.8.10",
@@ -47,7 +47,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
     "jest": "^29.7.0",
-    "monaco-editor": "0.44.0",
+    "monaco-editor": "0.45.0",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
