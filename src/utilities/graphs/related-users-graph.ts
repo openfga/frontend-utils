@@ -59,7 +59,7 @@ export class TreeBuilder {
     }
   }
 
-  private async expandTuple(tuple: Required<Omit<TupleKey, "user">>): Promise<ExpandResponse> {
+  private async expandTuple(tuple: Pick<TupleKey, "relation" | "object">): Promise<ExpandResponse> {
     return this.openFgaApi.expand({
       tuple_key: {
         relation: tuple.relation,
@@ -159,7 +159,7 @@ export class TreeBuilder {
     await Promise.all(promises);
   }
 
-  private async walk(currentTuple: { object: string } & TupleKey): Promise<void> {
+  private async walk(currentTuple: Pick<TupleKey, "object"> & Partial<Pick<TupleKey, "relation">>): Promise<void> {
     const currentTupleKey = `${currentTuple.object}#${currentTuple.relation}`;
 
     if (!currentTuple.relation || this.expandedTuples[currentTupleKey]) {
@@ -170,7 +170,7 @@ export class TreeBuilder {
     }
 
     this.expandedTuples[currentTupleKey] = true;
-    const data = await this.expandTuple(currentTuple as Required<Omit<TupleKey, "user">>);
+    const data = await this.expandTuple(currentTuple as Pick<TupleKey, "relation" | "object">);
     const rootNode = data.tree?.root;
 
     await this.walkNode(rootNode!);

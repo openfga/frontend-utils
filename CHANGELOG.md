@@ -1,20 +1,25 @@
 # Changelog
 
+## v0.2.0 Beta 4 (Frontend Utils)
+### [0.2.0-beta.4](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.3...v0.2.0-beta.4) (2024-01-03)
+
+- chore: update dependencies
+
 ## v0.2.0 Beta 3 (Frontend Utils)
-### [0.2.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.2...v0.2.0-beta.3) (2023-11-20)
+### [0.2.0-beta.3](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.2...v0.2.0-beta.3) (2023-11-20)
 
 - feat: add conditions tokens for prism
 - fix: monaco grammar for conditions
 - fix: monaco grammar for type restrictions 
 
 ## v0.2.0 Beta 2 (Frontend Utils)
-### [0.2.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-11-03)
+### [0.2.0-beta.2](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-11-03)
 
 - fix: bump dependencies
   - brings in improvements to monaco alerts and support for conditions
 
 ## v0.2.0 Beta 1 (Frontend Utils)
-### [0.2.0](https://github.com/openfga/frontend-utils/releases/tag/v0.2.0-beta.1) (2023-10-09)
+### [0.2.0-beta.1](https://github.com/openfga/frontend-utils/releases/tag/v0.2.0-beta.1) (2023-10-09)
 
 Removed: (BREAKING)
 - Syntax Transformer has been moved to [Language](https://github.com/openfga/language/tree/main/pkg/js)
