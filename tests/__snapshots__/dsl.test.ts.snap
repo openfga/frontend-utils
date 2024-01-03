@@ -3,10 +3,10 @@
 exports[`DSL validateDSL() invalid code should handle \`no definitions\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -16,7 +16,7 @@ exports[`DSL validateDSL() invalid code should handle \`no definitions\` 1`] = `
     "endColumn": 16,
     "endLineNumber": 4,
     "extraInformation": {},
-    "message": "mismatched input '<EOF>' expecting {INDENT, NEWLINE, WS}",
+    "message": "mismatched input '<EOF>' expecting NEWLINE",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 11,
@@ -28,10 +28,10 @@ exports[`DSL validateDSL() invalid code should handle \`no definitions\` 1`] = `
 exports[`DSL validateDSL() invalid code should handle \`no relations\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -43,10 +43,10 @@ exports[`DSL validateDSL() invalid code should handle \`no relations\` 1`] = `
 exports[`DSL validateDSL() invalid keywords should handle invalid \`and\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -63,13 +63,13 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`and\` 1`] = 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -78,10 +78,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`and\` 1`] = 
 exports[`DSL validateDSL() invalid keywords should handle invalid \`as\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -98,13 +98,13 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`as\` 1`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 21,
+    "endColumn": 20,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 's' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 20,
+    "startColumn": 19,
     "startLineNumber": 5,
   },
 ]
@@ -113,10 +113,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`as\` 1`] = `
 exports[`DSL validateDSL() invalid keywords should handle invalid \`as\` 2`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -133,13 +133,13 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`as\` 2`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 21,
+    "endColumn": 20,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 's' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 20,
+    "startColumn": 19,
     "startLineNumber": 5,
   },
 ]
@@ -148,10 +148,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`as\` 2`] = `
 exports[`DSL validateDSL() invalid keywords should handle invalid \`but not\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -168,13 +168,13 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`but not\` 1`
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -183,10 +183,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`but not\` 1`
 exports[`DSL validateDSL() invalid keywords should handle invalid \`define\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -196,7 +196,7 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`define\` 1`]
     "endColumn": 7,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'dec' expecting 'define'",
+    "message": "no viable alternative at input '\\n    dec'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 4,
@@ -208,10 +208,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`define\` 1`]
 exports[`DSL validateDSL() invalid keywords should handle invalid \`or\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -228,13 +228,13 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`or\` 1`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -243,10 +243,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`or\` 1`] = `
 exports[`DSL validateDSL() invalid keywords should handle invalid \`self\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -263,13 +263,13 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`self\` 1`] =
     "startLineNumber": 5,
   },
   {
-    "endColumn": 23,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'se' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -278,10 +278,10 @@ exports[`DSL validateDSL() invalid keywords should handle invalid \`self\` 1`] =
 exports[`DSL validateDSL() semantics should allow model with relations starting with as 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -298,24 +298,14 @@ exports[`DSL validateDSL() semantics should allow model with relations starting 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "extraneous input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
-  },
-  {
-    "endColumn": 4,
-    "endLineNumber": 6,
-    "extraInformation": {},
-    "message": "mismatched input 'type' expecting <EOF>",
-    "severity": 8,
-    "source": "SyntaxError",
-    "startColumn": 0,
-    "startLineNumber": 6,
   },
 ]
 `;
@@ -323,10 +313,10 @@ exports[`DSL validateDSL() semantics should allow model with relations starting 
 exports[`DSL validateDSL() semantics should allow reference from other relation 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -343,13 +333,13 @@ exports[`DSL validateDSL() semantics should allow reference from other relation 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 22,
+    "endColumn": 18,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 18,
+    "startColumn": 17,
     "startLineNumber": 5,
   },
 ]
@@ -358,10 +348,10 @@ exports[`DSL validateDSL() semantics should allow reference from other relation 
 exports[`DSL validateDSL() semantics should allow same relation name in from 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -378,13 +368,13 @@ exports[`DSL validateDSL() semantics should allow same relation name in from 1`]
     "startLineNumber": 5,
   },
   {
-    "endColumn": 34,
+    "endColumn": 30,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 30,
+    "startColumn": 29,
     "startLineNumber": 5,
   },
 ]
@@ -393,10 +383,10 @@ exports[`DSL validateDSL() semantics should allow same relation name in from 1`]
 exports[`DSL validateDSL() semantics should allow self reference 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -413,13 +403,13 @@ exports[`DSL validateDSL() semantics should allow self reference 1`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -428,10 +418,10 @@ exports[`DSL validateDSL() semantics should allow self reference 1`] = `
 exports[`DSL validateDSL() semantics should be able to handle more than one error 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -448,13 +438,13 @@ exports[`DSL validateDSL() semantics should be able to handle more than one erro
     "startLineNumber": 5,
   },
   {
-    "endColumn": 27,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'writer' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -463,10 +453,10 @@ exports[`DSL validateDSL() semantics should be able to handle more than one erro
 exports[`DSL validateDSL() semantics should gracefully handle error 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -483,13 +473,13 @@ exports[`DSL validateDSL() semantics should gracefully handle error 1`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -498,10 +488,10 @@ exports[`DSL validateDSL() semantics should gracefully handle error 1`] = `
 exports[`DSL validateDSL() semantics should handle duplicated definition 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -518,13 +508,13 @@ exports[`DSL validateDSL() semantics should handle duplicated definition 1`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -533,10 +523,10 @@ exports[`DSL validateDSL() semantics should handle duplicated definition 1`] = `
 exports[`DSL validateDSL() semantics should handle invalid \`invalid and\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -553,13 +543,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid and\` 1`] =
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -568,10 +558,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid and\` 1`] =
 exports[`DSL validateDSL() semantics should handle invalid \`invalid but not\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -588,13 +578,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid but not\` 1
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -603,10 +593,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid but not\` 1
 exports[`DSL validateDSL() semantics should handle invalid \`invalid from\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -623,13 +613,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid from\` 1`] 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -638,10 +628,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid from\` 1`] 
 exports[`DSL validateDSL() semantics should handle invalid \`invalid or\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -658,13 +648,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid or\` 1`] = 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -673,10 +663,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`invalid or\` 1`] = 
 exports[`DSL validateDSL() semantics should handle invalid \`relation not define\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -693,13 +683,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`relation not define
     "startLineNumber": 5,
   },
   {
-    "endColumn": 27,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "extraneous input 'reader' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -708,10 +698,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`relation not define
 exports[`DSL validateDSL() semantics should handle invalid \`relation not define\` where name is substring of other word 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -728,13 +718,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`relation not define
     "startLineNumber": 5,
   },
   {
-    "endColumn": 24,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "extraneous input 'def' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -743,10 +733,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`relation not define
 exports[`DSL validateDSL() semantics should handle invalid \`self-error\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -763,13 +753,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`self-error\` 1`] = 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 27,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "extraneous input 'writer' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -778,10 +768,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`self-error\` 1`] = 
 exports[`DSL validateDSL() semantics should handle invalid \`self-ref in but not\` 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -798,13 +788,13 @@ exports[`DSL validateDSL() semantics should handle invalid \`self-ref in but not
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -813,10 +803,10 @@ exports[`DSL validateDSL() semantics should handle invalid \`self-ref in but not
 exports[`DSL validateDSL() semantics should identify correct error line number if there are spaces 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -833,13 +823,13 @@ exports[`DSL validateDSL() semantics should identify correct error line number i
     "startLineNumber": 6,
   },
   {
-    "endColumn": 24,
+    "endColumn": 20,
     "endLineNumber": 6,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 20,
+    "startColumn": 19,
     "startLineNumber": 6,
   },
 ]
@@ -848,10 +838,10 @@ exports[`DSL validateDSL() semantics should identify correct error line number i
 exports[`DSL validateDSL() semantics should not allow impossible self reference 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -868,13 +858,13 @@ exports[`DSL validateDSL() semantics should not allow impossible self reference 
     "startLineNumber": 5,
   },
   {
-    "endColumn": 27,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'member' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
   },
 ]
@@ -883,10 +873,10 @@ exports[`DSL validateDSL() semantics should not allow impossible self reference 
 exports[`DSL validateDSL() semantics should not allow self reference in from relation 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -903,13 +893,13 @@ exports[`DSL validateDSL() semantics should not allow self reference in from rel
     "startLineNumber": 5,
   },
   {
-    "endColumn": 34,
+    "endColumn": 30,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 30,
+    "startColumn": 29,
     "startLineNumber": 5,
   },
 ]
@@ -918,10 +908,10 @@ exports[`DSL validateDSL() semantics should not allow self reference in from rel
 exports[`DSL validateDSL() should correctly parse a simple sample 1`] = `
 [
   {
-    "endColumn": 10,
+    "endColumn": 12,
     "endLineNumber": 2,
     "extraInformation": {},
-    "message": "mismatched input '1' expecting '1.1'",
+    "message": "mismatched input '1.0' expecting '1.1'",
     "severity": 8,
     "source": "SyntaxError",
     "startColumn": 9,
@@ -938,24 +928,14 @@ exports[`DSL validateDSL() should correctly parse a simple sample 1`] = `
     "startLineNumber": 5,
   },
   {
-    "endColumn": 25,
+    "endColumn": 21,
     "endLineNumber": 5,
     "extraInformation": {},
-    "message": "extraneous input 'self' expecting {<EOF>, NEWLINE}",
+    "message": "mismatched input ' ' expecting {<EOF>, NEWLINE}",
     "severity": 8,
     "source": "SyntaxError",
-    "startColumn": 21,
+    "startColumn": 20,
     "startLineNumber": 5,
-  },
-  {
-    "endColumn": 4,
-    "endLineNumber": 7,
-    "extraInformation": {},
-    "message": "mismatched input 'type' expecting <EOF>",
-    "severity": 8,
-    "source": "SyntaxError",
-    "startColumn": 0,
-    "startLineNumber": 7,
   },
 ]
 `;

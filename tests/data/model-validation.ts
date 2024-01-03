@@ -454,13 +454,13 @@ type group
         startLineNumber: 9,
       },
       {
-        endColumn: 25,
+        endColumn: 21,
         endLineNumber: 9,
-        message: "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+        message: "mismatched input ' ' expecting {<EOF>, NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
-        startColumn: 21,
+        startColumn: 20,
         startLineNumber: 9,
       },
     ],
@@ -478,7 +478,7 @@ type document
       {
         endColumn: 18,
         endLineNumber: 5,
-        message: "`reader` is an impossible relation for `document` (no entrypoint).",
+        message: "`reader` is an impossible relation for `document` (potential loop).",
         extraInformation: {
           relation: "reader",
           error: "relation-no-entry-point",
@@ -491,7 +491,7 @@ type document
       {
         endColumn: 18,
         endLineNumber: 6,
-        message: "`writer` is an impossible relation for `document` (no entrypoint).",
+        message: "`writer` is an impossible relation for `document` (potential loop).",
         extraInformation: {
           relation: "writer",
           error: "relation-no-entry-point",
@@ -740,12 +740,32 @@ type org
       {
         endColumn: 22,
         endLineNumber: 6,
-        message: "mismatched input ']' expecting ALPHA_NUMERIC",
+        message: "extraneous input ']' expecting {IDENTIFIER, NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
         startColumn: 21,
         startLineNumber: 6,
+      },
+      {
+        endColumn: 10,
+        endLineNumber: 7,
+        extraInformation: {},
+        message: "mismatched input 'define' expecting IDENTIFIER",
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 4,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 17,
+        endLineNumber: 7,
+        extraInformation: {},
+        message: "mismatched input 'reader' expecting {',', ']'}",
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 11,
+        startLineNumber: 7,
       },
     ],
   },
@@ -763,12 +783,32 @@ type org
       {
         endColumn: 21,
         endLineNumber: 6,
-        message: "mismatched input ']' expecting {ALPHA_NUMERIC, WS}",
+        message: "extraneous input ']' expecting {WHITESPACE, IDENTIFIER, NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
         startColumn: 20,
         startLineNumber: 6,
+      },
+      {
+        endColumn: 10,
+        endLineNumber: 7,
+        extraInformation: {},
+        message: "mismatched input 'define' expecting IDENTIFIER",
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 4,
+        startLineNumber: 7,
+      },
+      {
+        endColumn: 17,
+        endLineNumber: 7,
+        extraInformation: {},
+        message: "mismatched input 'reader' expecting {',', ']'}",
+        severity: 8,
+        source: "SyntaxError",
+        startColumn: 11,
+        startLineNumber: 7,
       },
     ],
   },
@@ -788,7 +828,7 @@ type org
       {
         endColumn: 50,
         endLineNumber: 9,
-        message: "extraneous input ':' expecting {']', ',', WS}",
+        message: "mismatched input ':' expecting {',', ']', WHITESPACE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -808,9 +848,9 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 10,
+        endColumn: 12,
         endLineNumber: 2,
-        message: "mismatched input '0' expecting '1.1'",
+        message: "mismatched input '0.9' expecting '1.1'",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -830,9 +870,9 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 10,
+        endColumn: 12,
         endLineNumber: 2,
-        message: "mismatched input '1' expecting '1.1'",
+        message: "mismatched input '1.0' expecting '1.1'",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -863,13 +903,13 @@ type folder
         startLineNumber: 7,
       },
       {
-        endColumn: 25,
+        endColumn: 21,
         endLineNumber: 7,
-        message: "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+        message: "mismatched input ' ' expecting {<EOF>, NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
-        startColumn: 21,
+        startColumn: 20,
         startLineNumber: 7,
       },
     ],
@@ -886,9 +926,9 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 10,
+        endColumn: 12,
         endLineNumber: 2,
-        message: "mismatched input '1' expecting '1.1'",
+        message: "mismatched input '1.0' expecting '1.1'",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -919,13 +959,13 @@ type folder
         startLineNumber: 7,
       },
       {
-        endColumn: 25,
+        endColumn: 21,
         endLineNumber: 7,
-        message: "mismatched input 'self' expecting {<EOF>, NEWLINE}",
+        message: "mismatched input ' ' expecting {<EOF>, NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
-        startColumn: 21,
+        startColumn: 20,
         startLineNumber: 7,
       },
     ],
@@ -941,7 +981,7 @@ type group
       {
         endColumn: 4,
         endLineNumber: 1,
-        message: "extraneous input 'type' expecting {'model', '#', WS}",
+        message: "extraneous input 'type' expecting {'#', 'model', WHITESPACE, NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -951,7 +991,7 @@ type group
       {
         endColumn: 9,
         endLineNumber: 1,
-        message: "extraneous input 'user' expecting {'#', WS}",
+        message: "extraneous input 'user' expecting {'#', 'model', NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -961,7 +1001,7 @@ type group
       {
         endColumn: 4,
         endLineNumber: 2,
-        message: "mismatched input 'type' expecting 'model'",
+        message: "mismatched input 'type' expecting {'#', 'model'}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -983,7 +1023,7 @@ type group
       {
         endColumn: 33,
         endLineNumber: 6,
-        message: "extraneous input ':' expecting {']', ',', WS}",
+        message: "mismatched input ':' expecting {',', ']', WHITESPACE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -1008,7 +1048,7 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 7,
-        message: "`action1` is an impossible relation for `doc` (no entrypoint).",
+        message: "`action1` is an impossible relation for `doc` (potential loop).",
         extraInformation: {
           relation: "action1",
           error: "relation-no-entry-point",
@@ -1021,7 +1061,7 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 8,
-        message: "`action2` is an impossible relation for `doc` (no entrypoint).",
+        message: "`action2` is an impossible relation for `doc` (potential loop).",
         extraInformation: {
           relation: "action2",
           error: "relation-no-entry-point",
@@ -1034,7 +1074,7 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 9,
-        message: "`action3` is an impossible relation for `doc` (no entrypoint).",
+        message: "`action3` is an impossible relation for `doc` (potential loop).",
         extraInformation: {
           relation: "action3",
           error: "relation-no-entry-point",
@@ -1062,7 +1102,7 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 7,
-        message: "`action1` is an impossible relation for `doc` (no entrypoint).",
+        message: "`action1` is an impossible relation for `doc` (potential loop).",
         extraInformation: {
           relation: "action1",
           error: "relation-no-entry-point",
@@ -1075,7 +1115,7 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 8,
-        message: "`action2` is an impossible relation for `doc` (no entrypoint).",
+        message: "`action2` is an impossible relation for `doc` (potential loop).",
         extraInformation: {
           relation: "action2",
           error: "relation-no-entry-point",
@@ -1088,7 +1128,7 @@ type doc
       {
         endColumn: 19,
         endLineNumber: 9,
-        message: "`action3` is an impossible relation for `doc` (no entrypoint).",
+        message: "`action3` is an impossible relation for `doc` (potential loop).",
         extraInformation: {
           relation: "action3",
           error: "relation-no-entry-point",
@@ -1273,7 +1313,7 @@ type user
 type org
 
   relations
-    define member: [user]    
+    define member: [user]
 
 type group
   relations
