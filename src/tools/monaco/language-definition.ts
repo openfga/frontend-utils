@@ -61,9 +61,8 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
 
   tokenizer: {
     root: [
+      { include: "@comment" },
       { include: "@whitespace" },
-
-      [new RegExp(/^(\s*#).*/), OpenFgaDslThemeToken.COMMENT],
 
       [new RegExp(/(\[)/), "@brackets", "@restrictions"],
 
@@ -212,9 +211,10 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
     ],
 
     // Deal with white space, including comments
-    whitespace: [
-      [new RegExp(/\s+/), "white"],
-      [new RegExp(/(^(\s+#).*$)/), OpenFgaDslThemeToken.COMMENT],
+    whitespace: [[new RegExp(/\s+/), "white"]],
+    comment: [
+      [new RegExp(/\s+(#.*)/), OpenFgaDslThemeToken.COMMENT],
+      [new RegExp(/^\s*(#.*)/), OpenFgaDslThemeToken.COMMENT],
     ],
   },
 };
