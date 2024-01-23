@@ -828,7 +828,7 @@ type org
       {
         endColumn: 50,
         endLineNumber: 9,
-        message: "mismatched input ':' expecting {',', ']', WHITESPACE}",
+        message: "mismatched input ':' expecting {',', WHITESPACE, ']'}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -981,7 +981,7 @@ type group
       {
         endColumn: 4,
         endLineNumber: 1,
-        message: "extraneous input 'type' expecting {'#', 'model', WHITESPACE, NEWLINE}",
+        message: "extraneous input 'type' expecting {WHITESPACE, '#', 'model', NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -1023,7 +1023,7 @@ type group
       {
         endColumn: 33,
         endLineNumber: 6,
-        message: "mismatched input ':' expecting {',', ']', WHITESPACE}",
+        message: "mismatched input ':' expecting {',', WHITESPACE, ']'}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",

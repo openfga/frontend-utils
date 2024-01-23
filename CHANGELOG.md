@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.0 Beta 5 (Frontend Utils)
+### [0.2.0-beta.5](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.4...v0.2.0-beta.5) (2024-01-23)
+
+- feat: correctly tokenize comments (#197)
+- chore: update dependencies
+
 ## v0.2.0 Beta 4 (Frontend Utils)
 ### [0.2.0-beta.4](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.3...v0.2.0-beta.4) (2024-01-03)
 
