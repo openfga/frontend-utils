@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.0 Beta 6 (Frontend Utils)
+### [0.2.0-beta.6](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.5...v0.2.0-beta.6) (2024-01-29)
+
+- fix(monaco/validate): handle metadata being undefined
+
 ## v0.2.0 Beta 5 (Frontend Utils)
 ### [0.2.0-beta.5](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.4...v0.2.0-beta.5) (2024-01-23)
 
