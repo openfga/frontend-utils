@@ -41,10 +41,10 @@ export function validateDSL(monaco: typeof MonacoEditor, dsl: string): Marker[] 
       markers.push({
         message: singleErr.msg,
         severity: monaco.MarkerSeverity.Error,
-        startColumn: singleErr.column.start,
-        endColumn: singleErr.column.end,
-        startLineNumber: singleErr.line.start,
-        endLineNumber: singleErr.line.end,
+        startColumn: singleErr?.column?.start || 0,
+        endColumn: singleErr?.column?.end || 0,
+        startLineNumber: singleErr?.line?.start || 0,
+        endLineNumber: singleErr?.line?.end || 0,
         source,
         extraInformation,
       });
