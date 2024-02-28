@@ -69,7 +69,8 @@ npm install --save @openfga/frontend-utils
 TBD
 
 ## Contributing
-Take a look at our [Contributing Guide](./CONTRIBUTING.md)
+
+See [CONTRIBUTING](https://github.com/openfga/.github/blob/main/CONTRIBUTING.md).
 
 ## Author
 [OpenFGA](https://openfga.dev) team
