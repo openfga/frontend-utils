@@ -8,7 +8,7 @@ Currently used in the OpenFGA Docs and the FGA Playground to provide theming, mo
 [![Release](https://img.shields.io/github/v/release/openfga/frontend-utils?sort=semver&color=green)](https://github.com/openfga/frontend-utils/releases)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![FOSSA Status](https://app.fossa.com/api/projects/custom%2B4989%2Fgithub.com%2Fopenfga%2Ffrontend-utils.svg?type=shield)](https://app.fossa.com/reports/fb48e89d-655d-4656-8c7d-4eaa77e19e72)
-[![Discord Server](https://img.shields.io/discord/759188666072825867?color=7289da&logo=discord "Discord Server")](https://discord.gg/8naAwJfWN6)
+[![Join our community](https://img.shields.io/badge/slack-cncf_%23openfga-40abb8.svg?logo=slack)](https://openfga.dev/community)
 [![Twitter](https://img.shields.io/twitter/follow/openfga?color=%23179CF0&logo=twitter&style=flat-square "@openfga on Twitter")](https://twitter.com/openfga)
 
 ## Table of Contents
@@ -40,7 +40,7 @@ More SDKs and integrations such as Rego are planned for the future.
 - [OpenFGA Documentation](https://openfga.dev/docs)
 - [OpenFGA API Documentation](https://openfga.dev/api)
 - [Twitter](https://twitter.com/openfga)
-- [OpenFGA Discord Community](https://discord.gg/8naAwJfWN6)
+- [OpenFGA Community](https://openfga.dev/community)
 - [Zanzibar Academy](https://zanzibar.academy)
 - [Google's Zanzibar Paper (2019)](https://research.google/pubs/pub48190/)
 
