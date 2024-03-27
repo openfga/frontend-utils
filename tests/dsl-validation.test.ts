@@ -17,7 +17,6 @@ describe("DSL validation", () => {
       // TODO: Current language does not expose this information
       const expectedErrors = testCase.expectedError.map((expectedError: any) => {
         delete expectedError.extraInformation?.typeName;
-        delete expectedError.extraInformation?.relation;
         return expectedError;
       });
 

@@ -520,7 +520,7 @@ type folder
         message: "`parent` relation used inside from allows only direct relation.",
         extraInformation: {
           relation: "parent",
-          error: "tupleuset-not-direct",
+          error: "tupleuserset-not-direct",
         },
         severity: 8,
         source: "ModelValidationError",
@@ -533,7 +533,7 @@ type folder
         message: "`parent` relation used inside from allows only direct relation.",
         extraInformation: {
           relation: "parent",
-          error: "tupleuset-not-direct",
+          error: "tupleuserset-not-direct",
         },
         severity: 8,
         source: "ModelValidationError",
@@ -560,7 +560,7 @@ type folder
         message: "`parent` relation used inside from allows only direct relation.",
         extraInformation: {
           relation: "parent",
-          error: "tupleuset-not-direct",
+          error: "tupleuserset-not-direct",
         },
         severity: 8,
         source: "ModelValidationError",
@@ -587,7 +587,7 @@ type folder
         message: "`parent` relation used inside from allows only direct relation.",
         extraInformation: {
           relation: "parent",
-          error: "tupleuset-not-direct",
+          error: "tupleuserset-not-direct",
         },
         severity: 8,
         source: "ModelValidationError",
@@ -740,7 +740,8 @@ type org
       {
         endColumn: 22,
         endLineNumber: 6,
-        message: "extraneous input ']' expecting {IDENTIFIER, NEWLINE}",
+        message:
+          "extraneous input ']' expecting {IDENTIFIER, 'module', 'model', 'schema', 'extend', 'type', 'relation', NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -751,7 +752,8 @@ type org
         endColumn: 10,
         endLineNumber: 7,
         extraInformation: {},
-        message: "mismatched input 'define' expecting IDENTIFIER",
+        message:
+          "mismatched input 'define' expecting {IDENTIFIER, 'module', 'model', 'schema', 'extend', 'type', 'relation'}",
         severity: 8,
         source: "SyntaxError",
         startColumn: 4,
@@ -783,7 +785,8 @@ type org
       {
         endColumn: 21,
         endLineNumber: 6,
-        message: "extraneous input ']' expecting {WHITESPACE, IDENTIFIER, NEWLINE}",
+        message:
+          "extraneous input ']' expecting {WHITESPACE, IDENTIFIER, 'module', 'model', 'schema', 'extend', 'type', 'relation', NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -794,7 +797,8 @@ type org
         endColumn: 10,
         endLineNumber: 7,
         extraInformation: {},
-        message: "mismatched input 'define' expecting IDENTIFIER",
+        message:
+          "mismatched input 'define' expecting {IDENTIFIER, 'module', 'model', 'schema', 'extend', 'type', 'relation'}",
         severity: 8,
         source: "SyntaxError",
         startColumn: 4,
@@ -848,13 +852,15 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 12,
+        endColumn: 13,
         endLineNumber: 2,
-        message: "mismatched input '0.9' expecting '1.1'",
-        extraInformation: {},
+        message: "invalid schema 0.9",
+        extraInformation: {
+          error: "invalid-schema",
+        },
         severity: 8,
-        source: "SyntaxError",
-        startColumn: 9,
+        source: "ModelValidationError",
+        startColumn: 10,
         startLineNumber: 2,
       },
     ],
@@ -870,13 +876,15 @@ type org
 `,
     expectedError: [
       {
-        endColumn: 12,
+        endColumn: 13,
         endLineNumber: 2,
-        message: "mismatched input '1.0' expecting '1.1'",
-        extraInformation: {},
+        message: "invalid schema 1.0",
+        extraInformation: {
+          error: "invalid-schema",
+        },
         severity: 8,
-        source: "SyntaxError",
-        startColumn: 9,
+        source: "ModelValidationError",
+        startColumn: 10,
         startLineNumber: 2,
       },
     ],
@@ -926,13 +934,15 @@ type folder
 `,
     expectedError: [
       {
-        endColumn: 12,
+        endColumn: 13,
         endLineNumber: 2,
-        message: "mismatched input '1.0' expecting '1.1'",
-        extraInformation: {},
+        message: "invalid schema 1.0",
+        extraInformation: {
+          error: "invalid-schema",
+        },
         severity: 8,
-        source: "SyntaxError",
-        startColumn: 9,
+        source: "ModelValidationError",
+        startColumn: 10,
         startLineNumber: 2,
       },
     ],
@@ -981,7 +991,7 @@ type group
       {
         endColumn: 4,
         endLineNumber: 1,
-        message: "extraneous input 'type' expecting {WHITESPACE, '#', 'model', NEWLINE}",
+        message: "extraneous input 'type' expecting {WHITESPACE, '#', 'module', 'model', NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -991,7 +1001,7 @@ type group
       {
         endColumn: 9,
         endLineNumber: 1,
-        message: "extraneous input 'user' expecting {'#', 'model', NEWLINE}",
+        message: "extraneous input 'user' expecting {'#', 'module', 'model', NEWLINE}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -1001,7 +1011,7 @@ type group
       {
         endColumn: 4,
         endLineNumber: 2,
-        message: "mismatched input 'type' expecting {'#', 'model'}",
+        message: "mismatched input 'type' expecting {'#', 'module', 'model'}",
         extraInformation: {},
         severity: 8,
         source: "SyntaxError",
@@ -1559,15 +1569,16 @@ type document
 `,
     expectedError: [
       {
-        endColumn: 10,
+        endColumn: 48,
         endLineNumber: 8,
         extraInformation: {
-          error: "type-wildcard-relation",
+          error: "tupleuserset-not-direct",
+          relation: "viewer",
         },
-        message: "type restriction `document:*` cannot contain both wildcard and relation",
+        message: "`parent` relation used inside from allows only direct relation.",
         severity: 8,
         source: "ModelValidationError",
-        startColumn: 0,
+        startColumn: 42,
         startLineNumber: 8,
       },
     ],
