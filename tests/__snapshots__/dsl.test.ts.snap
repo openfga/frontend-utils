@@ -22,7 +22,6 @@ exports[`DSL validateDSL() invalid code should handle \`no relations\` 1`] = `
     "endLineNumber": 2,
     "extraInformation": {
       "error": "invalid-schema",
-      "relation": undefined,
     },
     "message": "invalid schema 1.0",
     "severity": 8,
