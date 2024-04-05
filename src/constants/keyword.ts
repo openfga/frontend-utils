@@ -11,6 +11,8 @@ export enum Keyword {
   BUT_NOT = "but not",
   MODEL = "model",
   SCHEMA = "schema",
+  MODULE = "module",
+  EXTEND = "extend",
   CONDITION = "condition",
 }
 

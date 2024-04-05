@@ -2,16 +2,23 @@ import type * as MonacoEditor from "monaco-editor";
 
 import { Marker } from "./typings";
 import { DSLSyntaxSingleError, ModelValidationSingleError } from "@openfga/syntax-transformer/dist/errors";
-import { errors, validator } from "@openfga/syntax-transformer";
+import { errors, validator, transformer } from "@openfga/syntax-transformer";
+import { transformModularDSLToJSONObject } from "@openfga/syntax-transformer/dist/transformer/dsltojson";
+import { AuthorizationModel } from "@openfga/sdk";
 
 export function validateDSL(monaco: typeof MonacoEditor, dsl: string): Marker[] {
   const markers: Marker[] = [];
   try {
-    validator.validateDSL(dsl);
+    const transform = transformer.transformDSLToJSONObject(dsl) as AuthorizationModel;
+    if (transform.schema_version) {
+      // If regular module
+      validator.validateDSL(dsl);
+    } else {
+      transformModularDSLToJSONObject(dsl);
+    }
   } catch (err) {
     for (const singleErr of (err as errors.BaseMultiError<errors.BaseError>).errors) {
       let source;
-
       if (singleErr instanceof DSLSyntaxSingleError) {
         source = "SyntaxError";
       } else if (singleErr instanceof ModelValidationSingleError) {
@@ -33,6 +40,8 @@ export function validateDSL(monaco: typeof MonacoEditor, dsl: string): Marker[] 
         });
       }
 
+      // monaco starts range of line & col from position 1
+      // https://microsoft.github.io/monaco-editor/typedoc/classes/Selection.html#startLineNumber
       markers.push({
         message: singleErr.msg,
         severity: monaco.MarkerSeverity.Error,
