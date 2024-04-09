@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.0 Beta 7 (Frontend Utils)
+### [0.2.0-beta.7](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.6...v0.2.0-beta.7) (2024-04-09)
+
+- feat: add modular model support for monaco
+
 ## v0.2.0 Beta 6 (Frontend Utils)
 ### [0.2.0-beta.6](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.5...v0.2.0-beta.6) (2024-01-29)
 
