@@ -120,8 +120,17 @@ jobs:
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
-      - uses: Roang-zero1/github-create-release-action@57eb9bdce7a964e48788b9e78b5ac766cb684803 # v3.0.1
+      - id: extract-changelog
+        uses: dahlia/submark@7d44d75a4dcfd351258491f26898e836b0521ce0 # v0.3.1
         with:
-          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
+          input-file: CHANGELOG.md
+          heading-level: 2
+          heading-title-text: ${{ github.ref_name }}
+          ignore-case: true
+          omit-heading: true
+
+      - uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        with:
+          body: ${{ steps.extract-changelog.outputs.output-text }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
