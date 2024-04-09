@@ -7,7 +7,6 @@ export {
   OpenFgaDslThemeToken,
   OpenFgaDslThemeTokenType,
 } from "./theme.typings";
-export { languageDefinition } from "../tools/prism/language-definition";
 
 export const supportedThemes: Record<SupportedTheme, OpenFgaThemeConfiguration> = {
   [SupportedTheme.OpenFgaDark]: openfgaDark,

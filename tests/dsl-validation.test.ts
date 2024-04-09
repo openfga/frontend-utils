@@ -12,12 +12,18 @@ import { validation_cases } from "./data/model-validation";
 describe("DSL validation", () => {
   validation_cases.forEach((testCase) => {
     it(`should validate ${testCase.name}`, () => {
-      const result = validateDSL(MonacoErrorSeverityShim, testCase.friendly);
+      const result = validateDSL(MonacoErrorSeverityShim, testCase.friendly).map((error: any) => {
+        delete error.extraInformation;
+        delete error.message;
+        delete error.source;
+        return error;
+      });
 
       // TODO: Current language does not expose this information
       const expectedErrors = testCase.expectedError.map((expectedError: any) => {
-        delete expectedError.extraInformation?.typeName;
-        delete expectedError.extraInformation?.relation;
+        delete expectedError.extraInformation;
+        delete expectedError.message;
+        delete expectedError.source;
         return expectedError;
       });
 

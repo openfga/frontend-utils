@@ -75,6 +75,20 @@ export const language = <MonacoEditor.languages.IMonarchLanguage>{
         [OpenFgaDslThemeToken.KEYWORD_SCHEMA, "@whitespace", OpenFgaDslThemeToken.VALUE_SCHEMA],
       ],
       [
+        new RegExp(/(module)(\s+)(@identifiers)/),
+        [OpenFgaDslThemeToken.KEYWORD_MODULE, "@whitespace", OpenFgaDslThemeToken.VALUE_MODULE],
+      ],
+      [
+        new RegExp(/(extend)(\s+)(type)(\s+)(@identifiers)/),
+        [
+          OpenFgaDslThemeToken.KEYWORD_EXTEND,
+          "@whitespace",
+          OpenFgaDslThemeToken.KEYWORD_TYPE,
+          "@whitespace",
+          OpenFgaDslThemeToken.VALUE_TYPE_NAME,
+        ],
+      ],
+      [
         new RegExp(/(type)(\s+)(@identifiers)/),
         [OpenFgaDslThemeToken.KEYWORD_TYPE, "@whitespace", OpenFgaDslThemeToken.VALUE_TYPE_NAME],
       ],
