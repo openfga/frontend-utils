@@ -10,6 +10,8 @@ export const openfgaDark: OpenFgaThemeConfiguration = {
     [OpenFgaDslThemeTokenType.DEFAULT]: "#FFFFFF",
     [OpenFgaDslThemeTokenType.COMMENT]: "#737981",
     [OpenFgaDslThemeTokenType.KEYWORD]: "#AAAAAA",
+    [OpenFgaDslThemeTokenType.MODULE]: "#79ED83",
+    [OpenFgaDslThemeTokenType.EXTEND]: "#79ED83",
     [OpenFgaDslThemeTokenType.TYPE]: "#79ED83",
     [OpenFgaDslThemeTokenType.RELATION]: "#20F1F5",
     [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: "#CEEC93",
