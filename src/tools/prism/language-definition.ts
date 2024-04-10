@@ -1,4 +1,4 @@
-import { OpenFgaDslThemeTokenType } from "../../theme";
+import { OpenFgaDslThemeTokenType } from "../../theme/theme.typings";
 
 export const languageDefinition = {
   [OpenFgaDslThemeTokenType.COMMENT]: {
