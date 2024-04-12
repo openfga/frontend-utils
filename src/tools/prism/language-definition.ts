@@ -6,26 +6,26 @@ export const languageDefinition = {
     lookbehind: true,
   },
   [OpenFgaDslThemeTokenType.TYPE]: {
-    pattern: /(\btype\s+)\w+/i,
+    pattern: /(\btype\s+)[\w_-]+/i,
     lookbehind: true,
   },
   [OpenFgaDslThemeTokenType.EXTEND]: {
-    pattern: /(\bextend type\s+)\w+/i,
+    pattern: /(\bextend type\s+)[\w_-]+/i,
     lookbehind: true,
   },
   [OpenFgaDslThemeTokenType.RELATION]: {
-    pattern: /(\bdefine\s+)\w+/i,
+    pattern: /(\bdefine\s+)[\w_-]+/i,
     lookbehind: true,
   },
   [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: /\[.*]|self/,
   [OpenFgaDslThemeTokenType.CONDITION]: {
-    pattern: /(\bcondition\s+)\w+/i,
+    pattern: /(\bcondition\s+)[\w_-]+/i,
     lookbehind: true,
   },
   "condition-params": {
     pattern: /\(.*\)\s*{/,
     inside: {
-      "condition-param": /\b(\w+)\s*:/i,
+      "condition-param": /\b([\w_-]+)\s*:/i,
       "condition-param-type": /\b(string|int|map|uint|list|timestamp|bool|duration|double|ipaddress)\b/,
     },
   },
