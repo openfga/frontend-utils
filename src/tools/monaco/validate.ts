@@ -2,21 +2,16 @@ import type * as MonacoEditor from "monaco-editor";
 
 import { Marker } from "./typings";
 import { DSLSyntaxSingleError, ModelValidationSingleError } from "@openfga/syntax-transformer/dist/errors";
-import { errors, validator, transformer } from "@openfga/syntax-transformer";
-import { transformModularDSLToJSONObject } from "@openfga/syntax-transformer/dist/transformer/dsltojson";
-import { AuthorizationModel } from "@openfga/sdk";
-
+import { errors, validator } from "@openfga/syntax-transformer";
 export function validateDSL(monaco: typeof MonacoEditor, dsl: string): Marker[] {
   const markers: Marker[] = [];
   try {
-    const transform = transformer.transformDSLToJSONObject(dsl) as AuthorizationModel;
-    if (transform.schema_version) {
-      // If regular module
-      validator.validateDSL(dsl);
-    } else {
-      transformModularDSLToJSONObject(dsl);
-    }
+    validator.validateDSL(dsl);
   } catch (err) {
+    if (!(err as errors.BaseMultiError<errors.BaseError>).errors) {
+      return markers;
+    }
+
     for (const singleErr of (err as errors.BaseMultiError<errors.BaseError>).errors) {
       let source;
       if (singleErr instanceof DSLSyntaxSingleError) {
