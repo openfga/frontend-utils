@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.0 Beta 9 (Frontend Utils)
+### [0.2.0-beta.9](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.8...v0.2.0-beta.9) (2024-04-12)
+
+- fix: correct syntax highlighting for identifiers with dashes and underscores
+
 ## v0.2.0 Beta 8 (Frontend Utils)
 ### [0.2.0-beta.8](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.7...v0.2.0-beta.8) (2024-04-12)
 
