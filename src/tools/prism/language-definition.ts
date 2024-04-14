@@ -1,26 +1,29 @@
 import { OpenFgaDslThemeTokenType } from "../../theme/theme.typings";
 
 export const languageDefinition = {
-  [OpenFgaDslThemeTokenType.MODULE]: {
+  module: {
     pattern: /(module\s+)[\w_-]+/i,
-    lookbehind: true,
+    alias: OpenFgaDslThemeTokenType.MODULE,
   },
-  [OpenFgaDslThemeTokenType.TYPE]: {
+  type: {
     pattern: /(\btype\s+)[\w_-]+/i,
-    lookbehind: true,
+    alias: OpenFgaDslThemeTokenType.TYPE,
   },
-  [OpenFgaDslThemeTokenType.EXTEND]: {
+  "extend-type": {
     pattern: /(\bextend type\s+)[\w_-]+/i,
-    lookbehind: true,
+    alias: OpenFgaDslThemeTokenType.EXTEND,
   },
-  [OpenFgaDslThemeTokenType.RELATION]: {
+  relation: {
     pattern: /(\bdefine\s+)[\w_-]+/i,
-    lookbehind: true,
+    alias: OpenFgaDslThemeTokenType.RELATION,
   },
-  [OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE]: /\[.*]|self/,
-  [OpenFgaDslThemeTokenType.CONDITION]: {
+  "directly-assignable": {
+    pattern: /\[.*]|self/,
+    alias: OpenFgaDslThemeTokenType.DIRECTLY_ASSIGNABLE,
+  },
+  condition: {
     pattern: /(\bcondition\s+)[\w_-]+/i,
-    lookbehind: true,
+    alias: OpenFgaDslThemeTokenType.CONDITION,
   },
   "condition-params": {
     pattern: /\(.*\)\s*{/,
@@ -29,10 +32,12 @@ export const languageDefinition = {
       "condition-param-type": /\b(string|int|map|uint|list|timestamp|bool|duration|double|ipaddress)\b/,
     },
   },
-  [OpenFgaDslThemeTokenType.COMMENT]: {
+  comment: {
     pattern: /(^\s*|\s+)#.*/,
+    alias: OpenFgaDslThemeTokenType.COMMENT,
   },
-  [OpenFgaDslThemeTokenType.KEYWORD]: {
+  keyword: {
     pattern: /\b(type|relations|define|and|or|but not|from|as|model|schema|condition|module|extend)\b/,
+    alias: OpenFgaDslThemeTokenType.KEYWORD,
   },
 };
