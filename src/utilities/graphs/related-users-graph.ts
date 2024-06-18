@@ -31,6 +31,7 @@ export class TreeBuilder {
   constructor(
     private readonly openFgaApi: Pick<OpenFgaApi, "expand">,
     private readonly capturedTuple: Required<Omit<TupleKey, "user">>,
+    private readonly storeId: string,
     private readonly existingTree?: ResolutionTree,
     private readonly authorizationModelId?: string,
   ) {
@@ -60,7 +61,7 @@ export class TreeBuilder {
   }
 
   private async expandTuple(tuple: Pick<TupleKey, "relation" | "object">): Promise<ExpandResponse> {
-    return this.openFgaApi.expand({
+    return this.openFgaApi.expand(this.storeId, {
       tuple_key: {
         relation: tuple.relation,
         object: tuple.object,
