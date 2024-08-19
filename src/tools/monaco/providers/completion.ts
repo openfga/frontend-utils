@@ -37,7 +37,7 @@ function getSuggestions(
         label: `sample-${key}`,
         kind: monaco.languages.CompletionItemKind.Struct,
         insertText: transformer.transformJSONToDSL(
-          schemaVersion === SchemaVersion.OneDotOne
+          schemaVersion === SchemaVersion.OneDotOne || schemaVersion === SchemaVersion.OneDotTwo
             ? sampleModel
             : {
                 schema_version: SchemaVersion.OneDotZero,
@@ -228,6 +228,7 @@ export const provideCompletionItems =
   ) =>
   (model: editor.ITextModel, position: Position): languages.ProviderResult<languages.CompletionList> => {
     switch (schemaVersion) {
+      case SchemaVersion.OneDotTwo:
       case SchemaVersion.OneDotOne:
         return provideCompletionItemsOneDotOne(monaco, completionExtraOptions)(model, position);
       case SchemaVersion.OneDotZero:
