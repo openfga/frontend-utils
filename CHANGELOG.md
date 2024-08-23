@@ -1,7 +1,7 @@
 # Changelog
 
 ## v0.2.0 Beta 10 (Frontend Utils)
-### [0.2.0-beta.10](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.9...v0.2.0-beta.10) (2024-08-19)
+### [0.2.0-beta.10](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.9...v0.2.0-beta.10) (2024-08-23)
 
 - fix: code completions for schema 1.2 (#273)
 - chore: update dependencies
