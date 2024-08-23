@@ -48,6 +48,14 @@ const errorFixesByErrorCodeAndSchema: Partial<
         text: `${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE} ${relation}: [typeName]\n${lineContent}`,
       };
     },
+    [SchemaVersion.OneDotTwo]: ({ model, marker, relation }) => {
+      const lineContent = model.getLineContent(marker.startLineNumber);
+      return {
+        startColumn: 0,
+        title: `Fix: add definition for \`${relation}\`.`,
+        text: `${SINGLE_INDENTATION}${SINGLE_INDENTATION}${Keyword.DEFINE} ${relation}: [typeName]\n${lineContent}`,
+      };
+    },
   },
   [errors.ValidationError.SelfError]: {
     [SchemaVersion.OneDotZero]: ({ text }) => ({
@@ -55,6 +63,10 @@ const errorFixesByErrorCodeAndSchema: Partial<
       text: Keyword.SELF,
     }),
     [SchemaVersion.OneDotOne]: ({ text }) => ({
+      title: `Fix: replace \`${text}\` with type restrictions.`,
+      text: "[typeName]",
+    }),
+    [SchemaVersion.OneDotTwo]: ({ text }) => ({
       title: `Fix: replace \`${text}\` with type restrictions.`,
       text: "[typeName]",
     }),
@@ -67,6 +79,12 @@ const errorFixesByErrorCodeAndSchema: Partial<
       text: "",
     }),
     [SchemaVersion.OneDotOne]: ({ model, marker, markerRange, text }) => ({
+      startLineNumber: markerRange.startLineNumber - 1,
+      startColumn: model.getLineContent(marker.startLineNumber - 1).length + 1,
+      title: `Fix: remove duplicated \`${text}\`.`,
+      text: "",
+    }),
+    [SchemaVersion.OneDotTwo]: ({ model, marker, markerRange, text }) => ({
       startLineNumber: markerRange.startLineNumber - 1,
       startColumn: model.getLineContent(marker.startLineNumber - 1).length + 1,
       title: `Fix: remove duplicated \`${text}\`.`,
