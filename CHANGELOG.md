@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.0 Beta 11 (Frontend Utils)
+### [0.2.0-beta.11](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.10...v0.2.0-beta.11) (2024-09-06)
+
+- chore: update dependencies
+
 ## v0.2.0 Beta 10 (Frontend Utils)
 ### [0.2.0-beta.10](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.9...v0.2.0-beta.10) (2024-08-23)
 
