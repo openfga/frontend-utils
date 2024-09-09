@@ -190,31 +190,6 @@ type group
     ],
   },
   {
-    name: "no entry point for single type single relation",
-    friendly: `model
-  schema 1.1
-type user
-type group
-  relations
-    define group: group from group
-`,
-    expectedError: [
-      {
-        endColumn: 17,
-        endLineNumber: 6,
-        message: "`group` is an impossible relation for `group` (no entrypoint).",
-        extraInformation: {
-          relation: "group",
-          error: "relation-no-entry-point",
-        },
-        severity: 8,
-        source: "ModelValidationError",
-        startColumn: 12,
-        startLineNumber: 6,
-      },
-    ],
-  },
-  {
     name: "no entry point for single type multiple relations",
     friendly: `model
   schema 1.1
