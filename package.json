@@ -36,7 +36,7 @@
     "@openfga/syntax-transformer": "^0.2.0-beta.21"
   },
   "devDependencies": {
-    "@openfga/sdk": "^0.6.3",
+    "@openfga/sdk": "^0.7.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.5.4",
     "@types/prismjs": "^1.26.4",
