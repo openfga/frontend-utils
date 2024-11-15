@@ -1,0 +1,128 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The store name"
+    },
+    "model": {
+      "type": "string",
+      "description": "The Authorization Model"
+    },
+    "model_file": {
+      "type": "string",
+      "description": "The Authorization Model"
+    },
+    "tuples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "The user"
+          },
+          "relation": {
+            "type": "string",
+            "description": "The relation"
+          },
+          "object": {
+            "type": "string",
+            "description": "The object"
+          }
+        }
+      }
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The test name"
+          },
+          "description": {
+            "type": "string",
+            "description": "The test description"
+          },
+          "tuples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "description": "The user"
+                },
+                "relation": {
+                  "type": "string",
+                  "description": "The relation"
+                },
+                "object": {
+                  "type": "string",
+                  "description": "The object"
+                }
+              }
+            }
+          },
+          "check": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "description": "The user"
+                },
+                "object": {
+                  "type": "string",
+                  "description": "The object"
+                },
+                "assertions": {
+                  "type": "object",
+                  "patternProperties": {
+                    "*": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "list_objects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "description": "The user"
+                },
+                "relation": {
+                  "type": "string",
+                  "description": "The relation"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The object type"
+                },
+                "assertions": {
+                  "type": "object",
+                  "patternProperties": {
+                    "*": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
