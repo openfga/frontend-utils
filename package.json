@@ -64,6 +64,9 @@
   "bugs": {
     "url": "https://github.com/openfga/frontend-utils/issues"
   },
+  "engines": {
+    "node": ">=16.15.0"
+  },
   "homepage": "https://github.com/openfga/frontend-utils#readme",
   "publishConfig": {
     "access": "public",
