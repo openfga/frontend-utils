@@ -1,5 +1,10 @@
 # Changelog
 
+## [UNRELEASED](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...main)
+
+Changed:
+- [BREAKING] Drop support for Node.js 14. The minimum supported version is now Node.js 16.15.0
+
 ## v0.2.0 Beta 11 (Frontend Utils)
 ### [0.2.0-beta.11](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.10...v0.2.0-beta.11) (2024-09-06)
 
