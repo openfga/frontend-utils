@@ -1,25 +1,28 @@
+# yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
 version: 2
+
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
     groups:
-     dependencies:
+      dependencies:
         dependency-type: "production"
         patterns:
           - "*"
-     dev-dependencies:
+      dev-dependencies:
         dependency-type: "development"
         patterns:
           - "*"
         exclude-patterns:
           - "eslint"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     groups:
-     dependencies:
+      dependencies:
         patterns:
           - "*"
