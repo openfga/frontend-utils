@@ -61,7 +61,7 @@ jobs:
         run: npm ci
 
       - name: Audit dependencies
-        run: npm audit
+        run: npm audit --no-package-lock
 
       - name: Check for circular dependencies
         run: npx madge --circular . --extensions ts,js
