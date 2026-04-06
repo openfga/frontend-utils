@@ -50,7 +50,7 @@
     "monaco-editor": "0.55.1",
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2"
+    "typescript": "^6.0.2"
   },
   "files": [
     "README.md",
