@@ -67,7 +67,7 @@
   },
   "homepage": "https://github.com/openfga/frontend-utils#readme",
   "overrides": {
-    "dompurify": "^3.3.3"
+    "dompurify": "^3.4.11"
   },
   "engines": {
     "node": ">=16.15.0"
