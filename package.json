@@ -67,6 +67,7 @@
   },
   "homepage": "https://github.com/openfga/frontend-utils#readme",
   "overrides": {
+    "axios": "1.18.1",
     "dompurify": "^3.4.11"
   },
   "engines": {
