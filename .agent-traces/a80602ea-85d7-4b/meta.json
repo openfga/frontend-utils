@@ -1,0 +1,16 @@
+{
+  "session_id": "a80602ea-85d7-4b",
+  "started_at": 1789033808.429467,
+  "agent_name": "github-copilot",
+  "command": "github-copilot (new)",
+  "tool_calls": 51,
+  "errors": 1,
+  "attribution": {
+    "os_user": "siddhant-git-ai",
+    "hostname": "Siddhants-MacBook-Pro.local",
+    "pid": 88882,
+    "ppid": 88332,
+    "agent_provider": "unknown",
+    "working_dir": "/Users/siddhant-git-ai/.copilot/installed-plugins/agent-trace/agent-strace"
+  }
+}

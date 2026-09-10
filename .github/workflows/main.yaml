@@ -35,7 +35,7 @@ jobs:
         run: npm i -g npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build
         run: npm run build
@@ -58,7 +58,7 @@ jobs:
         run: npm i -g npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Audit dependencies
         run: npm audit --no-package-lock
@@ -103,7 +103,7 @@ jobs:
         run: npm i -g npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Publish to npm
         run: npm publish
