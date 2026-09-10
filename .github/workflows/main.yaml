@@ -61,7 +61,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Audit dependencies
-        run: npm audit --no-package-lock
+        run: npm audit --no-package-lock --legacy-peer-deps
 
       - name: Check for circular dependencies
         run: npx madge --circular . --extensions ts,js
