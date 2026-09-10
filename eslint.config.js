@@ -13,7 +13,6 @@ module.exports = [
       parserOptions: {
         ecmaVersion: 2021,
         sourceType: "module",
-        project: "./tsconfig.json",
       },
       globals: {
         browser: "readonly",
@@ -39,6 +38,23 @@ module.exports = [
         },
       ],
       "object-curly-spacing": ["error", "always"],
+      "no-useless-assignment": "off",
+      "preserve-caught-error": "off",
+    },
+  },
+  {
+    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        test: "readonly",
+      },
     },
   },
 ];
