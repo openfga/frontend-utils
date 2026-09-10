@@ -1,36 +1,32 @@
-const { FlatCompat } = require("@eslint/eslintrc");
+const { defineConfig, globalIgnores } = require("eslint/config");
 const js = require("@eslint/js");
+const tsPlugin = require("@typescript-eslint/eslint-plugin");
+const importX = require("eslint-plugin-import-x");
+const prettier = require("eslint-config-prettier/flat");
+const globals = require("globals");
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-module.exports = [
+module.exports = defineConfig([
+  globalIgnores(["dist/**", "src/parser/grammar.ts"]),
   {
-    ignores: ["dist/**", "src/parser/grammar.ts"],
-  },
-  ...compat.config({
-    env: {
-      browser: true,
-      es2021: true,
-      node: true,
-    },
+    files: ["**/*.ts"],
     extends: [
-      "eslint:recommended",
-      "prettier",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:import/recommended",
-      "plugin:import/typescript",
+      js.configs.recommended,
+      tsPlugin.configs["flat/recommended"],
+      importX.flatConfigs.recommended,
+      importX.flatConfigs.typescript,
+      prettier,
     ],
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-      ecmaVersion: 2021,
-      sourceType: "module",
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
+      },
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: "module",
+      },
     },
-    plugins: ["@typescript-eslint"],
     rules: {
       "no-case-declarations": "off",
       "no-useless-assignment": "off",
@@ -48,5 +44,5 @@ module.exports = [
       ],
       "object-curly-spacing": ["error", "always"],
     },
-  }),
-];
+  },
+]);
