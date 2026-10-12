@@ -72,12 +72,6 @@ TBD
 
 See [CONTRIBUTING](https://github.com/openfga/.github/blob/main/CONTRIBUTING.md).
 
-Dependency overrides in `package.json` keep the CI dependency audit passing. The
-override for `@istanbuljs/load-nyc-config` uses `js-yaml` 4 to avoid the unpatched
-`sprintf-js` dependency pulled in by `js-yaml` 3. When updating dependencies,
-regenerate `package-lock.json` and run both `npm audit` and the CI command,
-`npm audit --no-package-lock`.
-
 ## Author
 [OpenFGA](https://openfga.dev) team
 
