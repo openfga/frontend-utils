@@ -2,7 +2,7 @@
 
 ## [0.3.1](https://github.com/openfga/frontend-utils/compare/v0.3.0...v0.3.1) (2026-11-18)
 
-> **Note:** `0.3.0` was tagged but never published to npm. The publish step of the release workflow failed to authenticate with the registry, so the GitHub release stayed a draft. `0.3.1` contains the same changes as `0.3.0` (listed below) and is the first release published with npm trusted publishing ([#410](https://github.com/openfga/frontend-utils/pull/410)).
+> **Note:** `0.3.0` was tagged but never published to npm. The publish step of the release workflow failed to authenticate with the registry, so the GitHub release stayed a draft. `0.3.1` contains the same changes as `0.3.0` (see the 0.3.0 entry in `CHANGELOG.md`) and is the first release published with npm trusted publishing ([#410](https://github.com/openfga/frontend-utils/pull/410)).
 
 
 ### Miscellaneous
