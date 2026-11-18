@@ -63,7 +63,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com:openfga/frontend-utils.git"
+    "url": "git://github.com/openfga/frontend-utils.git"
   },
   "bugs": {
     "url": "https://github.com/openfga/frontend-utils/issues"
