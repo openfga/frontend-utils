@@ -2,14 +2,7 @@
 
 ## [0.3.1](https://github.com/openfga/frontend-utils/compare/v0.3.0...v0.3.1) (2026-11-18)
 
-> **Note:** `0.3.0` was tagged but never published to npm. The publish step of the release workflow failed to authenticate with the registry, so the GitHub release stayed a draft. `0.3.1` contains the same changes as `0.3.0` (see the 0.3.0 entry in `CHANGELOG.md`) and is the first release published with npm trusted publishing ([#410](https://github.com/openfga/frontend-utils/pull/410)).
-
-
-### Miscellaneous
-
-* release 0.3.1 ([35dd769](https://github.com/openfga/frontend-utils/commit/35dd76930d2bca0e945ee87c324fdd6f9c208d45))
-
-## [0.3.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...v0.3.0) (2026-11-18)
+> **Note:** `0.3.0` was tagged but never published to npm. The publish step of the release workflow failed to authenticate with the registry, so the GitHub release stayed a draft. The changes prepared for `0.3.0` are released here instead, and `0.3.1` is the first release published with npm trusted publishing ([#410](https://github.com/openfga/frontend-utils/pull/410)).
 
 
 ### Fixed
@@ -21,7 +14,11 @@
 
 ### Miscellaneous
 
-* release 0.3.0 ([b403e23](https://github.com/openfga/frontend-utils/commit/b403e237152538f5d04df2825a57e030dede922d))
+* release 0.3.1 ([35dd769](https://github.com/openfga/frontend-utils/commit/35dd76930d2bca0e945ee87c324fdd6f9c208d45))
+
+## [0.3.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...v0.3.0) (2026-11-18)
+
+Not published to npm. Its changes are listed under 0.3.1 above.
 
 ## [UNRELEASED](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...main)
 
