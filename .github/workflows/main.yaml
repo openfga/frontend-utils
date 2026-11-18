@@ -79,10 +79,39 @@ jobs:
       - name: Run tests
         run: npm test
 
-  publish:
+  verify-version:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [build, test]
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Verify versions match
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+          MANIFEST_VERSION=$(jq -r '.["."]' .release-please-manifest.json)
+          PACKAGE_VERSION=$(jq -r '.version' package.json)
+
+          echo "Tag: $TAG_VERSION | Manifest: $MANIFEST_VERSION | package.json: $PACKAGE_VERSION"
+
+          if [[ "$TAG_VERSION" != "$MANIFEST_VERSION" ]]; then
+            echo "ERROR: Tag version does not match manifest version"
+            exit 1
+          fi
+          if [[ "$PACKAGE_VERSION" != "$MANIFEST_VERSION" ]]; then
+            echo "ERROR: package.json version does not match manifest version"
+            exit 1
+          fi
+          echo "All versions verified: $TAG_VERSION"
+
+  # Publishes with npm trusted publishing (OIDC): no long-lived npm token.
+  # Requires a trusted publisher configured on npmjs.com for this package:
+  # repository openfga/frontend-utils, workflow main.yaml.
+  publish:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [verify-version]
     permissions:
       contents: read
       id-token: write
@@ -101,16 +130,42 @@ jobs:
           always-auth: false
           cache: 'npm'
 
-      - name: Update npm
-        run: npm i -g npm
-
+      # Dependency install scripts are not needed to build, and this job can
+      # mint OIDC tokens, so do not run them here.
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
+      - name: Validate tag and determine npm tag
+        id: npm-tag
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+
+          # Validate tag format
+          if [[ ! "$TAG" =~ ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(-(alpha|beta|rc)\.[[:digit:]]+)?$ ]]; then
+            echo "Error: Tag '$TAG' does not match the required format"
+            echo "Valid formats:"
+            echo "  - v1.2.3"
+            echo "  - v1.2.3-alpha.1"
+            echo "  - v1.2.3-beta.1"
+            echo "  - v1.2.3-rc.1"
+            exit 1
+          fi
+
+          # Determine npm tag
+          VERSION="${TAG#v}"
+          if [[ "$VERSION" =~ -alpha ]]; then
+            echo "tag=alpha" >> "$GITHUB_OUTPUT"
+          elif [[ "$VERSION" =~ -beta ]]; then
+            echo "tag=beta" >> "$GITHUB_OUTPUT"
+          elif [[ "$VERSION" =~ -rc ]]; then
+            echo "tag=rc" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Trusted publishing needs npm >= 11.5.1; pin the CLI used to publish.
       - name: Publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx -y npm@11.9.0 publish --tag ${{ steps.npm-tag.outputs.tag }}
 
   undraft-release:
     if: startsWith(github.ref, 'refs/tags/v')
