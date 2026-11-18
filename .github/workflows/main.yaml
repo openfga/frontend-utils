@@ -112,18 +112,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  create-release:
-    runs-on: ubuntu-latest
+  undraft-release:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: publish
+    needs: [publish]
     permissions:
       contents: write
-
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - uses: Roang-zero1/github-create-release-action@57eb9bdce7a964e48788b9e78b5ac766cb684803 # v3.0.1
-        with:
-          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: openfga/.github/.github/workflows/undraft-release.yml@835baf31562809ad9eb884c73efc5b79318f700f # pin@main
