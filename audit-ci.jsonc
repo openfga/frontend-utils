@@ -1,0 +1,11 @@
+{
+  "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
+  // Fail on any advisory, in production and dev dependencies alike.
+  "low": true,
+  "allowlist": [
+    // picomatch ReDoS: every published version is affected (<= 4.0.7) and no
+    // patched release exists. Dev-only here (jest, eslint tooling).
+    // Remove this entry once a fixed picomatch is available.
+    "GHSA-fc5q-39xc-vjpf"
+  ]
+}

@@ -60,8 +60,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Audits production and dev dependencies; fails on any advisory that is
+      # not explicitly allowlisted in audit-ci.jsonc.
       - name: Audit dependencies
-        run: npm audit --no-package-lock
+        run: npx --yes audit-ci@7.1.0 --config ./audit-ci.jsonc
 
       - name: Check for circular dependencies
         run: npx madge --circular . --extensions ts,js
