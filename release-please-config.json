@@ -6,7 +6,7 @@
   "bootstrap-sha": "3d215bf7ffc1b7fa1f41fed61f5b6f2386140b23",
   "packages": {
     ".": {
-      "package-name": "@openfga/frontend-utils",
+      "package-name": "",
       "include-component-in-tag": false,
       "changelog-path": "CHANGELOG.md",
       "changelog-type": "default",
