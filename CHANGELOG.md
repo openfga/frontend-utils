@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/openfga/frontend-utils/compare/v0.3.0...v0.3.1) (2026-11-18)
+
+
+### Miscellaneous
+
+* release 0.3.1 ([35dd769](https://github.com/openfga/frontend-utils/commit/35dd76930d2bca0e945ee87c324fdd6f9c208d45))
+
 ## [0.3.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...v0.3.0) (2026-11-18)
 
 
