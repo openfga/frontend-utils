@@ -60,8 +60,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Audit dependencies
+      # Blocking: dependencies that ship to consumers of the package.
+      - name: Audit production dependencies
         run: npm audit --omit=dev
+
+      # Informational: dev tooling (jest, eslint, ...) never reaches consumers,
+      # so advisories there are reported but must not block CI or a release.
+      - name: Audit all dependencies (non-blocking)
+        run: npm audit
+        continue-on-error: true
 
       - name: Check for circular dependencies
         run: npx madge --circular . --extensions ts,js
