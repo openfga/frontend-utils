@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.3.1](https://github.com/openfga/frontend-utils/compare/v0.3.0...v0.3.1) (2026-11-18)
+
+> **Note:** `0.3.0` was tagged but never published to npm. The publish step of the release workflow failed to authenticate with the registry, so the GitHub release stayed a draft. The changes prepared for `0.3.0` are released here instead, and `0.3.1` is the first release published with npm trusted publishing ([#410](https://github.com/openfga/frontend-utils/pull/410)).
+
+
+### Fixed
+
+* **deps:** resolve CI dependency audit failures ([#394](https://github.com/openfga/frontend-utils/issues/394)) ([6166e44](https://github.com/openfga/frontend-utils/commit/6166e44f553945a858753aa45140dd5790e8e47c))
+* override dompurify to ^3.3.3 to resolve XSS vulnerability ([#343](https://github.com/openfga/frontend-utils/issues/343)) ([19f5a8d](https://github.com/openfga/frontend-utils/commit/19f5a8d882b5b940aa5b372b3569a367156e435d))
+* resolve npm audit vulnerabilities ([#372](https://github.com/openfga/frontend-utils/issues/372)) ([990ea7d](https://github.com/openfga/frontend-utils/commit/990ea7d0435b7ba9193385462ce31520725e5c54))
+
+
+### Miscellaneous
+
+* release 0.3.1 ([35dd769](https://github.com/openfga/frontend-utils/commit/35dd76930d2bca0e945ee87c324fdd6f9c208d45))
+
+## [0.3.0](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...v0.3.0) (2026-11-18)
+
+Not published to npm. Its changes are listed under 0.3.1 above.
+
 ## [UNRELEASED](https://github.com/openfga/frontend-utils/compare/v0.2.0-beta.11...main)
 
 Changed:
